@@ -1,0 +1,947 @@
+{
+    "birthday":{
+        "emoji":"🎂",
+        "icon":{
+            "id":"1114549090198495352",
+            "filename":"Cake"
+        },
+        "command":{
+            "birthday-add":{
+                "emoji":"🎂",
+                "title":"Add Birthday",
+                "thumbnail":[
+                    "1114549090198495352",
+                    "Cake"
+                ],
+                "type":"slash",
+                "id":"1129996188406525993",
+                "description":"Add your birthday",
+                "channel":[
+                    "<#860052083150684190>"
+                ],
+                "argument":{
+                    "date":{
+                        "type":"slash",
+                        "description":"Your birthday (DD-MM)",
+                        "example":"14-03",
+                        "required":"Yes"
+                    }
+                }
+            },
+            "birthday-next":{
+                "emoji":"🎂",
+                "title":"Next Birthdays",
+                "thumbnail":[
+                    "1114549090198495352",
+                    "Cake"
+                ],
+                "type":"slash",
+                "id":"1129996188406525994",
+                "description":"View the upcoming birthdays",
+                "channel":[
+                    "<#860052083150684190>"
+                ]
+            },
+            "birthday-remove":{
+                "emoji":"🎂",
+                "title":"Remove Birthday",
+                "thumbnail":[
+                    "1114549090198495352",
+                    "Cake"
+                ],
+                "type":"slash",
+                "id":"1129996188406525995",
+                "description":"Remove your birthday",
+                "channel":[
+                    "<#860052083150684190>"
+                ]
+            },
+            "birthday-unset":{
+                "emoji":"🎂",
+                "title":"Unset Birthday",
+                "thumbnail":[
+                    "1114549090198495352",
+                    "Cake"
+                ],
+                "role":[
+                    "<@&859852356674125864>"
+                ],
+                "type":"slash",
+                "id":"1129996188406525997",
+                "description":"Remove a user's birthday",
+                "channel":[
+                    "<#860052083150684190>"
+                ],
+                "argument":{
+                    "user":{
+                        "type":"slash",
+                        "description":"The target user",
+                        "example":"<@699604758729588786>",
+                        "required":"Yes"
+                    }
+                }
+            },
+            "birthday-view":{
+                "emoji":"🎂",
+                "title":"View Birthday",
+                "thumbnail":[
+                    "1114549090198495352",
+                    "Cake"
+                ],
+                "type":"slash",
+                "id":"1129996188670758914",
+                "description":"View a user’s birthday",
+                "channel":[
+                    "<#860052083150684190>"
+                ],
+                "argument":{
+                    "user":{
+                        "type":"slash",
+                        "description":"The target user",
+                        "example":"<@699604758729588786>",
+                        "required":"Yes"
+                    }
+                }
+            }
+        }
+    },
+    "fun":{
+        "emoji":"🎮",
+        "icon":{
+            "id":"1152888875862212658",
+            "filename":"GameController"
+        },
+        "command":{
+            "gm":{
+                "emoji":"☀️",
+                "title":"Good Morning",
+                "thumbnail":[
+                    "1120249509096734720",
+                    "Sun"
+                ],
+                "type":"slash",
+                "id":"1066048533020540968",
+                "description":"Get a good morning image",
+                "channel":[
+                    "`ALL`"
+                ],
+                "argument":{
+                    "subject":{
+                        "type":"slash",
+                        "description":"The subject of the image",
+                        "example":"Jill",
+                        "required":"No",
+                        "notes":"If no subject has been specified, a random image will be drawn."
+                    }
+                }
+            },
+            "gn":{
+                "emoji":"🌙",
+                "title":"Good Night",
+                "thumbnail":[
+                    "1120249507494514698",
+                    "Moon"
+                ],
+                "type":"slash",
+                "id":"1066048533020540969",
+                "description":"Get a good night image",
+                "channel":[
+                    "`ALL`"
+                ],
+                "argument":{
+                    "subject":{
+                        "type":"slash",
+                        "description":"The subject of the image",
+                        "example":"Lily",
+                        "required":"No",
+                        "notes":"If no subject has been specified, a random image will be drawn."
+                    }
+                }
+            },
+            "heart":{
+                "emoji":"♥️",
+                "title":"Heart",
+                "thumbnail":[
+                    "1120249507200909404",
+                    "Heart"
+                ],
+                "type":"slash",
+                "id":"1066048533020540970",
+                "description":"Get a heart image",
+                "channel":[
+                    "`ALL`"
+                ],
+                "argument":{
+                    "girl":{
+                        "type":"slash",
+                        "description":"The subject of the image",
+                        "example":"Sage",
+                        "required":"No",
+                        "notes":"If no girl has been specified, a random image will be drawn."
+                    }
+                }
+            },
+            "takeover":{
+                "emoji":"❤️‍🔥",
+                "title":"Takeover Day",
+                "thumbnail":[
+                    "1120249507200909404",
+                    "Heart"
+                ],
+                "type":"button",
+                "id":"Takeover On or Takeover Off",
+                "description":"Participate in the Takeover Day",
+                "channel":[
+                    "<#971780734337581136>"
+                ],
+                "notes":"This command can only be executed on Takeover Days (or the day after for returning your old roles)."
+            }
+        }
+    },
+    "information":{
+        "emoji":"ℹ️",
+        "icon":{
+            "id":"1129772628291366982",
+            "filename":"Information"
+        },
+        "command":{
+            "info-bot":{
+                "emoji":"🤖",
+                "title":"Bot Information",
+                "thumbnail":[
+                    "1120249508517924894",
+                    "Robot"
+                ],
+                "role":[
+                    "<@&971812411013210132>",
+                    "<@&1137093747004412054>"
+                ],
+                "type":"slash",
+                "id":"1129996188406525998",
+                "description":"Get information about the bot",
+                "channel":[
+                    "`ALL`"
+                ]
+            },
+            "info-channel":{
+                "emoji":"📌",
+                "title":"Channel Information",
+                "thumbnail":[
+                    "1120253546315653180",
+                    "Network"
+                ],
+                "role":[
+                    "<@&859852356674125864>"
+                ],
+                "type":"slash",
+                "id":"1129996188406525999",
+                "description":"Get information about a channel",
+                "channel":[
+                    "<#859925779831586827>",
+                    "<#860052083150684190>",
+                    "<#975385494575788032>"
+                ],
+                "argument":{
+                    "channel":{
+                        "type":"slash",
+                        "description":"The target channel",
+                        "example":"<#859842474682875917>",
+                        "required":"Yes"
+                    }
+                }
+            },
+            "info-role":{
+                "emoji":"🎭",
+                "title":"Role Information",
+                "thumbnail":[
+                    "1120249506911486062",
+                    "Drama"
+                ],
+                "role":[
+                    "<@&859852356674125864>"
+                ],
+                "type":"slash",
+                "id":"1129996188406526000",
+                "description":"Get information about a role",
+                "channel":[
+                    "<#859925779831586827>",
+                    "<#860052083150684190>",
+                    "<#975385494575788032>"
+                ],
+                "argument":{
+                    "role":{
+                        "type":"slash",
+                        "description":"The target role",
+                        "example":"<@&945346595891843122>",
+                        "required":"Yes"
+                    }
+                }
+            },
+            "info-server":{
+                "emoji":"🌐",
+                "title":"Server Information",
+                "thumbnail":[
+                    "1120249506676625448",
+                    "Community"
+                ],
+                "role":[
+                    "<@&971812411013210132>",
+                    "<@&1137093747004412054>"
+                ],
+                "type":"slash",
+                "id":"1129996188406526001",
+                "description":"Get information about the server",
+                "channel":[
+                    "`ALL`"
+                ]
+            },
+            "info-user":{
+                "emoji":"👤",
+                "title":"User Information",
+                "thumbnail":[
+                    "1120253546554720319",
+                    "User"
+                ],
+                "role":[
+                    "<@&859852356674125864>"
+                ],
+                "type":"slash",
+                "id":"1129996188670758912",
+                "description":"Get information about a user",
+                "channel":[
+                    "<#859925779831586827>",
+                    "<#860052083150684190>",
+                    "<#975385494575788032>"
+                ],
+                "argument":{
+                    "user":{
+                        "type":"slash",
+                        "description":"The target user",
+                        "example":"<@699604758729588786>",
+                        "required":"Yes"
+                    }
+                }
+            }
+        }
+    },
+    "levels":{
+        "emoji":"📊",
+        "icon":{
+            "id":"1155535692416438363",
+            "filename":"Chart"
+        },
+        "command":{
+            "leaderboard":{
+                "emoji":"🏆",
+                "title":"Leaderboard",
+                "thumbnail":[
+                    "1155533274140127273",
+                    "Leaderboard"
+                ],
+                "type":"slash",
+                "id":"1155529400201261056",
+                "description":"View the leaderboard",
+                "channel":[
+                    "<#860052083150684190>"
+                ]
+            },
+            "rank":{
+                "emoji":"📌",
+                "title":"Rank",
+                "thumbnail":[
+                    "1155534787331760299",
+                    "Rank"
+                ],
+                "type":"slash",
+                "id":"1155534011255500850",
+                "description":"Get your rank card",
+                "channel":[
+                    "<#860052083150684190>"
+                ]
+            }
+        }
+    },
+    "moderation":{
+        "emoji":"🛠",
+        "icon":{
+            "id":"1153437744396247100",
+            "filename":"Shield"
+        },
+        "command":{
+            "badik-ban":{
+                "emoji":"🔨",
+                "title":"BaDIK Ban",
+                "thumbnail":[
+                    "1128993578719383573",
+                    "HammerHit"
+                ],
+                "role":[
+                    "<@&971812411013210132>",
+                    "<@&1137093747004412054"
+                ],
+                "type":"slash",
+                "id":"1128963140227436625",
+                "description":"Ban a user from the badik-discussion channel",
+                "channel":[
+                    "`ALL`"
+                ],
+                "argument":{
+                    "user":{
+                        "type":"slash",
+                        "description":"The target user",
+                        "example":"<@699604758729588786>",
+                        "required":"Yes"
+                    },
+                    "duration":{
+                        "type":"slash",
+                        "description":"The duration of the ban",
+                        "example":"7d",
+                        "required":"No",
+                        "default":"Indefinite"
+                    }
+                }
+            },
+            "badik-banlist":{
+                "emoji":"🔨",
+                "title":"BaDIK Ban List",
+                "thumbnail":[
+                    "1128993578719383573",
+                    "HammerHit"
+                ],
+                "role":[
+                    "<@&971812411013210132>",
+                    "<@&1137093747004412054>"
+                ],
+                "type":"slash",
+                "id":"1129032923547443260",
+                "description":"View the users banned from the badik-discussion channel",
+                "channel":[
+                    "<#859925779831586827>",
+                    "<#975385494575788032>"
+                ]
+            },
+            "badik-unban":{
+                "emoji":"🔨",
+                "title":"BaDIK Unban",
+                "thumbnail":[
+                    "1128993578719383573",
+                    "HammerHit"
+                ],
+                "role":[
+                    "<@&971812411013210132>",
+                    "<@&1137093747004412054>"
+                ],
+                "type":"slash",
+                "id":"1128963140227436626",
+                "description":"Unban a user from the badik-discussion channel",
+                "channel":[
+                    "`ALL`"
+                ],
+                "argument":{
+                    "user":{
+                        "type":"slash",
+                        "description":"The target user",
+                        "example":"<@699604758729588786>",
+                        "required":"yes"
+                    }
+                }
+            },
+            "warn":{
+                "emoji":"⚠️",
+                "title":"Warn",
+                "thumbnail":[
+                    "1119610013263073340",
+                    "Caution"
+                ],
+                "role":[
+                    "<@&859852356674125864>"
+                ],
+                "type":"slash",
+                "id":"1066048533020540972",
+                "description":"Warn a user",
+                "channel":[
+                    "`ALL`"
+                ],
+                "argument":{
+                    "user":{
+                        "type":"slash",
+                        "description":"The target user",
+                        "example":"<@699604758729588786>",
+                        "required":"Yes"
+                    },
+                    "reason":{
+                        "type":"slash",
+                        "description":"The reason for issuing the warning",
+                        "example":"3. No Advertising/Spam",
+                        "required":"Yes"
+                    },
+                    "details":{
+                        "type":"slash",
+                        "description":"Further detail on the user's action",
+                        "example":"Invite links",
+                        "required":"Yes"
+                    }
+                },
+                "notes":"You cannot warn someone whose highest role is equal or above yours."
+            },
+            "warninfo":{
+                "emoji":"⚠️",
+                "title":"Warn Information",
+                "thumbnail":[
+                    "1119610013263073340",
+                    "Caution"
+                ],
+                "role":[
+                    "<@&859852356674125864>"
+                ],
+                "type":"slash",
+                "id":"1041998214590648380",
+                "description":"Get information about a user's warning history",
+                "channel":[
+                    "`ALL`"
+                ],
+                "argument":{
+                    "user":{
+                        "type":"slash",
+                        "description":"The target user",
+                        "example":"<@699604758729588786>",
+                        "required":"Yes"
+                    }
+                }
+            }
+        }
+    },
+    "reminder":{
+        "emoji":"🔔",
+        "icon":{
+            "id":"1152889220399104100",
+            "filename":"Reminder"
+        },
+        "command":{
+            "remind-cancel":{
+                "emoji":"🔕",
+                "title":"Cancel Reminder",
+                "thumbnail":[
+                    "1146889149626990692",
+                    "Reminder"
+                ],
+                "type":"slash",
+                "id":"1146924806298677258",
+                "description":"Cancel a reminder",
+                "channel":[
+                    "<#860052083150684190>"
+                ]
+            },
+            "remind":{
+                "emoji":"🔔",
+                "title":"Reminder",
+                "thumbnail":[
+                    "1146889149626990692",
+                    "Reminder"
+                ],
+                "type":"slash",
+                "id":"1146779384695509084",
+                "description":"Set a reminder",
+                "channel":[
+                    "`ALL`"
+                ],
+                "argument":{
+                    "message":{
+                        "type":"slash",
+                        "description":"What the reminder is about",
+                        "example":"New status update",
+                        "required":"Yes"
+                    },
+                    "time":{
+                        "type":"slash",
+                        "description":"When the reminder is set (m/d/h/w)",
+                        "example":"5d",
+                        "required":"Yes"
+                    }
+                }
+            }
+        }
+    },
+    "support":{
+        "emoji":"👥",
+        "icon":{
+            "id":"1141302604454961212",
+            "filename":"Support"
+        },
+        "command":{
+            "faq":{
+                "emoji":"❓",
+                "title":"FAQ",
+                "thumbnail":[
+                    "1144589442074562620",
+                    "FAQ"
+                ],
+                "role":[
+                    "<@&859852356674125864>"
+                ],
+                "type":"slash",
+                "id":"1149270157139656786",
+                "description":"View a particular FAQ and its answer",
+                "channel":[
+                    "`ALL`"
+                ],
+                "argument":{
+                    "category":{
+                        "type":"slash",
+                        "description":"FAQ category",
+                        "example":"Being a DIK",
+                        "required":"Yes"
+                    },
+                    "number":{
+                        "type":"slash",
+                        "description":"Question number",
+                        "example":"3",
+                        "required":"Yes"
+                    }
+                }
+            },
+            "help":{
+                "emoji":"❓",
+                "title":"Help",
+                "thumbnail":[
+                    "1117812731924455454",
+                    "Question"
+                ],
+                "type":"slash",
+                "id":"1118738919907930152",
+                "description":"Get information about a command",
+                "channel":[
+                    "<#860052083150684190>"
+                ],
+                "argument":{
+                    "command":{
+                        "type":"menu",
+                        "description":"The target command",
+                        "example":"Add Birthday",
+                        "required":"Yes"
+                    }
+                }
+            },
+            "report":{
+                "emoji":"‼️",
+                "title":"Message Report",
+                "thumbnail":[
+                    "1141031943794856016",
+                    "MessageAlert"
+                ],
+                "type":"button",
+                "id":"Report",
+                "description":"Report a Message",
+                "channel":[
+                    "<#1031832935717945365>"
+                ],
+                "argument":{
+                    "link":{
+                        "type":"modal",
+                        "description":"The message's link",
+                        "example":"`https#COLON#//discord.com/channels/859842474682875914/1067186584396513350/1067186688419438612`",
+                        "required":"Yes"
+                    },
+                    "reason":{
+                        "type":"modal",
+                        "description":"The reason for reporting the message",
+                        "example":"Spam",
+                        "required":"Yes"
+                    }
+                }
+            },
+            "rules":{
+                "emoji":"📑",
+                "title":"Rules",
+                "thumbnail":[
+                    "1142907015732146348",
+                    "Rules"
+                ],
+                "role":[
+                    "<@&859852356674125864>"
+                ],
+                "type":"slash",
+                "id":"1142908395834314772",
+                "description":"View the server's rules",
+                "channel":[
+                    "ALL"
+                ],
+                "argument":{
+                    "rule":{
+                        "type":"slash",
+                        "description":"The rule you want to view",
+                        "example":"3. No Advertising",
+                        "required":"Yes"
+                    }
+                }
+            },
+            "ticket":{
+                "emoji":"🎫",
+                "title":"Ticket",
+                "thumbnail":[
+                    "1120249509402923049",
+                    "Ticket"
+                ],
+                "type":"button",
+                "id":"🎫 Open Ticket",
+                "description":"Open a ticket",
+                "channel":[
+                    "<#1031832935717945365>"
+                ],
+                "argument":{
+                    "enquiry":{
+                        "type":"modal",
+                        "description":"The reason behind opening a ticket",
+                        "example":"A user is spamming invites",
+                        "required":"Yes"
+                    }
+                },
+                "notes":"You can only have one open ticket at a time."
+            }
+        }
+    },
+    "miscellaneous":{
+        "emoji":"🔧",
+        "icon":{
+            "id":"1152890575696175227",
+            "filename":"Miscellaneous"
+        },
+        "command":{
+            "avn-register":{
+                "emoji":"📆",
+                "title":"AVN Release Date Register",
+                "thumbnail":[
+                    "1121796734021029898",
+                    "Calendar"
+                ],
+                "type":"slash",
+                "id":"1150817122931441735",
+                "description":"Register an AVN's release date into the calendar",
+                "channel":[
+                    "<#860052083150684190>"
+                ],
+                "argument":{
+                    "title":{
+                        "type":"slash",
+                        "description":"The AVN's title",
+                        "example":"Being a DIK",
+                        "required":"Yes"
+                    },
+                    "number":{
+                        "type":"slash",
+                        "description":"Chapter number",
+                        "example":"3",
+                        "required":"Yes"
+                    },
+                    "date":{
+                        "type":"slash",
+                        "description":"The release date of the AVN (DD/MM/YYYY)",
+                        "example":"23/05/2023",
+                        "required":"Yes"
+                    }
+                }
+            },
+            "rolecustomise":{
+                "emoji":"🎨",
+                "title":"Customise Role",
+                "thumbnail":[
+                    "1120249507767140352",
+                    "Paint"
+                ],
+                "role":[
+                    "<@&859852356674125864>",
+                    "<@&863176464160260096>",
+                    "<@&929055118849085451>",
+                    "<@&958174663207432262>",
+                    "<@&1116747015687250040>"
+                ],
+                "type":"slash",
+                "id":"1091980116118229012",
+                "description":"Modify your custom role",
+                "channel":[
+                    "<#860052083150684190>"
+                ],
+                "argument":{
+                    "colour":{
+                        "type":"slash",
+                        "description":"The role's new colour (hex)",
+                        "example":"ae95b0",
+                        "required":"No"
+                    },
+                    "icon":{
+                        "type":"slash",
+                        "description":"The role's new icon (`jpg`, `png`, or `webp`)",
+                        "example":"icon.png",
+                        "required":"No"
+                    },
+                    "name":{
+                        "type":"slash",
+                        "description":"The role's new name",
+                        "example":"New Role Name",
+                        "required":"No"
+                    }
+                },
+                "notes":"At least one input must be filled."
+            },
+            "giveaway":{
+                "emoji":"🎁",
+                "title":"Giveaway",
+                "thumbnail":[
+                    "1117386144104071288",
+                    "Gift"
+                ],
+                "role":[
+                    "<@&859852356674125864>"
+                ],
+                "type":"slash",
+                "id":"1116739034132250644",
+                "description":"Start a giveaway",
+                "channel":[
+                    "`ALL`"
+                ],
+                "argument":{
+                    "sponsor":{
+                        "type":"slash",
+                        "description":"The giveaway's sponsor",
+                        "example":"<@699604758729588786>",
+                        "required":"Yes"
+                    },
+                    "prize":{
+                        "type":"slash",
+                        "description":"The giveaway's prize",
+                        "example":"1 Month Nitro",
+                        "required":"Yes"
+                    },
+                    "date":{
+                        "type":"slash",
+                        "description":"The end date of the giveaway (`DD-MM`)",
+                        "example":"09-11",
+                        "required":"Yes"
+                    },
+                    "time":{
+                        "type":"slash",
+                        "description":"The end time of the giveaway (`HH#COLON#MM`) (UTC/GMT)",
+                        "example":"17#COLON#00",
+                        "required":"Yes"
+                    }
+                }
+            },
+            "messagelink":{
+                "emoji":"📨",
+                "title":"Message Link",
+                "thumbnail":[
+                    "1120253546084978730",
+                    "Message"
+                ],
+                "type":"word",
+                "id":"Message URL",
+                "description":"Get contents of a message in the server",
+                "channel":[
+                    "`ALL`"
+                ]
+            },
+            "poll":{
+                "emoji":"🗳",
+                "title":"Poll",
+                "thumbnail":[
+                    "1117125292264259644",
+                    "Poll"
+                ],
+                "role":[
+                    "<@&971812411013210132>",
+                    "<@&1137093747004412054>"
+                ],
+                "type":"slash",
+                "id":"1117048662472794182",
+                "description":"Launch a poll",
+                "channel":[
+                    "`ALL`"
+                ],
+                "argument":{
+                    "channel":{
+                        "type":"slash",
+                        "description":"The channel where the poll is to be held",
+                        "example":"<#859842474682875917>",
+                        "required":"Yes"
+                    },
+                    "date":{
+                        "type":"slash",
+                        "description":"The poll's end date (DD-MM)",
+                        "example":"23-10",
+                        "required":"Yes"
+                    },
+                    "time":{
+                        "type":"slash",
+                        "description":"The poll's end time (`HH`:`MM`) (UTC/GMT)",
+                        "example":"00:00",
+                        "required":"Yes"
+                    },
+                    "image":{
+                        "type":"slash",
+                        "description":"An image for the poll (`jpg`, `png`, or `webp`)",
+                        "example":"poll_icon.png",
+                        "required":"No"
+                    },
+                    "topic":{
+                        "type":"modal",
+                        "description":"The poll's topic",
+                        "example":"Favourite Food",
+                        "required":"Yes"
+                    },
+                    "options":{
+                        "type":"modal",
+                        "description":"The poll's options (2-16 options, separate with newline)",
+                        "example":"Hamburgers⏎Pizza⏎Sushi",
+                        "required":"Yes"
+                    }
+                }
+            },
+            "quickpoll":{
+                "emoji":"🗳",
+                "title":"Quick Poll",
+                "thumbnail":[
+                    "1117125292264259644",
+                    "Poll"
+                ],
+                "type":"slash",
+                "id":"1040831580924555329",
+                "description":"Launch a quick poll",
+                "channel":[
+                    "`ALL`"
+                ],
+                "argument":{
+                    "topic":{
+                        "type":"modal",
+                        "description":"The poll's topic",
+                        "example":"Favourite Food",
+                        "required":"Yes"
+                    },
+                    "options":{
+                        "type":"modal",
+                        "description":"The poll's options (2-8 options, separate with comma)",
+                        "example":"Hamburgers, Pizza, Sushi",
+                        "required":"Yes"
+                    }
+                }
+            },
+            "starboard":{
+                "emoji":"⭐",
+                "title":"Starboard",
+                "thumbnail":[
+                    "1120249508824088656",
+                    "Star"
+                ],
+                "role":[
+                    "<@&859852356674125864>"
+                ],
+                "type":"reaction",
+                "id":"⭐",
+                "description":"Crosspost a message to the starboard",
+                "channel":[
+                    "`ALL`"
+                ],
+                "notes":"A message may only be starboarded once."
+            }
+        }
+    }
+}
