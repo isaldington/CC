@@ -2,17 +2,17 @@
     "birthday":{
         "emoji":"🎂",
         "icon":{
-            "id":"1114549090198495352",
-            "filename":"Cake"
+            "id":"1157974096198508604",
+            "index":0
         },
         "command":{
             "birthday-add":{
                 "emoji":"🎂",
                 "title":"Add Birthday",
-                "thumbnail":[
-                    "1114549090198495352",
-                    "Cake"
-                ],
+                "thumbnail":{
+                    "id":"1157974096198508604",
+                    "index":0
+                },
                 "type":"slash",
                 "id":"1129996188406525993",
                 "description":"Add your birthday",
@@ -31,10 +31,10 @@
             "birthday-next":{
                 "emoji":"🎂",
                 "title":"Next Birthdays",
-                "thumbnail":[
-                    "1114549090198495352",
-                    "Cake"
-                ],
+                "thumbnail":{
+                    "id":"1157974096198508604",
+                    "index":0
+                },
                 "type":"slash",
                 "id":"1129996188406525994",
                 "description":"View the upcoming birthdays",
@@ -45,10 +45,10 @@
             "birthday-remove":{
                 "emoji":"🎂",
                 "title":"Remove Birthday",
-                "thumbnail":[
-                    "1114549090198495352",
-                    "Cake"
-                ],
+                "thumbnail":{
+                    "id":"1157974096198508604",
+                    "index":0
+                },
                 "type":"slash",
                 "id":"1129996188406525995",
                 "description":"Remove your birthday",
@@ -59,12 +59,12 @@
             "birthday-unset":{
                 "emoji":"🎂",
                 "title":"Unset Birthday",
-                "thumbnail":[
-                    "1114549090198495352",
-                    "Cake"
-                ],
+                "thumbnail":{
+                    "id":"1157974096198508604",
+                    "index":0
+                },
                 "role":[
-                    "<@&859852356674125864>"
+                    "859852356674125864"
                 ],
                 "type":"slash",
                 "id":"1129996188406525997",
@@ -84,10 +84,10 @@
             "birthday-view":{
                 "emoji":"🎂",
                 "title":"View Birthday",
-                "thumbnail":[
-                    "1114549090198495352",
-                    "Cake"
-                ],
+                "thumbnail":{
+                    "id":"1157974096198508604",
+                    "index":0
+                },
                 "type":"slash",
                 "id":"1129996188670758914",
                 "description":"View a user’s birthday",
@@ -108,17 +108,17 @@
     "fun":{
         "emoji":"🎮",
         "icon":{
-            "id":"1152888875862212658",
-            "filename":"GameController"
+            "id":"1157972517185654795",
+            "index":6
         },
         "command":{
             "gm":{
                 "emoji":"☀️",
                 "title":"Good Morning",
-                "thumbnail":[
-                    "1120249509096734720",
-                    "Sun"
-                ],
+                "thumbnail":{
+                    "id":"1157972910200332339",
+                    "index":7
+                },
                 "type":"slash",
                 "id":"1066048533020540968",
                 "description":"Get a good morning image",
@@ -138,10 +138,10 @@
             "gn":{
                 "emoji":"🌙",
                 "title":"Good Night",
-                "thumbnail":[
-                    "1120249507494514698",
-                    "Moon"
-                ],
+                "thumbnail":{
+                    "id":"1157972660354031636",
+                    "index":7
+                },
                 "type":"slash",
                 "id":"1066048533020540969",
                 "description":"Get a good night image",
@@ -161,10 +161,10 @@
             "heart":{
                 "emoji":"♥️",
                 "title":"Heart",
-                "thumbnail":[
-                    "1120249507200909404",
-                    "Heart"
-                ],
+                "thumbnail":{
+                    "id":"1157972517185654795",
+                    "index":9
+                },
                 "type":"slash",
                 "id":"1066048533020540970",
                 "description":"Get a heart image",
@@ -184,10 +184,10 @@
             "takeover":{
                 "emoji":"❤️‍🔥",
                 "title":"Takeover Day",
-                "thumbnail":[
-                    "1120249507200909404",
-                    "Heart"
-                ],
+                "thumbnail":{
+                    "id":"1157972517185654795",
+                    "index":9
+                },
                 "type":"button",
                 "id":"Takeover On or Takeover Off",
                 "description":"Participate in the Takeover Day",
@@ -201,20 +201,20 @@
     "information":{
         "emoji":"ℹ️",
         "icon":{
-            "id":"1129772628291366982",
-            "filename":"Information"
+            "id":"1157972660354031636",
+            "index":0
         },
         "command":{
             "info-bot":{
                 "emoji":"🤖",
                 "title":"Bot Information",
-                "thumbnail":[
-                    "1120249508517924894",
-                    "Robot"
-                ],
+                "thumbnail":{
+                    "id":"1157972790482309241",
+                    "index":8
+                },
                 "role":[
-                    "<@&971812411013210132>",
-                    "<@&1137093747004412054>"
+                    "971812411013210132",
+                    "1137093747004412054"
                 ],
                 "type":"slash",
                 "id":"1129996188406525998",
@@ -226,12 +226,12 @@
             "info-channel":{
                 "emoji":"📌",
                 "title":"Channel Information",
-                "thumbnail":[
-                    "1120253546315653180",
-                    "Network"
-                ],
+                "thumbnail":{
+                    "id":"1157972660354031636",
+                    "index":8
+                },
                 "role":[
-                    "<@&859852356674125864>"
+                    "859852356674125864"
                 ],
                 "type":"slash",
                 "id":"1129996188406525999",
@@ -253,12 +253,12 @@
             "info-role":{
                 "emoji":"🎭",
                 "title":"Role Information",
-                "thumbnail":[
-                    "1120249506911486062",
-                    "Drama"
-                ],
+                "thumbnail":{
+                    "id":"1157972517185654795",
+                    "index":4
+                },
                 "role":[
-                    "<@&859852356674125864>"
+                    "859852356674125864"
                 ],
                 "type":"slash",
                 "id":"1129996188406526000",
@@ -280,13 +280,13 @@
             "info-server":{
                 "emoji":"🌐",
                 "title":"Server Information",
-                "thumbnail":[
-                    "1120249506676625448",
-                    "Community"
-                ],
+                "thumbnail":{
+                    "id":"1157972517185654795",
+                    "index":2
+                },
                 "role":[
-                    "<@&971812411013210132>",
-                    "<@&1137093747004412054>"
+                    "971812411013210132",
+                    "1137093747004412054"
                 ],
                 "type":"slash",
                 "id":"1129996188406526001",
@@ -298,12 +298,12 @@
             "info-user":{
                 "emoji":"👤",
                 "title":"User Information",
-                "thumbnail":[
-                    "1120253546554720319",
-                    "User"
-                ],
+                "thumbnail":{
+                    "id":"1157974096198508604",
+                    "index":4
+                },
                 "role":[
-                    "<@&859852356674125864>"
+                    "859852356674125864"
                 ],
                 "type":"slash",
                 "id":"1129996188670758912",
@@ -327,17 +327,17 @@
     "levels":{
         "emoji":"📊",
         "icon":{
-            "id":"1155535692416438363",
-            "filename":"Chart"
+            "id":"1157972517185654795",
+            "index":0
         },
         "command":{
             "leaderboard":{
                 "emoji":"🏆",
                 "title":"Leaderboard",
-                "thumbnail":[
-                    "1155533274140127273",
-                    "Leaderboard"
-                ],
+                "thumbnail":{
+                    "id":"1157972660354031636",
+                    "index":1
+                },
                 "type":"slash",
                 "id":"1155529400201261056",
                 "description":"View the leaderboard",
@@ -348,10 +348,10 @@
             "rank":{
                 "emoji":"📌",
                 "title":"Rank",
-                "thumbnail":[
-                    "1155534787331760299",
-                    "Rank"
-                ],
+                "thumbnail":{
+                    "id":"1157972790482309241",
+                    "index":5
+                },
                 "type":"slash",
                 "id":"1155534011255500850",
                 "description":"Get your rank card",
@@ -364,20 +364,20 @@
     "moderation":{
         "emoji":"🛠",
         "icon":{
-            "id":"1153437744396247100",
-            "filename":"Shield"
+            "id":"1157972910200332339",
+            "index":3
         },
         "command":{
             "badik-ban":{
                 "emoji":"🔨",
                 "title":"BaDIK Ban",
-                "thumbnail":[
-                    "1128993578719383573",
-                    "HammerHit"
-                ],
+                "thumbnail":{
+                    "id":"1157972517185654795",
+                    "index":8
+                },
                 "role":[
-                    "<@&971812411013210132>",
-                    "<@&1137093747004412054"
+                    "971812411013210132",
+                    "1137093747004412054"
                 ],
                 "type":"slash",
                 "id":"1128963140227436625",
@@ -404,13 +404,13 @@
             "badik-banlist":{
                 "emoji":"🔨",
                 "title":"BaDIK Ban List",
-                "thumbnail":[
-                    "1128993578719383573",
-                    "HammerHit"
-                ],
+                "thumbnail":{
+                    "id":"1157972517185654795",
+                    "index":8
+                },
                 "role":[
-                    "<@&971812411013210132>",
-                    "<@&1137093747004412054>"
+                    "971812411013210132",
+                    "1137093747004412054"
                 ],
                 "type":"slash",
                 "id":"1129032923547443260",
@@ -423,13 +423,13 @@
             "badik-unban":{
                 "emoji":"🔨",
                 "title":"BaDIK Unban",
-                "thumbnail":[
-                    "1128993578719383573",
-                    "HammerHit"
-                ],
+                "thumbnail":{
+                    "id":"1157972517185654795",
+                    "index":8
+                },
                 "role":[
-                    "<@&971812411013210132>",
-                    "<@&1137093747004412054>"
+                    "971812411013210132",
+                    "1137093747004412054"
                 ],
                 "type":"slash",
                 "id":"1128963140227436626",
@@ -449,12 +449,12 @@
             "warn":{
                 "emoji":"⚠️",
                 "title":"Warn",
-                "thumbnail":[
-                    "1119610013263073340",
-                    "Caution"
-                ],
+                "thumbnail":{
+                    "id":"1157972358620004352",
+                    "index":8
+                },
                 "role":[
-                    "<@&859852356674125864>"
+                    "859852356674125864"
                 ],
                 "type":"slash",
                 "id":"1066048533020540972",
@@ -487,12 +487,12 @@
             "warninfo":{
                 "emoji":"⚠️",
                 "title":"Warn Information",
-                "thumbnail":[
-                    "1119610013263073340",
-                    "Caution"
-                ],
+                "thumbnail":{
+                    "id":"1157972358620004352",
+                    "index":8
+                },
                 "role":[
-                    "<@&859852356674125864>"
+                    "859852356674125864"
                 ],
                 "type":"slash",
                 "id":"1041998214590648380",
@@ -514,17 +514,17 @@
     "reminder":{
         "emoji":"🔔",
         "icon":{
-            "id":"1152889220399104100",
-            "filename":"Reminder"
+            "id":"1157972790482309241",
+            "index":7
         },
         "command":{
             "remind-cancel":{
                 "emoji":"🔕",
                 "title":"Cancel Reminder",
-                "thumbnail":[
-                    "1146889149626990692",
-                    "Reminder"
-                ],
+                "thumbnail":{
+                    "id":"1157972790482309241",
+                    "index":6
+                },
                 "type":"slash",
                 "id":"1146924806298677258",
                 "description":"Cancel a reminder",
@@ -535,10 +535,10 @@
             "remind":{
                 "emoji":"🔔",
                 "title":"Reminder",
-                "thumbnail":[
-                    "1146889149626990692",
-                    "Reminder"
-                ],
+                "thumbnail":{
+                    "id":"1157972790482309241",
+                    "index":6
+                },
                 "type":"slash",
                 "id":"1146779384695509084",
                 "description":"Set a reminder",
@@ -565,19 +565,19 @@
     "support":{
         "emoji":"👥",
         "icon":{
-            "id":"1141302604454961212",
-            "filename":"Support"
+            "id":"1157972910200332339",
+            "index":8
         },
         "command":{
             "faq":{
                 "emoji":"❓",
                 "title":"FAQ",
-                "thumbnail":[
-                    "1144589442074562620",
-                    "FAQ"
-                ],
+                "thumbnail":{
+                    "id":"1157972517185654795",
+                    "index":5
+                },
                 "role":[
-                    "<@&859852356674125864>"
+                    "859852356674125864"
                 ],
                 "type":"slash",
                 "id":"1149270157139656786",
@@ -603,10 +603,10 @@
             "help":{
                 "emoji":"❓",
                 "title":"Help",
-                "thumbnail":[
-                    "1117812731924455454",
-                    "Question"
-                ],
+                "thumbnail":{
+                    "id":"1157972790482309241",
+                    "index":3
+                },
                 "type":"slash",
                 "id":"1118738919907930152",
                 "description":"Get information about a command",
@@ -625,10 +625,10 @@
             "report":{
                 "emoji":"‼️",
                 "title":"Message Report",
-                "thumbnail":[
-                    "1141031943794856016",
-                    "MessageAlert"
-                ],
+                "thumbnail":{
+                    "id":"1157972660354031636",
+                    "index":5
+                },
                 "type":"button",
                 "id":"Report",
                 "description":"Report a Message",
@@ -653,12 +653,12 @@
             "rules":{
                 "emoji":"📑",
                 "title":"Rules",
-                "thumbnail":[
-                    "1142907015732146348",
-                    "Rules"
-                ],
+                "thumbnail":{
+                    "id":"1157972910200332339",
+                    "index":1
+                },
                 "role":[
-                    "<@&859852356674125864>"
+                    "859852356674125864"
                 ],
                 "type":"slash",
                 "id":"1142908395834314772",
@@ -678,10 +678,10 @@
             "ticket":{
                 "emoji":"🎫",
                 "title":"Ticket",
-                "thumbnail":[
-                    "1120249509402923049",
-                    "Ticket"
-                ],
+                "thumbnail":{
+                    "id":"1157974096198508604",
+                    "index":2
+                },
                 "type":"button",
                 "id":"🎫 Open Ticket",
                 "description":"Open a ticket",
@@ -703,17 +703,17 @@
     "miscellaneous":{
         "emoji":"🔧",
         "icon":{
-            "id":"1152890575696175227",
-            "filename":"Miscellaneous"
+            "id":"1157972660354031636",
+            "index":6
         },
         "command":{
             "avn-register":{
                 "emoji":"📆",
                 "title":"AVN Release Date Register",
-                "thumbnail":[
-                    "1121796734021029898",
-                    "Calendar"
-                ],
+                "thumbnail":{
+                    "id":"1157972358620004352",
+                    "index":7
+                },
                 "type":"slash",
                 "id":"1150817122931441735",
                 "description":"Register an AVN's release date into the calendar",
@@ -744,16 +744,16 @@
             "rolecustomise":{
                 "emoji":"🎨",
                 "title":"Customise Role",
-                "thumbnail":[
-                    "1120249507767140352",
-                    "Paint"
-                ],
+                "thumbnail":{
+                    "id":"1157972660354031636",
+                    "index":9
+                },
                 "role":[
-                    "<@&859852356674125864>",
-                    "<@&863176464160260096>",
-                    "<@&929055118849085451>",
-                    "<@&958174663207432262>",
-                    "<@&1116747015687250040>"
+                    "859852356674125864",
+                    "863176464160260096",
+                    "929055118849085451",
+                    "958174663207432262",
+                    "1116747015687250040"
                 ],
                 "type":"slash",
                 "id":"1091980116118229012",
@@ -786,12 +786,12 @@
             "giveaway":{
                 "emoji":"🎁",
                 "title":"Giveaway",
-                "thumbnail":[
-                    "1117386144104071288",
-                    "Gift"
-                ],
+                "thumbnail":{
+                    "id":"1157972517185654795",
+                    "index":7
+                },
                 "role":[
-                    "<@&859852356674125864>"
+                    "859852356674125864"
                 ],
                 "type":"slash",
                 "id":"1116739034132250644",
@@ -829,10 +829,10 @@
             "messagelink":{
                 "emoji":"📨",
                 "title":"Message Link",
-                "thumbnail":[
-                    "1120253546084978730",
-                    "Message"
-                ],
+                "thumbnail":{
+                    "id":"1157972660354031636",
+                    "index":4
+                },
                 "type":"word",
                 "id":"Message URL",
                 "description":"Get contents of a message in the server",
@@ -843,13 +843,13 @@
             "poll":{
                 "emoji":"🗳",
                 "title":"Poll",
-                "thumbnail":[
-                    "1117125292264259644",
-                    "Poll"
-                ],
+                "thumbnail":{
+                    "id":"1157972790482309241",
+                    "index":2
+                },
                 "role":[
-                    "<@&971812411013210132>",
-                    "<@&1137093747004412054>"
+                    "971812411013210132",
+                    "1137093747004412054"
                 ],
                 "type":"slash",
                 "id":"1117048662472794182",
@@ -899,10 +899,10 @@
             "quickpoll":{
                 "emoji":"🗳",
                 "title":"Quick Poll",
-                "thumbnail":[
-                    "1117125292264259644",
-                    "Poll"
-                ],
+                "thumbnail":{
+                    "id":"1157972790482309241",
+                    "index":2
+                },
                 "type":"slash",
                 "id":"1040831580924555329",
                 "description":"Launch a quick poll",
@@ -927,12 +927,12 @@
             "starboard":{
                 "emoji":"⭐",
                 "title":"Starboard",
-                "thumbnail":[
-                    "1120249508824088656",
-                    "Star"
-                ],
+                "thumbnail":{
+                    "id":"1157972910200332339",
+                    "index":5
+                },
                 "role":[
-                    "<@&859852356674125864>"
+                    "859852356674125864"
                 ],
                 "type":"reaction",
                 "id":"⭐",
