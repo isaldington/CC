@@ -723,19 +723,19 @@
                 "argument":{
                     "title":{
                         "type":"slash",
-                        "description":"The AVN's title",
+                        "description":"Title of AVN",
                         "example":"Being a DIK",
                         "required":"Yes"
                     },
-                    "number":{
+                    "version":{
                         "type":"slash",
-                        "description":"Chapter number",
-                        "example":"3",
+                        "description":"Update version",
+                        "example":"Ch. 3 or Ep. 5 or V 1.2.35",
                         "required":"Yes"
                     },
                     "date":{
                         "type":"slash",
-                        "description":"The release date of the AVN (DD/MM/YYYY)",
+                        "description":"Release date of AVN (DD/MM/YYYY)",
                         "example":"23/05/2023",
                         "required":"Yes"
                     }
