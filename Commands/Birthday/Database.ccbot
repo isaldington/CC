@@ -1,0 +1,102 @@
+/*
+    Type: Library
+    Trigger: birthday
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$function[getImage;id;i]{
+    $if[$i==undefined]{
+        $let[i;0]
+    }
+    $return[$msg[1157421810288185384;$id;attachment;$i]]
+}
+$objectCreate[{
+    "date":$getServerVar[birthdayDates],
+    "user":$getServerVar[birthdayUsers],
+    "month":[
+        {
+            "name":"January",
+            "numday":31
+        },
+        {
+            "name":"February",
+            "numday":29
+        },
+        {
+            "name":"March",
+            "numday":31
+        },
+        {
+            "name":"April",
+            "numday":30
+        },
+        {
+            "name":"May",
+            "numday":31
+        },
+        {
+            "name":"June",
+            "numday":30
+        },
+        {
+            "name":"July",
+            "numday":31
+        },
+        {
+            "name":"August",
+            "numday":31
+        },
+        {
+            "name":"September",
+            "numday":30
+        },
+        {
+            "name":"October",
+            "numday":31
+        },
+        {
+            "name":"November",
+            "numday":30
+        },
+        {
+            "name":"December",
+            "numday":31
+        }
+    ],
+    "message":{
+        "true":{
+            "color":"479f4b",
+            "icon":{
+                "id":"1157974096198508604",
+                "index":5
+            },
+            "title":"Added"
+        },
+        "false":{
+            "color":"transparent",
+            "icon":{
+                "id":"1157972517185654795",
+                "index":3
+            },
+            "title":"Removed"
+        },
+        "error":{
+            "color":"db3539",
+            "icon":{
+                "id":"1157974096198508604",
+                "index":6
+            },
+            "title":"Error"
+        },
+        "birthday":{
+            "color":"ff9fd9",
+            "icon":{
+                "id":"1157974096198508604",
+                "index":0
+            },
+            "title":"Birthday"
+        }
+    }
+}]

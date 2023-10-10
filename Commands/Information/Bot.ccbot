@@ -1,0 +1,51 @@
+/*
+    Type: Slash Command
+    Trigger: info-bot
+    Min Perms: Admin
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$objectCreate[{
+    "embed":{
+        "color":"$userRoleColor[$clientID]",
+        "desc":{
+            "Name":"<@$clientID>",
+            "Tag":"`$username[$clientID]`",
+            "ID":"`$clientID`",
+            "Ping":{
+                "value":"`$round[$ping]` ms",
+                "warning":{
+                    "check":"$ping",
+                    "threshold":150
+                }
+            },
+            "CPU":{
+                "value":"`$cpu`",
+                "warning":{
+                    "check":"$filterMessage[$cpu;%]",
+                    "threshold":50
+                }
+            },
+            "RAM":{
+                "value":"`$round[$ram]` MB/`$round[$maxRam]` MB (`$roundTenth[$math[($ram/$maxRam)*100];2]`%)",
+                "warning":{
+                    "check":"$math[$ram/$maxRam]",
+                    "threshold":0.5
+                }
+            },
+            "Uptime":"`$uptime`",
+            "Version":"`$botVersion`"
+        },
+        "thumbnail":"$userAvatar[$clientID]",
+        "title":"Bot Information"
+    }
+}]
+$objectLoop[parameter;value;;embed;desc]{
+    $if[$objectKeyExists[embed;desc;$parameter;warning]==true]{
+        $let[parameterValue;$objectGet[embed;desc;$parameter;value]]
+        $let[warning;$conditional[$objectGet[embed;desc;$parameter;warning;check]>$objectGet[embed;desc;$parameter;warning;threshold];⚠️;]]
+        $objectSet[embed;desc;$parameter;$parameterValue$warning]
+    }
+}
+$includeLibrary[information]

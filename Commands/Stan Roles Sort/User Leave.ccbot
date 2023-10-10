@@ -1,0 +1,9 @@
+/*
+    Type: On Join/Leave
+    Trigger: remove
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: #sandbox
+*/
+$includeLibrary[sort_stanroles]

@@ -1,0 +1,72 @@
+/*
+    Type: Button
+    Trigger: poll-
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$objectCreate[{
+    "success":{
+        "color":"479f4b",
+        "icon":{
+            "id":"1157974096198508604",
+            "index":7
+        }
+    },
+    "error":{
+        "color":"db3539",
+        "icon":{
+            "id":"1157974096198508604",
+            "index":6
+        }
+    },
+    "check":{
+        "color":"fbec5d",
+        "icon":{
+            "id":"1157972517185654795",
+            "index":1
+        }
+    }
+}]
+$initVar[user;vote$messageID;false,none]
+$let[action;$regexMatch[$buttonID;(?<=poll-)(Check|Reset|Vote);i]]
+$arrayCreate[$getUserVar[vote$messageID];,]
+$if[$action==Vote]{
+    $if[$arrayGet[1]!=true]
+        $let[option;$regexMatch[$buttonID;(?<=Vote).+]]
+        $let[response;You have voted for `$option`.]
+        $setUserVar[vote$messageID;true,$option]
+        $setMessageVar[count$option;$sum[$getMessageVar[count$option];1]]
+        $let[outcome;success]
+    $else
+        $let[response;You have already voted. Click on `Reset` to reset your vote.]
+        $let[outcome;error]
+    $endIf
+$elseif[$arrayGet[2]==none]
+    $let[response;You have not voted yet.]
+    $if[$action==Check]
+        $let[outcome;check]
+    $else
+        $let[outcome;error]
+    $endIf
+$endelseif
+$elseif[$action==Check]
+    $let[response;You have voted for `$arrayGet[2]`.]
+    $let[outcome;check]
+$endelseif
+$elseif[$action==Reset]
+    $deleteUserVar[vote$messageID]
+    $setMessageVar[count$arrayGet[2];$sub[$getMessageVar[count$arrayGet[2]];1]]
+    $let[response;Your vote has been reset.]
+    $let[outcome;success]
+$endelseif
+}
+$objectLoop[parameter;value;;$outcome;icon]{
+    $let[$parameter;$value]
+}
+$interactionReply[
+    {color:$objectGet[$outcome;color]}
+    {author:$toLocaleUppercase[$outcome]:$msg[1157421810288185384;$id;attachment;$index]}
+    {desc:$response}
+;yes]

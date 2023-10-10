@@ -1,4 +1,18 @@
-{
+/*
+    Type: Library
+    Trigger: help
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$function[getImage;id;i]{
+    $if[$i==undefined]{
+        $let[i;0]
+    }
+    $return[$msg[1157421810288185384;$id;attachment;$i]]
+}
+$objectCreate[{
     "birthday":{
         "emoji":"🎂",
         "icon":{
@@ -944,4 +958,11 @@
             }
         }
     }
-}
+}]
+$let[timeoutMessage;
+    {color:ffcd69}
+    {author:Help:$getImage[1157972790482309241;3]}
+    {thumbnail:$getImage[1157972358620004352;8]}
+    {title:Request Timeout}
+    {desc:You have not entered a response in time. Please call a new help page.}
+]

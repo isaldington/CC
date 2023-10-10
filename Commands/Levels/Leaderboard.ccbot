@@ -1,0 +1,24 @@
+/*
+    Type: Slash Command
+    Trigger: leaderboard
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$objectCreate[$jsonRequest[https://api.lurkr.gg/levels/$guild[id]?page=1]]
+$forEach[i;$seq[0;9]]{
+    $objectSet[text;User;$i;**$math[$i+1]**. <@$objectGet[levels;$i;userId]>]
+    $objectSet[text;Level;$i;$objectGet[levels;$i;level]]
+    $objectSet[text;XP;$i;$abbreviate[$objectGet[levels;$i;xp];0]]
+}
+$interactionReply[
+    {color:$userRoleColor[$clientID]}
+    {thumbnail:$msg[1157421810288185384;1158153673428443167;attachment;6]}
+    {title:Leaderboard}
+    $objectLoop[parameter;;;text]{
+        {field:$parameter:$objectValues[#NL#;text;$parameter]:yes}
+    }
+    {footer:Click on the button below to view the full leaderboard}
+    {button:Website:url::https\://lurkr.gg/levels/diksnhots}
+]

@@ -1,0 +1,27 @@
+/*
+    Type: Word
+    Trigger: /<a:(?:love_|Heart)(?:Arieth|Bianca|Bella|Brandi|Camila|Cathy|Elena|Heather|Isabella|Jade|Jill|Josy|KRJ|Lily|Lynette|Madame|Maya|Melanie|Nicole|Nora|Quinn|Riona|Rose|Sage|Sally|Sandy|Sarah|Tara|Zoey)+:\d{18,}>/i
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$redirectErrors[997972754915655700]
+$let[date;$year$padLeft[$month[no];2;0]$day]
+$let[name;$toLowercase[$regexMatch[$message;(?<=<a:(love_|Heart))[a-z]+(?=:\d{18,}>);i]]]
+$let[name;$regexReplace[$name;isa(?=bella)]]
+$objectCreate[$getServerVar[takeoverSchedule]]
+$if[$objectKeyExists[$date]==true]{
+    $let[gotd;$toLowercase[$objectGet[$date;name]]]
+    $let[gotd2;$regexReplace[$gotd;^isa(?=bella)$]]
+    $if[$rolePosition[$highestRole]>$rolePosition[$highestRole[$clientID]]&&$name!=$gotd2]
+        $userSetTimeout[$userID;60s]
+        $addCmdReactions[$randomText[🧢;🤡;🤮;💩;❌;🚫]]
+    $endIf
+$else
+    $onlyForChannels[859853722044596294;997972754915655700;]
+    $let[roll;$random[1;10]]
+    $onlyIf[$roll==1||$name==madame]
+    $let[gotd;Madame]
+}
+$sendMessage[$customEmoji[Heart$gotd]]

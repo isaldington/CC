@@ -1,0 +1,37 @@
+/*
+    Type: Slash Command
+    Trigger: info-role
+    Min Perms: Kick
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$let[id;$getOption[role]]
+$let[embedColor;$conditional[$role[$id;hex]==000000;transparent;$role[$id;hex]]]
+$if[$roleIcon[$id]!=undefined]{
+    $objectSet[embed;thumbnail;$roleIcon[$id]]
+}
+$objectCreate[{
+    "embed":{
+        "color":"$embedColor",
+        "desc":{
+            "Role":"<@&$id>",
+            "ID":"`$id`",
+            "Colour":"`$role[$id;hex]`",
+            "Position":"`$sub[$roleCount;$role[$id;position]]`",
+            "Created":"<t\:$formatDate[$role[$id;created];X]\:d>",
+            "Member Count":"`$roleMembersCount[$id]`",
+            "Mentionable":"`$toUppercase[$role[$id;ismentionable]]`",
+            "Hoisted":"`$toUppercase[$role[$id;ishoisted]]`",
+            "Managed":"`$toUppercase[$role[$id;ismanaged]]`"
+        },
+        "title":"Role Information"
+    }
+}]
+$if[$rolePerms[$id]!=]{
+    $arrayCreate[$rolePerms[$id;,];,]
+    $arraySort[yes;alpha]
+    $objectSet[embed;field;title;Permissions]
+    $objectSet[embed;field;body;$arrayJoin[, ]]
+}
+$includeLibrary[information]

@@ -1,0 +1,47 @@
+/*
+    Type: On Join/Leave
+    Trigger: -
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: #sandbox
+*/
+$let[action;$conditional[$userID!=undefined;Join;Leave]]
+$let[embedColor;$conditional[$userID!=undefined;32cd32;transparent]]
+$objectCreate[{
+    "embed":{
+        "author":"$authorID",
+        "desc":{
+            "User":"$mention"
+        },
+        "footer":"$authorID",
+        "title":"User $action"
+    }
+}]
+$if[$action==Join]{
+    $let[accCreated;$dateToTime[$formatDate[$user[$authorID;created];L]]]
+    $let[accAge;$math[$timestamp-$accCreated]]
+    $let[accCreatedS;$math[round($accCreated/1000)]]
+    $if[$accAge<86400000]
+        $let[embedColor;d0342c]
+        $let[shortTime;<t\:$accCreatedS\:t>]
+        // $arrayUnshift[⚠️ **__NEW ACCOUNT__**;body]
+    $else
+        $let[shortTime;]
+    $endIf
+    $objectSet[embed;desc;Created;<t\:$accCreatedS\:d> $shortTime]
+    $objectSet[embed;desc;Age;$humanizeMS[$accAge;2; ]]
+$else
+    $let[joinTime;$memberJoinedDate[$authorID;ms]]
+    $if[$joinTime!=undefined]
+        $let[joinRel;$parseDate[$math[$timestamp-$joinTime];time]]
+        $let[joinRel;$regexMatch[$joinRel;^(?:\d+\x20[a-z]+(?:\x20(?:and\x20)?|$)){1,2}]]
+        $let[joinRel;$regexReplace[$joinRel;\x20and(?:\x20$)?;;]]
+        $objectSet[embed;desc;Joined;<t\:$math[round($joinTime/1000)]\:d>]
+        $objectSet[embed;desc;Duration;$joinRel]
+    $endIf
+    $objectSet[embed;desc;Roles;$userRoles[$authorID;mentions;, ]]
+}
+$objectSet[embed;color;$embedColor]
+$objectSet[embed;desc;Members;`$membersCount`]
+$includeLibrary[modlog]

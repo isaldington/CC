@@ -1,0 +1,42 @@
+/*
+    Type: Slash Command
+    Trigger: birthday-view
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$includeLibrary[birthday]
+$let[member;$getOption[user]]
+$let[birthdate;$objectGet[user;$member]]
+$if[$member==$userID]{
+    $let[target;Your]
+    $let[possess;have]
+$else
+    $let[target;<@$member>'s]
+    $let[possess;has]
+}
+$if[$birthdate!=undefined]{
+    $let[birthDay;$textSlice[$birthdate;2;4]]
+    $let[birthMonth;$textSlice[$birthdate;0;2]]
+    $let[nextYear;$conditional[$birthdate<=$padLeft[$month[no];2;0]$day;$sum[$year;1];$year]]
+    $let[birthdateText;$math[$birthDay] $objectGet[month;$sub[$birthMonth;1];name]]
+    $let[numDays;$math[($dateToTime[$birthMonth-$birthDay-$nextYear]-$dateToTime[$month[no]-$day-$year])/86400000]]
+    $let[plural;$conditional[$numDays>1;s;]]
+    $let[content;$target birthday is on **$birthdateText**. The next birthday is in **$numDays** day$plural, on **$birthdateText $nextYear**.]
+$else
+    $if[$member==$userID]
+        $let[setMessage;Call </birthday-add\:1129996188406525993> to add your birthday.]
+    $elseif[$hasRole[$userID;859852356674125864]==true]
+        $let[setMessage;Call </birthday-set\:1129996188406525996> to add $toLowercase[$target] birthday.]
+    $endelseif
+    $else
+        $let[setMessage;]
+    $endIf
+    $let[content;$target birthday $possess not been registered. $setMessage]
+}
+$interactionReply[
+    {color:$objectGet[message;birthday;color]}
+    {author:Birthday:$getImage[$spread[,;$objectValues[,;message;birthday;icon]]]}
+    {desc:$content}
+]

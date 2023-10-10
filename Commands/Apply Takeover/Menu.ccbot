@@ -1,0 +1,26 @@
+/*
+    Type: Menu
+    Trigger: takeover_apply
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$initVar[server;takeoverApplication;
+    $forEach[girl;Camila,Cathy,Isabella,Jade,Jill,Josy,KRJ,Lily,Maya,Melanie,Nicole,Quinn,Riona,Sage,Sally,Sarah,Zoey;,]{
+        $objectSet[$girl;]
+    }
+    $getObject
+]
+$objectCreate[$getServerVar[takeoverApplication]]
+$arrayCreate[$objectGet[$eventSelected];,]
+$arrayPush[<@$authorID>]
+$objectSet[$eventSelected;$arrayJoin[,]]
+$setServerVar[takeoverApplication;$getObject]
+$setUserVar[takeover_hasApplied;true]
+$interactionDelete[$messageID]
+$interactionReply[
+    {color:479f4b}
+    {author:Success:$msg[1157421810288185384;1157974096198508604;attachment;7]}
+    {desc:Your application has been submitted. You have chosen **$eventSelected**.}
+;yes]

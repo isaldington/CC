@@ -1,0 +1,56 @@
+/*
+    Type: Channel Creation / Deletion
+    Trigger: -
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: #sandbox
+*/
+$objectCreate[{
+    "channel_type":{
+        "news":"Announcement",
+        "stage":"Stage",
+        "text":"Text",
+        "undefined":"Forum",
+        "voice":"Voice"
+    }
+}]
+$let[action;$conditional[$channelExists[$eventChannelID]==true;Create;Delete]]
+$let[embedColor;$conditional[$action==Create;32cd32;d0342c]]
+$let[chnlType;$channel[$eventChannelID;type]]
+$if[$chnlType==category]{
+    $let[channelClass;Category]
+$elseif[$regexCheck[$chnlType;^thread]==true]
+    $let[channelClass;Thread]
+$endelseif
+$else
+    $let[channelClass;Channel]
+}
+$let[eventChannel;$conditional[$action==Delete||$chnlType==category;$channel[$eventChannelID;name];<#$eventChannelID>]]
+$objectSet[embed;desc;$channelClass;$eventChannel]
+$if[$channelClass==Channel]{
+    $objectSet[embed;desc;Category;$channel[$eventChannelID;parentname]]
+    $objectSet[embed;desc;Type;$objectGet[channel_type;$chnlType]]
+    $if[$regexCheck[$chnlType;undefined|voice|stage]==false]
+        $let[channel_topic;$channel[$eventChannelID;topic]]
+        $objectSet[embed;desc;Topic;$conditional[$channel_topic!=none;$channel_topic;None]]
+    $endIf
+$elseif[$channelClass==Thread]
+    $objectSet[embed;desc;Level;$toLocaleUppercase[$regexMatch[$chnlType;(?<=thread_)\w+$]]]
+    $objectSet[embed;desc;Channel;<#$eventChannelParent>]
+    $objectSet[embed;desc;Category;$channel[$eventChannelParent;parentname]]
+    $objectSet[embed;desc;Created By;<@$thread[$eventChannelID;owner]>]
+    $objectSet[embed;desc;Duration;$thread[$eventChannelID;duration]]
+$endelseif
+}
+$if[$action==Delete]{
+    $let[channelCreated;$math[round($channel[$eventChannelID;timestamp]/1000)]]
+    $let[shortTime;$conditional[$timestamp-$channelCreated<86400;<t\:$channelCreated\:t>;]]
+    $let[channelAge;$parseDate[$math[$timestamp-1000*$channelCreated];time]]
+    $objectSet[embed;desc;Created;<t\:$channelCreated\:d> $shortTime]
+    $objectSet[embed;desc;Age;$regexMatch[$channelAge;^(?:\d+\x20[a-z]+(?:\x20(?:and\x20)?|$)){1,2}]]
+}
+$objectSet[embed;color;$embedColor]
+$objectSet[embed;footer;$eventChannelID]
+$objectSet[embed;title;$channelClass $action]
+$includeLibrary[modlog]

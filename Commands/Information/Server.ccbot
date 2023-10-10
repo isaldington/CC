@@ -1,0 +1,40 @@
+/*
+    Type: Slash Command
+    Trigger: info-server
+    Min Perms: Admin
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$arrayCreate[$serverFeatures;, ;features]
+$arraySort[yes;alpha;features]
+$objectCreate[{
+    "embed":{
+        "color":"$userRoleColor[$clientID]",
+        "desc":{
+            "Name":"`$guild[name]`",
+            "ID":"`$guild[id]`",
+            "Created":"<t\:$truncate[$divide[$creationDate[$guild[id];ms];1000]]\:d>",
+            "Owner":"<@$ownerID>",
+            "Description":"*$guild[description]*",
+            "Member Count":"`$guild[membercount]` (`$membersCount[no]` humans, `$botCount` bots)",
+            "System Channel":"<#$guild[systemchannelid]>",
+            "News Channel":"$guild[updateschannel]",
+            "Rules Channel":"<#$guild[ruleschannel]>",
+            "Boost Level":"`$guild[boostlevel]`",
+            "Boost Count":"`$guild[boostcount]`",
+            "Role Count":"`$rolePosition[$lowestServerRole]`",
+            "Category Count":"`$channelCount[category]`",
+            "Channel Count":"`$sum[$channelCount[news];$channelCount[text];$channelCount[voice]]` (`$channelCount[news]` announcement, `$channelCount[text]` text, `$channelCount[voice]` voice)",
+            "Thread Count":"`$sum[$channelCount[thread_public];$channelCount[thread_private]]` (`$channelCount[thread_public]` public, `$channelCount[thread_private]` private)",
+            "Emoji Count":"`$guild[emojicount]`"
+        },
+        "field":{
+            "title":"Features",
+            "body":"$arrayJoin[, ;features]"
+        },
+        "thumbnail":"$serverIcon",
+        "title":"Server Information"
+    }
+}]
+$includeLibrary[information]

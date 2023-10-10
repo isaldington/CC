@@ -1,0 +1,42 @@
+/*
+    Type: Slash Command
+    Trigger: badik-banlist
+    Min Perms: Kick
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$initVar[server;badikBanList;]
+$arrayCreate[$getServerVar[badikBanList];,;init_list]
+$let[banCount;$arrayLength[init_list]]
+$arrayLoop[member;;init_list]{
+    $if[$checkContains[$getUserVar[badikBan;$member];token]==false]
+        $arrayPush[$arrayShift[init_list];perm]
+    $else
+        $let[logID;$regexMatch[$getUserVar[badikBan;$member];(?<="log":")\d{18,}]]
+        $let[logContent;$msg[859961383261306890;$logID;embeddesc]]
+        $objectSet[$regexMatch[$logContent;(?<=<t:)\d{13,}(?=:d>)];$member]
+    $endIf
+}
+$arrayCreate[$objectKeys[sort];,;temp]
+$arraySort[yes;num;temp]
+$arrayLoop[time;;temp]{
+    $arrayPush[<@$objectGet[$time]>;user]
+    $arrayPush[<t\:$time:d> (<t\:$time:R>);time]
+}
+$arraySort[yes;num;perm]
+$arrayLoop[member;;perm]{
+    $arrayPush[<@$member>;user]
+    $arrayPush[Indefinite;time]
+}
+$if[$banCount==0]{
+    $arrayPush[-;user]
+    $arrayPush[-;time]
+}
+$interactionReply[
+    {color:RED}
+    {author:BaDIK Ban List:$msg[1157421810288185384;1157972517185654795;attachment;8]}
+    {field:User:$arrayJoin[#NL#;user]:yes}
+    {field:End:$arrayJoin[#NL#;time]:yes}
+    {footer:Banned Users\: $banCount}
+]

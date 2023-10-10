@@ -1,0 +1,131 @@
+/*
+    Type: Word
+    Trigger: !editlinks
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$function[getImage;id;i]{
+    $if[$i==undefined]{
+        $let[i;0]
+    }
+    $return[$msg[1157421810288185384;$id;attachment;$i]]
+}
+$let[linkChannel;1143302362606342154]
+$cacheChannelMessages[$linkChannel]
+$let[linkID;$getChannelMessages[$linkChannel;everyone;ids;,;1]]
+$let[date;$day/$padLeft[$month[no];2;0]/$year]
+$objectCreate[[
+    {
+        "color":"f89147",
+        "thumbnail":{
+            "id":"1157972660354031636",
+            "index":2
+        },
+        "title":"Additional Links",
+        "desc":[
+            "These are links to external sites that may be helpful to you. Click on the icons to be directed to their respective site."
+        ],
+        "image":{
+            "id":"1158153673428443167",
+            "index":0
+        },
+        "footer":"Last Updated - $date"
+    },
+    {
+        "color":"ef77b4",
+        "thumbnail":{
+            "id":"1158153673428443167",
+            "index":5
+        },
+        "title":"DrPinkCake",
+        "desc":[
+            "Please support DrPinkCake by purchasing his works and receiving news on the project's development.",
+            "# [<\:Icon_Patreon\:1143298009656991775>](https://www.patreon.com/DrPinkCake) [<\:Icon_Steam\:1143298004498001990>](https://store.steampowered.com/app/1126320/Being_a_DIK__Season_1) [<\:Icon_GOG\:1143298008256102470>](https://www.gog.com/en/games?developers=dr-pinkcake) [<\:Icon_Twitter\:1143298012332953620>](https://twitter.com/DrPinkCake) [<\:Icon_Discord\:1143298006943277156>](https://discord.gg/KyCc5E4)"
+        ],
+        "image":{
+            "id":"1158153673428443167",
+            "index":2
+        }
+    },
+    {
+        "color":"ff4500",
+        "thumbnail":{
+            "id":"1158156558820192346",
+            "index":0
+        },
+        "title":"Being a DIK Subreddit",
+        "desc":[
+            "Join this server's sister subreddit.",
+            "# [<\:Icon_Reddit\:1143306873089560678>](https://www.reddit.com/r/beingaDIK/)"
+        ],
+        "image":{
+            "id":"1158153673428443167",
+            "index":3
+        }
+    },
+    {
+        "color":"22b2b8",
+        "thumbnail":{
+            "id":"1158153673428443167",
+            "index":6
+        },
+        "title":"DIKs & HOTs Server",
+        "desc":[
+            "Invite your friends to this server with the following link.",
+            "```fix",
+            "https://discord.gg/diksnhots",
+            "```"
+        ],
+        "image":{
+            "id":"1158153673428443167",
+            "index":1
+        }
+    },
+    {
+        "color":"ccf49f",
+        "thumbnail":{
+            "id":"1157972358620004352",
+            "index":0
+        },
+        "title":"Sister Servers",
+        "desc":[
+            "Servers that are related to, but independently-run from this server.",
+            "### Public Servers",
+            "# [<\:Maya\:1068428354702815272>](https\://discord.gg/Ywn9ZKH96K)",
+            "### Private Servers",
+            "These servers are currently invite-only. Please contact their respective managers to request access.",
+            "",
+            "<\:Bella\:1068428291666608168> - <@535634881435271168>",
+            "<\:Jill\:1068428334347849818> - <@315150103256104961>",
+            "<\:Josy\:1068428344384827432> - <@752250176667910144>",
+            "<\:Lily\:1068428349090828349> - <@536604117192278026>",
+            "<\:Nicole\:1068428374604795964> - <@302121096852013057>",
+            "<\:Riona\:1068428388412444713> - <@224881047463002112>",
+            "<\:Sage\:1068428395685351444> - <@315150103256104961>"
+        ],
+        "image":{
+            "id":"1158153673428443167",
+            "index":0
+        }
+    }
+]]
+$let[content;
+    $objectLoop[i]{
+        {embed:
+            $objectLoop[parameter;value;;$i]
+                $if[$parameter==desc]{
+                    {desc:$objectValues[#NL#;$i;desc]}
+                $elseif[$parameter==image||$parameter==thumbnail]
+                    {$parameter:$getImage[$spread[,;$objectValues[,;$i;$parameter]]]}
+                $endelseif
+                $else
+                    {$parameter:$value}
+                }
+            $endObjectLoop
+        }
+    }
+]
+$arrayCreate[$getChannelVar[webhook;$linkChannel];, ]
+$editWebhookMessage[$arrayGet[1];$arrayGet[2];$linkID;$content]

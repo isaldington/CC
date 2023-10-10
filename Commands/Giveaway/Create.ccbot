@@ -1,0 +1,102 @@
+/*
+    Type: Slash Command
+    Trigger: giveaway
+    Min Perms: Kick
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$objectCreate[{
+    "settings":{
+        "time":{
+            "past":false,
+            "present":false,
+            "future":true
+        },
+        "option":{
+            "year":true,
+            "time":true
+        },
+        "time_limit":"30d"
+    }
+}]
+$includeLibrary[datecheck]
+$let[giveawayChannel;997972754915655700]
+$if[$regexCheck[$getOption[image];^$|(?<=\d{19,}/).+\.(?:jpe?g|png|webp)(?=\?ex);i]==false]{
+    $arrayPush[- Image must be `jpg`,`png`, or `webp`.;error]
+}
+$onlyIf[$arrayLength[error]==0;
+    $errorMessage
+    {desc:$arrayJoin[#NL#;error]}
+    {footer:Error Count\: $arrayLength[error]}
+]
+$if[$getOption[image]!=]{
+    $let[giveawayIcon;$getOption[image]]
+$else
+    $let[giveawayIcon;$getImage[1157972517185654795;7]]
+}
+$let[sponsor;<@$getOption[sponsor]>]
+$let[setTimestampS;$math[round($setTimestamp/1000)]]
+$objectCreate[{
+    "icon":{
+        "true":"$getOption[icon]",
+        "false":"$getImage[1157972517185654795;7]"
+    },
+    "content":{
+        "Prize":"$getOption[prize]",
+        "Sponsor":"$sponsor",
+        "End":"<t\:$setTimestampS\:f> (<t\:$setTimestampS\:R>)"
+    }
+}]
+$let[giveawayIcon;$objectGet[icon;$checkCondition[$getOption[icon]!=]]]
+$objectLoop[parameter;value;;content]{
+    $arrayPush[**$parameter\:** $value;start]
+    $if[$parameter!=End]{
+        $arrayPush[**$parameter\:** $value;end]
+    }
+}
+$let[endDetails;$arrayJoin[#NL#;end]]
+$arrayPush[- Click `Join` to participate in this giveaway.;instructions]
+$arrayPush[- Click `Leave` to withdraw from this giveaway.;instructions]
+$let[giveawayMessage;$channelSendMessage[$giveawayChannel;
+    {color:$userRoleColor[$clientID]}
+    {title:Giveaway}
+    {thumbnail:$giveawayIcon}
+    {desc:$arrayJoin[#NL#;start]}
+    {field:Instructions:$arrayJoin[#NL#;instructions]}
+    {footer:Participants\: 0}
+    {button:Join:green::giveaway-join}
+    {button:Leave:red::giveaway-leave}
+;yes]]
+$interactionReply[
+    {color:479f4b}
+    {author:Giveaway Created:$getImage[1157974096198508604;7]}
+    {desc:[Click here]($msg[$giveawayChannel;$giveawayMessage;url]) to view the giveaway.}
+;yes]
+$setTimeout[$math[$setTimestampS-$timestamp[yes]]s;Giveaway - End $giveawayMessage]{
+    $useChannel[$giveawayChannel]
+    $initVar[message;participants;;$giveawayMessage]
+    $arrayCreate[$getMessageVar[participants;$giveawayMessage];,]
+    $deleteMessage[$giveawayChannel;$giveawayMessage]
+    $if[$arrayLength>0]{
+        $let[winner;<@$arrayGet[$random[1;$arrayLength]]>]
+        $let[msgWinner;$winner]
+        $let[results;Congratulations to the lucky winner $winner! The sponsor will soon be in touch to hand the prize over.]
+    $else
+        $let[winner;]
+        $let[msgWinner;N/A]
+        $let[results;Unfortunately, no winner had been selected as there were no participants.]
+    }
+    $arrayCreate[$endDetails;#NL;results]
+    $arrayPush[**Winner\:** $msgWinner;results]
+    $let[resultsContent;$arrayJoin[#NL#;results]]
+    $let[resultsMessage;$sendMessage[
+        $winner $sponsor
+        {color:$userRoleColor[$clientID]}
+        {title:Giveaway}
+        {thumbnail:$giveawayIcon}
+        {desc:$endDetails#NL##NL#$results}
+        {footer:Participants\: $arrayLength}
+    ;yes]]
+    $deleteMessageVar[participants;$giveawayMessage]
+}

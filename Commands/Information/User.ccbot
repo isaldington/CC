@@ -1,0 +1,46 @@
+/*
+    Type: Slash Command
+    Trigger: info-user
+    Min Perms: Kick
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$let[memberID;$getOption[user]]
+$objectCreate[{
+    "class":{
+        "moderator":$hasRole[$memberID;859852356674125864],
+        "administrator":$hasPerms[$memberID;admin],
+        "owner":$checkCondition[$memberID==$ownerID],
+        "bot":$isBot[$memberID]
+    },
+    "embed":{
+        "color":"$userRoleColor[$memberID]",
+        "desc":{
+            "User":"<@$memberID>",
+            "Username":"`$username[$memberID]`",
+            "ID":"`$memberID`",
+            "User Since":"<t\:$formatDate[$user[$memberID;created];X]\:d>",
+            "Member Since":"<t\:$formatDate[$memberJoinedDate[$memberID;date];X]\:d>"
+        },
+        "field":{
+            "header":"Roles",
+            "body":"$userRoles[$memberID;mentions;, ]"
+        },
+        "title":"User Information",
+        "thumbnail":"$userAvatar[$memberID;;;yes]"
+    }
+}]
+$if[$isBoosting[$memberID]==true]{
+    $objectSet[embed;desc;Boosting Since;<t\:$formatDate[$boostingSince[$memberID;date];X]\:d>]
+}
+$objectLoop[type;boolean;;class]{
+    $if[$boolean==true]{
+        $let[class;$toUppercase[$type]]
+    }
+}
+$if[$get[class]==undefined]{
+    $let[class;MEMBER]
+}
+$objectSet[embed;desc;Class;`$class`]
+$includeLibrary[information]

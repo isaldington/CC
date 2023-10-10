@@ -1,0 +1,55 @@
+/*
+    Type: Slash Command
+    Trigger: poll
+    Min Perms: Kick
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$objectCreate[{
+    "settings":{
+        "time":{
+            "past":false,
+            "present":false,
+            "future":true
+        },
+        "option":{
+            "year":true,
+            "time":true
+        },
+        "time_limit":"30d"
+    }
+}]
+$includeLibrary[datecheck]
+$if[$regexCheck[$channelType[$getOption[channel]];^(stage|undefined)$]==true]{
+    $arrayPush[- Poll cannot be sent to this channel.;error]
+}
+$if[$regexCheck[$getOption[image];^$|(?<=\d{19,}/).+\.(?:jpe?g|png|webp)(?=\?ex);i]==false]{
+    $arrayPush[- Image must be `jpg`,`png`, or `webp`.;error]
+}
+$onlyIf[$arrayLength[error]==0;
+    $errorMessage
+    {desc:$arrayJoin[#NL#;error]}
+    {footer:Error Count\: $arrayLength[error]}
+]
+$let[newPollData;{
+    "channel":"$getOption[channel]",
+    "image":"$getOption[image]",
+    "timestamp":"$endTimestamp"
+};yes]
+$modal[
+    {id=poll}
+    {title=Create a Poll}
+    {input=
+        {id=topic}        
+        {name=Topic}
+        {ph=What is the poll about?}
+    }
+    {input=
+        {id=options}        
+        {name=Options}
+        {ph=2-16 options. Enter each option in a new line.}
+        {type=long}
+        {max=2000}
+    }
+]

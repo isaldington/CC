@@ -1,0 +1,30 @@
+/*
+    Type: Slash Command
+    Trigger: rules
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$let[rulesChannel;862371285895479327]
+$arrayCreate[$getChannelMessages[$rulesChannel;everyone;ids;,;3];,;messages]
+$let[introID;$arrayGet[1;messages]]
+$let[rulesID;$arrayGet[2;messages]]
+$let[footerID;$arrayGet[3;messages]]
+$let[ruleNo;$regexMatch[$getOption[rule];^\d+]]
+$let[ruleTitle;$msg[$rulesChannel;$rulesID;embedtitle;$math[$ruleNo-1]]]
+$arrayCreate[👥,🤖,❓,🔗;,;emoji]
+$arrayPush[$msg[$rulesChannel;$rulesID;embeddesc;$math[$ruleNo-1]];body]
+$forEach[i;$seq[1;3]]{
+    $arrayPush[$arrayShift[emoji]  $msg[$rulesChannel;$footerID;embeddesc;$i];body]
+}
+$arrayPush[$arrayShift[emoji] *[Click here for the full set of rules.]($msg[$rulesChannel;$introID;url])*;body]
+$let[introEmbed;$msg[$rulesChannel;$introID;embed]]
+$let[lastUpdate;$regexMatch[$introEmbed;(?<=\{footer:).+(?=:)]]
+$interactionReply[
+    {color:$userRoleColor[$clientID]}
+    {author:Rule #$ruleNo:$msg[1157421810288185384;1157972910200332339;attachment;2]}
+    {title:$ruleTitle}
+    {desc:$arrayJoin[#NL##NL#;body]}
+    {footer:$lastUpdate}
+]

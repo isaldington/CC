@@ -1,0 +1,150 @@
+/*
+    Type: Library
+    Trigger: message_content
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$function[imageAction;action;type;text]{
+    $if[$type==image]{
+        $let[regex;https://.+\.(gif|jpe?g|png|webp)(\?width=\d+&height=\d+)?]
+    $elseif[$type==tenor&&$action==get]
+        $let[regex;(?<=https://tenor\.com/view/.+-gif-)\d{7,}]
+    $endelseif
+    $elseif[$type==tenor]
+        $let[regex;<?https://tenor\.com/view/.+-gif-\d{7,}>?]
+    $endelseif
+    }
+    $if[$action==check]{
+        $return[$regexCheck[$text;$regex;i]]
+    $elseif[$action==filter]
+        $return[$regexReplace[$text;$regex;gi;]]
+    $endelseif
+    $elseif[$action==get&&$type==image]
+        $return[$regexMatch[$text;$regex;i]]
+    $endelseif
+    $elseif[$action==get&&$type==tenor]
+        $let[id;$regexMatch[$text;$regex;i]]
+        $return[$jsonRequest[https://tenor.googleapis.com/v2/posts?key=AIzaSyCVsUd5qj_vcMGbBdeLSFVirHkBEILsSLw&client_key==ccbot_messagecontent&ids=$id&media_filter=gif;results:0:media_formats:gif:url]]
+    $endelseif
+    }
+}
+$arrayCreate[AllAttachments,AllAttachmentsName,Author,AuthorName,ChannelName,Content,Created,Embed,Reference,URL;,;property]
+$arrayLoop[property;;property]{
+    $let[msg$property;$msg[$msgChannel;$msgID;$toLowercase[$property]]]
+}
+$let[msgEmbed;$regexReplace[$msgEmbed;^{thumbnail:.+}\n{url:.+}$;;]]
+$arrayCreate[$msgAllAttachments;#NL#;attachment]
+$arrayCreate[$msgAllAttachmentsName;#NL#;attachment_name]
+$arrayLoop[file;i;attachment]{
+    $if[$imageAction[check;image;$file]==true]
+        $arrayPush[$file;image]
+    $endIf
+}
+$if[$arrayLength[image]>0]{
+    $let[msgImage;$arrayShift[image]]
+}
+$forEach[type;image,tenor;,]{
+    $if[$imageAction[check;$type;$msgContent]==true]
+        $let[content;$imageAction[get;$type;$msgContent]]
+        $if[$arrayLength[image]>0]
+            $arrayUnshift[$content;image]
+        $else
+            $let[msgImage;$content]
+        $endIf
+        $let[msgContent;$imageAction[filter;$type;$msgContent]]
+    $endIf
+}
+$if[$get[msgImage]==undefined]{
+    $let[msgImage;]
+    $if[$msgContent==&&$regexCheck[$msgAllAttachmentsName;^(https?://.+\.(gif|jpe?g|png|webp)(\?width=\d+&height=\d+)?)?$;m]==false]
+        $let[msgContent;`This message only contain attachments.`]
+    $elseif[$msgContent==&&$msgEmbed==&&$arrayLength[image]==0]
+        $let[msgContent;`Message cannot be displayed.`#NL#[Link to original message]($msgURL)]
+    $endelseif
+    $endIf
+}
+$arraySlice[1;10;image]
+$if[$msgEmbed!=]{
+    $let[embed2;$msgEmbed]
+    $arrayRemove[$arrayLength[image];image]
+    $if[$msgContent==&&$msgImage==]
+        $let[msgContent;`This message only has embeds. Please see below.`]
+    $endIf
+$else
+    $let[embed2;]
+}
+$if[$messageExists[$msgChannel;$msgReference]==true]{
+    $forEach[option;Attachment,Author,AuthorName,Content,URL;,]{
+        $let[msgRef$option;$msg[$msgChannel;$msgReference;$toLowercase[$option]]]
+    }
+    $let[msgRefHyperlink;[Link to original message]($msgRefURL)]
+    $if[$imageAction[check;image;$msgRefContent]==false&&$msgRefAttachment==undefined&&$msgRefContent==]
+        $let[msgRefContent;`Message cannot be displayed`.#NL#$msgRefHyperlink]
+        $let[msgRefFile;]
+    $else
+        $if[$imageAction[check;image;$msgRefContent]==true]
+            $let[msgRefFile;[Image]($imageAction[get;image;$msgRefContent])]
+            $let[msgRefContent;$imageAction[filter;image;$msgRefContent]]
+        $elseif[$imageAction[check;tenor;$msgRefContent]==true]
+            $let[msgRefFile;[Image]($imageAction[get;tenor;$msgRefContent])]
+            $let[msgRefContent;$imageAction[filter;tenor;$msgRefContent]]
+        $endelseif
+        $elseif[$msgRefAttachment!=undefined]
+            $let[msgRefFile;[Attachment]($msgRefAttachment)]
+        $endelseif
+        $else
+            $let[msgRefFile;]
+        $endIf
+        $let[msgRefContent;$regexReplace[$msgRefContent;(?<=.{100}|\n).*?$;s;…#NL#$msgRefHyperlink]]
+    $endIf
+    $let[msgRefContent;$regexReplace[$msgRefContent;(?<=\n);g;> ]]
+    $let[msgRefAuthor;$conditional[$userExists[$msgRefAuthor]==true;<@$msgRefAuthor>;`$msgRefAuthorName`]]
+    $let[msgRef;> ### **Replied to** $msgRefAuthor#NL#> $msgRefContent $msgRefFile#NL##NL#]
+$else
+    $let[msgRef;]
+}
+$if[$userExists[$msgAuthor]==false]{
+    $let[authName;$msgAuthorName]
+    $let[authAvatar;$userAvatar[$msgAuthor]]
+    $let[authColor;transparent]
+    $let[starboardee;`$msgAuthorName`]
+$else
+    $let[authName;$nickname[$msgAuthor]]
+    $let[authAvatar;$userAvatar[$msgAuthor;;;yes]]
+    $let[authColor;$userRoleColor[$msgAuthor]]
+    $let[starboardee;<@$msgAuthor>]
+}
+$if[$getTrigger[type]==word]{
+    $arrayFilter[file;;attachment]{
+        $checkCondition[$imageAction[check;image;$file]==false]
+    }
+    $let[msgAttachments;$arrayLoop[file;i;attachment]{
+        {attachment:$arrayGet[$i;attachment_name]:$file}
+    }]
+$else
+    $let[msgAttachments;]
+}
+$let[embedTemplate;
+    {color:$authColor}
+    {author:$authName:$authAvatar:$msgURL}
+    {image:$msgImage}
+    {footer:#$regexMatch[$msgChannelName;[\w\x20&,-]+]}
+    {timestamp:$dateToTime[$msgCreated]}
+]
+$let[msgImages;$arrayLoop[file;i;image]{
+    {embed:
+        $embedTemplate
+        {image:$file}
+    }
+}]
+$let[output;
+    $msgAttachments
+    {embed:
+        $embedTemplate
+        {desc:$msgRef$msgContent}
+    }
+    $msgImages
+    {embed:$embed2}
+]

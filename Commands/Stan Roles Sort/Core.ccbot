@@ -1,0 +1,48 @@
+/*
+    Type: Library
+    Trigger: sort_stanroles
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$arrayCreate[$getServerVar[stanRoles];,]
+$arrayLoop[id]{
+    $let[userCount;$roleMembersCount[$id]]
+    $if[$objectGet[$userCount]==undefined]{
+        $objectSet[$userCount;$id]
+    $else
+        $objectSet[$userCount;$objectGet[$userCount],$id]
+    }
+}
+$arrayCreate[$objectValues[,];,;sort]
+$arrayReverse[sort]
+$let[pegRole;859847170697854997]
+$if[$arrayInclude[$pegRole;sort]==true]{
+    $let[pegPos;$arraySearch[$pegRole;sort]]
+$else
+    $arrayLoop[ids;i;sort]{
+        $if[$regexCheck[$ids;$pegRole]==true]
+            $let[pegPos;$i]
+        $endIf
+    }
+    $onlyIf[$get[pegPos]!=undefined;]
+    $arrayCreate[$arrayGet[$pegPos;sort];,;sort_c]
+    $arrayRemove[$arraySearch[$pegRole;sort_c];sort_c]
+    $arraySet[$pegPos;$arrayJoin[,;sort_c];sort]
+}
+$arrayCreate[$arrayJoin[,;sort];,;sort_a]
+$arrayCreate[$arrayJoin[,;sort];,;sort_b]
+$arraySlice[1;$math[$pegPos-1];sort_a]
+$arraySlice[$pegPos;$arrayLength[sort];sort_b]
+$arrayCreate[$arrayJoin[,;sort_a],859855063299129374,$arrayJoin[,;sort_b];,;sort]
+$let[refPosition;$math[$rolePosition[$arrayGet[1;sort]]-1]]
+$arrayCreate[$arrayJoin[,;sort];,;filter]
+$arrayFilter[id;i;filter]{
+    $checkCondition[$rolePosition[$id]!=$sum[$refPosition;$i]]
+}
+$onlyIf[$arrayLength[filter]>0]
+$forEach[id;$arrayJoin[,;filter];,]{
+    $let[newPosition;$math[$arraySearch[$id;sort]+$refPosition]]
+    $modifyRole[$id;;;;;$math[$roleCount-$newPosition]]
+}

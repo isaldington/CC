@@ -1,0 +1,11 @@
+/*
+    Type: Role add/remove
+    Trigger: -
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: #sandbox
+*/
+$arrayCreate[$getServerVar[stanRoles];,]
+$onlyIf[$regexCheck[$roleID;^($arrayJoin[|])$]==true]
+$includeLibrary[sort_stanroles]

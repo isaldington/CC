@@ -1,0 +1,32 @@
+/*
+    Type: Slash Command
+    Trigger: birthday-next
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$includeLibrary[birthday]
+$forEach[i;$seq[0;11]]{
+    $if[$arrayLength<10]{
+        $let[a;$math[$month[no]+$i]]
+        $let[index;$conditional[$a==12;12;$modulo[$a;12]]]
+        $arrayCreate[$objectValues[,;date;$math[$index-1]];,;$i]
+        $if[$i==0]
+            $arraySlice[$math[$day+1];31;0]
+        $endIf
+        $arrayLoop[id;;$i]{
+            $if[$arrayLength<10&&$regexCheck[$id;\d{18,}]==true]
+                $arrayPush[$id]
+            $endIf
+        }
+    }
+}
+$interactionReply[
+    {color:$objectGet[message;birthday;color]}
+    {author:Upcoming Birthdays:$getImage[$spread[,;$objectValues[,;message;birthday;icon]]]}
+    $arrayMap[id]{
+        **$math[$textSlice[$objectGet[user;$id];2;4]] $objectGet[month;$math[$textSlice[$objectGet[user;$id];0;2]-1];name]\:** <@$id>
+    }
+    {desc:$arrayJoin[#NL#]}
+]

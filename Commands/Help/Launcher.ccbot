@@ -1,0 +1,41 @@
+/*
+    Type: Slash Command
+    Trigger: help
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$includeLibrary[help]
+$objectLoop[class]{
+    $arrayCreate[$objectKeys[,;$class;command];,]
+    $arrayFilter[command]{
+        $if[$objectKeyExists[$class;command;$command;role]==true]{
+            $hasAnyRole[$userID;$spread[,;$objectValues[,;$class;command;$command;role]]]
+        }
+    }
+    $if[$arrayLength==0]{
+        $objectRemove[$class]
+    }
+}
+$let[launcherID;$interactionReply[
+    {color:ffcd69}
+    {author:Help:$getImage[1157972790482309241;3]}
+    {title:Welcome}
+    {desc:Welcome to the Help page. Please select a category to get started.}
+    {menu:
+        {id=help-$userID-category}
+        {ph=Select a category}
+        $forEach[class;$objectKeys[,];,]{
+            {label=$toLocaleUppercase[$class]}
+            {emoji=$objectGet[$class;emoji]}
+            {value=$class}
+        }
+    }
+;no;yes]]
+$setMessageVar[launchStage;true;$launcherID]
+$wait[1m]
+$onlyIf[$getMessageVar[launchStage;$launcherID]==true]
+$removeMenu[$launcherID]
+$interactionEdit[$timeoutMessage;$launcherID]
+$deleteMessageVar[launchStage;$launcherID]

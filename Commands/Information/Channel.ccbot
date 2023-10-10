@@ -1,0 +1,71 @@
+/*
+    Type: Slash Command
+    Trigger: info-channel
+    Min Perms: Kick
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$let[input;$getOption[channel]]
+$forEach[option;ParentID,ParentName;,]{
+    $let[channel$option;$channel[$input;$toLowercase[$option]]]
+}
+$objectCreate[{
+    "type":{
+        "news":{
+            "name":"Announcement",
+            "color":"5bd15a"
+        },
+        "stage":{
+            "name":"Stage",
+            "color":"ffd080"
+        },
+        "text":{
+            "name":"Text",
+            "color":"52a7cb"
+        },
+        "thread_public":{
+            "name":"Public Thread",
+            "color":"a1a8ea"
+        },
+        "thread_private":{
+            "name":"Private Thread",
+            "color":"ee6101"
+        },
+        "undefined":{
+            "name":"Forum",
+            "color":"fe43ab"
+        },
+        "voice":{
+            "name":"Voice",
+            "color":"9b6946"
+        }
+    },
+    "embed":{
+        "desc":{
+            "ID":"`$input`"
+        },
+        "title":"Channel Information"
+    }
+}]
+$objectSet[embed;desc;Type;`$objectGet[type;$channelType[$input];name]`]
+$if[$regexCheck[$channelType[$input];thread]==true]{
+    $let[class;Thread]
+    $let[time;$humanizeMS[$parseTime[$thread[$input;duration]]]]
+    $let[threadTime;`$regexMatch[$time;\d+]` $regexReplace[$time;\d+\s;]]
+    $objectSet[embed;desc;Parent Channel;<#$channelParentID>]
+    $objectSet[embed;desc;Duration;$threadTime]
+    $objectSet[embed;desc;Member Count;`$thread[$input;membersCount]`]
+    $objectSet[embed;desc;Locked;`$toUppercase[$thread[$input;locked]]`]
+$else
+    $let[class;Channel]
+    $objectSet[embed;desc;Created;<t\:$formatDate[$channel[$input;created];X]\:d>]
+    $objectSet[embed;desc;Category;`$channelParentName`]
+    $if[$regexCheck[$channelType[$input];news|text|undefined]==true]
+        $objectSet[embed;desc;Topic;$channelTopic[$input]]
+    $endIf
+}
+$objectSet[embed;color;$objectGet[type;$channelType;color]]
+$objectSet[embed;desc;$class;<#$input>]
+$objectSet[embed;thumbnail;$msg[1157421810288185384;1157972358620004352;attachment;9]]
+$includeLibrary[information]

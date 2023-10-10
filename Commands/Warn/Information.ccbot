@@ -1,0 +1,36 @@
+/*
+    Type: Slash Command
+    Trigger: warn-info
+    Min Perms: Kick
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: Run in Channel
+*/
+$let[logChannel;859961383261306890]
+$let[memberID;$getOption[user]]
+$let[infractions;$getUserVar[infractions;$memberID]]
+$if[$infractions!=undefined]{
+    $arrayCreate[$infractions;,]
+    $arrayLoop[id;i]{
+        $arrayPush[[#$i]($msg[$logChannel;$id;url]);link]
+    }
+    $let[warnCount;$arrayLength]
+    $let[capLength;$mathMin[$warnCount;10]]
+    $arrayReverse
+    $arraySlice[1;$capLength]
+    $arrayLoop[id]{
+        $arrayPush[<t\:$round[$formatDate[$msg[$logChannel;$id;embedtimestamp];X]]\:d>;timestamp]
+        $arrayPush[$regexMatch[$msg[$logChannel;$id;embeddesc];(?<=Reason:\*{2}\s).+$;m];reason]
+    }
+$else
+    $let[warnCount;0]
+}
+$interactionReply[
+    {color:eed202}
+    {thumbnail:$userAvatar[$memberID;;;yes]}
+    {title:Infractions}
+    {desc:**User\:** <@$memberID>#NL#**Number of Infractions\:** `$warnCount`#NL#### Recent Infractions}
+    {field:Date:$arrayJoin[#NL#;timestamp]:yes}
+    {field:Reason:$arrayJoin[#NL#;reason]:yes}
+    {field:All Infractions:$arrayJoin[, ;link]}
+]

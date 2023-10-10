@@ -1,0 +1,35 @@
+/*
+    Type: Interval
+    Trigger: 1d
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: #sandbox
+*/
+$objectCreate[{
+    "monday":{
+        "name":"Mallory",
+        "message":"Lads, it’s Malmal Monday!",
+        "emoji":"<a:HeartMallory:970640603614416918>"
+    },
+    "thursday":{
+        "name":"Tara",
+        "message":"It’s *Tara Thursday*, mofos. Time to get the simping on!",
+        "emoji":"<a:HeartTara:965551539907342337>"
+    },
+    "sunday":{
+        "name":"Jaye",
+        "message":"Boys, it's time to worship the fiery redhead!",
+        "emoji":"<a:HeartJaye:970646137612673076>"
+    }
+}]
+$let[today;$toLowercase[$day[yes]]]
+$onlyIf[$objectGet[$today]!=undefined]
+$arrayCreate[$getChannelVar[webhook;972544373227143278];, ]
+$sendWebhook[
+    {id=$arrayGet[1]}
+    {token=$arrayGet[2]}
+    {message=$objectGet[$today;message]#NL## $objectGet[$today;emoji]}
+    {username=$objectGet[$today;name]}
+    {avatar=https://s9.gifyu.com/images/Sprite$objectGet[$today;name].png}
+]
