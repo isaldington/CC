@@ -105,7 +105,8 @@ $objectCreate[[
                 "<#947263244081434664>, etc":"Artist-specific fan-arts gallery"
             },
             "Miscellaneous":{
-                "<#860052083150684190>":"Bot commands spam"
+                "<#860052083150684190>":"Bot commands spam",
+                "<#1161670740064620604>":"Play bot games"
             },
             "Spoilers":{
                 "notes":"These channels will only be accessible during the spoiler-free period.",
