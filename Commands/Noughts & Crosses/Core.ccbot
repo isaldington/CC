@@ -1,0 +1,83 @@
+/*
+    Type: Library
+    Trigger: xno
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: #game-room
+    channelUsed: Run in Channel
+*/
+$objectCreate[{
+    "score":[
+        $getMessageVar[score;$sessionID]
+    ],
+    "buttons":[
+        $getMessageVar[buttonFill;$sessionID]
+    ],
+    "style":[
+        {
+            "color":"grey",
+            "label":""
+        },
+        {
+            "color":"green",
+            "label":"0"
+        },
+        {
+            "color":"red",
+            "label":"X"
+        }
+    ]
+}]
+$if[$regexCheck[$getMessageVar[buttonFill;$sessionID];0]==false]{
+    $let[gameOver;draw]
+$else
+    $objectLoop[i;score;;score]{
+        $if[$score==3]
+            $let[gameOver;$player1]
+        $elseif[$score==-3]
+            $let[gameOver;$player2]
+        $endelseif
+        $endIf
+    }
+}
+$arrayCreate[$player1,$player2;,;player]
+$arrayCreate[0,X;,;sign]
+$arrayMap[player;i;player]{
+    - Player $i (`$arrayGet[$i;sign]`) - <@$player>
+}
+$let[buttons;$forEach[i;$seq[0;8]]{
+    $let[isNewLine;$conditional[$i==3||$i==6;yes;no]]
+    $let[isDisabled;$conditional[$objectGet[buttons;$i]!=0||$get[gameOver]!=undefined;yes;no]]
+    $let[fill;$objectGet[buttons;$i]]
+    {button:$objectGet[style;$fill;label]:$objectGet[style;$fill;color]::xno-$sessionID-$turn-$curPlayer-$i:$isNewLine:$isDisabled}
+}]
+$if[$get[gameOver]!=undefined]{
+    $let[endMessage;$conditional[$gameOver==draw;The result is a tie.;The winner is <@$gameOver>.]]
+    $let[mentions;<@$player1> <@$player2>]
+    $let[embedColor;transparent]
+    $let[embedContent;
+        {desc:The game has ended. $endMessage}
+    ]
+    $let[embedTitle;Game Over]
+    $forEach[var;buttonFill,score;,]{
+        $deleteMessageVar[$var;$sessionID]
+    }
+$else
+    $let[mentions;<@$curPlayer>]
+    $let[embedColor;$msg[$channelID;$sessionID;embedcolor]]
+    $let[embedContent;
+        {field:Players:$arrayJoin[#NL#;player]}
+        {field:Current Player:The current turn is <@$curPlayer>'s.}
+        {footer:Turn $turn}
+    ]
+    $let[embedTitle;Noughts and Crosses]
+}
+$sendMessage[
+    {reply:$sessionID}
+    $mentions
+    {thumbnail:$msg[1157421810288185384;1161424947881709702;attachment]}
+    {title:$embedTitle}
+    {color:$embedColor}
+    $embedContent
+    $buttons
+]
