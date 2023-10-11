@@ -28,17 +28,16 @@ $objectCreate[{
         }
     ]
 }]
-$if[$regexCheck[$getMessageVar[buttonFill;$sessionID];0]==false]{
-    $let[gameOver;draw]
-$else
-    $objectLoop[i;score;;score]{
-        $if[$score==3]
-            $let[gameOver;$player1]
-        $elseif[$score==-3]
-            $let[gameOver;$player2]
-        $endelseif
-        $endIf
+$objectLoop[i;score;;score]{
+    $if[$score==3]{
+        $let[gameOver;$player1]
+    $elseif[$score==-3]
+        $let[gameOver;$player2]
+    $endelseif
     }
+}
+$if[$get[gameOver]==undefined&&$regexCheck[$getMessageVar[buttonFill;$sessionID];0]==false]{
+    $let[gameOver;draw]
 }
 $arrayCreate[$player1,$player2;,;player]
 $arrayCreate[0,X;,;sign]
