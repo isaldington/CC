@@ -210,16 +210,38 @@ $objectCreate[{
                 ],
                 "notes":"This command can only be executed on Takeover Days (or the day after for returning your old roles)."
             },
-            "xno":{
-                "emoji":"",
-                "title":"Noughts and Crosses",
+            "trivia":{
+                "emoji":"💭",
+                "title":"Trivia",
                 "thumbnail":{
-                    "id":"1161424947881709702",
+                    "id":"1162081466755334154",
                     "index":0
                 },
                 "type":"slash",
-                "id":"1161607752834088971",
-                "description":"Play a game of noughts and crosses (tic-tac-toe)",
+                "id":"1161955757869248532",
+                "description":"Play a game of Trivia",
+                "channel":[
+                    "<#1161670740064620604>"
+                ],
+                "argument":{
+                    "difficulty":{
+                        "type":"menu",
+                        "description":"The difficulty of the questions",
+                        "example":"Medium",
+                        "required":"Yes"
+                    }
+                }
+            },
+            "ttt":{
+                "emoji":"❌",
+                "title":"Noughts and Crosses",
+                "thumbnail":{
+                    "id":"1162081466755334154",
+                    "index":1
+                },
+                "type":"slash",
+                "id":"1162141266256085112",
+                "description":"Play a game of Noughts and Crosses (Tic-tac-toe)",
                 "channel":[
                     "<#1161670740064620604>"
                 ],

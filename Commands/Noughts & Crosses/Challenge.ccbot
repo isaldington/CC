@@ -1,6 +1,6 @@
 /*
-    Type: Button
-    Trigger: xnochallenge-
+    Type: On Button Click
+    Trigger: tttchallenge-
     Min Perms: None
     Ignore Roles: None
     Run only in: #game-room
@@ -37,7 +37,7 @@ $if[$action==accept]{
     $let[curPlayer;$player1]
     $setMessageVar[buttonFill;0,0,0,0,0,0,0,0,0;$sessionID]
     $setMessageVar[score;0,0,0,0,0,0,0,0;$sessionID]
-    $includeLibrary[xno]
+    $includeLibrary[ttt]
 $elseif[$action==decline]
     $let[challenger;$regexMatch[$msg[$channelID;$messageID;embeddesc];\d{18,}]]
     $interactionReply[

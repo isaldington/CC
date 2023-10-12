@@ -1,6 +1,6 @@
 /*
-    Type: Button
-    Trigger: xno-
+    Type: On Button Click
+    Trigger: ttt-
     Min Perms: None
     Ignore Roles: None
     Run only in: #game-room
@@ -81,4 +81,4 @@ $forEach[idx;$objectValues[,;$buttonIndex];,]{
     $arraySet[$n;$math[$arrayGet[$n;score]+$modifier];score]
 }
 $setMessageVar[score;$arrayJoin[,;score];$sessionID]
-$includeLibrary[xno]
+$includeLibrary[ttt]

@@ -1,0 +1,22 @@
+/*
+    Type: On Menu Select
+    Trigger: trivia-
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: #game-room
+    channelUsed: Run in Channel
+*/
+$onlyIf[$regexCheck[$menuID;-$authorID$]==true;
+    {private}
+    {color:db3539}
+    {author:Error:$msg[1157421810288185384;1157974096198508604;attachment;6]}
+    {desc:This is not your session. Please call </trivia\:1161955757869248532> to start your own session.}
+]
+$deleteUserVar[triviaLauncher]
+$let[sessionToken;$jsonRequest[https://opentdb.com/api_token.php?command=request;token]]
+$let[difficulty;$eventSelected]
+$let[score;0]
+$arrayCreate[$difficulty|$score|$sessionToken;|;session]
+$setUserVar[triviaSession;$arrayJoin[|;session]]
+$removeMenu[$messageID]
+$includeLibrary[trivia]

@@ -1,0 +1,106 @@
+/*
+    Type: Library
+    Trigger: trivia
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: #game-room
+    channelUsed: Run in Channel
+*/
+$function[getImage;id;i]{
+    $if[$i==undefined]{
+        $let[i;0]
+    }
+    $return[$msg[1157421810288185384;$id;attachment;$i]]
+}
+$function[resetData]{
+    $forEach[var;currentScore,data;,]{
+        $deleteMessageVar[$var;$messageID]
+    }
+    $deleteUserVar[triviaSession]
+}
+$let[apiResponse;$jsonRequest[https://opentdb.com/api.php?amount=1&encode=url3986&token=$sessionToken&difficulty=$difficulty]]
+$let[decodedResponse;$uri[decode;$apiResponse]]
+$let[output;$regexReplace[$decodedResponse;(?<="question":".+)"(?=.+,"correct_answer");g;\"]]
+$objectCreate[$output]
+$let[responseCode;$objectGet[response_code]]
+$if[$responseCode==0]{
+    $let[correctAnswer;$objectGet[results;0;correct_answer]]
+    $if[$objectGet[results;0;type]==multiple]
+        $arrayCreate[$objectValues[,;results;0;incorrect_answers];,;answers]
+        $arrayPush[$correctAnswer;answers]
+        $arrayShuffle[answers]
+    $else
+        $arrayCreate[True,False;,;answers]
+    $endIf
+    $let[correctIndex;$arraySearch[$correctAnswer;answers]]
+    $let[buttons;$arrayLoop[answer;i;answers]{
+        $let[isCorrectAnswer;$checkCondition[$i==$correctIndex]]
+        $objectSet[data;buttons;$i;$answer]
+        {button:$answer:grey::trivia-answer-$i}
+    }]
+    $objectSet[data;correct_answer;$correctAnswer]
+    $objectSet[data;player;$authorID]
+    $objectSet[data;score;$score]
+    $objectSet[data;choice_count;$arrayLength[answers]]
+    $objectSet[data;difficulty;$difficulty]
+    $objectSet[data;token;$sessionToken]
+    $interactionEdit[
+        {color:$msg[$channelID;$messageID;embedcolor]}
+        {author:Trivia ($toLocaleUppercase[$objectGet[results;0;difficulty]])}
+        {thumbnail:$getImage[1162081466755334154;0]}
+        {title:$objectGet[results;0;question]}
+        {desc:Timeout - <t\:$math[$timestamp[yes]+60]\:R>}
+        {footer:Score\: $score}
+        $buttons
+    ;$messageID]
+    $let[data;$objectGet[data]]
+    $setMessageVar[data;$data;$messageID]
+    $setMessageVar[currentScore;$score;$messageID]
+    $wait[1m]
+    $arrayCreate[$getUserVar[triviaSession];|;session]
+    $onlyIf[$getMessageVar[currentScore;$messageID]==$arrayGet[2;session]&&$getUserVar[triviaSession]!=undefined]
+    $objectCreate[$data]
+    $resetData
+    $interactionEdit[
+        {color:db3539}
+        {thumbnail:$getImage[1162081466755334154;0]}
+        {author:Timeout:$getImage[1157974096198508604;6]}
+        {title:$msg[$channelID;$messageID;embedtitle]}
+        {desc:**Correct answer\:** `$correctAnswer`#NL##NL#You have failed to answer in time. Your final score is `$score`.}
+        $objectLoop[index;value;;buttons]{
+            $let[style;$conditional[$value==$correctAnswer;green;grey]]
+            {button:$value:$style::$index:no:yes}
+        }
+    ;$messageID]
+$elseif[$responseCode>=3]
+    $objectCreate[[
+        {
+            "color":"transparent",
+            "author":{
+                "icon":6
+            },
+            "title":"Session Expired",
+            "desc":"Unfortunately, your session has expired. Please start a new game."
+        },
+        {
+            "color":"479f4b",
+            "author":{
+                "icon":7
+            },
+            "title":"Game Completed",
+            "desc":"Congratulations! You have answered all the questions. Your final score is `$score`."
+        }
+    ]]
+    $let[objectIndex;$math[$responseCode-3]]
+    $interactionReply[
+        $objectLoop[parameter;value;;$objectIndex]{
+            $if[$parameter==author]
+                {author::$getImage[1157421810288185384;$objectGet[$objectIndex;author;icon]]}
+            $else
+                {$parameter:$value}
+            $endIf
+        }
+        {thumbnail:$getImage[1162081466755334154;0]}
+    ]
+$endelseif
+}

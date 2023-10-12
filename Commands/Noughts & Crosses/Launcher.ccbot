@@ -1,6 +1,6 @@
 /*
     Type: Slash Command
-    Trigger: xno
+    Trigger: ttt
     Min Perms: None
     Ignore Roles: None
     Run only in: #game-room
@@ -20,6 +20,6 @@ $interactionReply[
     {title:Noughts and Crosses}
     {desc:$mention has challenged you to a game of noughts and crosses.}
     {footer:Please respond to the challenge by clicking on the appropriate button}
-    {button:Accept:green::xnochallenge-$challengee-accept}
-    {button:Decline:red::xnochallenge-$challengee-decline}
+    {button:Accept:green::tttchallenge-$challengee-accept}
+    {button:Decline:red::tttchallenge-$challengee-decline}
 ]

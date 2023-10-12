@@ -1,0 +1,49 @@
+/*
+    Type: Slash Command
+    Trigger: trivia
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: #game-room
+    channelUsed: Run in Channel
+*/
+$function[getImage;id;i]{
+    $if[$i==undefined]{
+        $let[i;0]
+    }
+    $return[$msg[1157421810288185384;$id;attachment;$i]]
+}
+$onlyIf[$getUserVar[triviaSession]==undefined&&$getUserVar[triviaLauncher]==undefined;
+    {private}
+    {color:db3539}
+    {author:Error:$getImage[1157974096198508604;6]}
+    {desc:You already have an active session.}
+]
+$arrayPush[- Select a difficulty from the menu below.]
+$arrayPush[- You will be given a question. Select the button that corresponds to your answer.]
+$arrayPush[- You have __**one minute**__ to answer the question. The game will end should you fail to answer by the deadline.]
+$arrayPush[- If your answer is correct, you will be allowed to proceed to the next question.]
+$arrayPush[- If your answer is incorrect, the game will end.]
+$arrayPush[- Your final score will be the number of correct questions you have answered.]
+$setUserVar[triviaLauncher;true]
+$interactionReply[
+    {color:RANDOM}
+    {thumbnail:$getImage[1162081466755334154;0]}
+    {title:Trivia}
+    {desc:Welcome to a game of Trivia. Please read the instructions below before playing.}
+    {field:How To Play:$arrayJoin[#NL#]}
+    {menu:
+        {id=trivia-$authorID}
+        {label=Easy}
+        {emoji=💚}
+        {desc=Haha! N00b!}
+        {value=easy}
+        {label=Medium}
+        {emoji=💛}
+        {desc=For the average bloke}
+        {value=medium}
+        {label=Hard}
+        {emoji=❤️‍🔥}
+        {desc=NERD ALERT!}
+        {value=hard}
+    }
+]

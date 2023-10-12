@@ -1,6 +1,6 @@
 /*
     Type: Library
-    Trigger: xno
+    Trigger: ttt
     Min Perms: None
     Ignore Roles: None
     Run only in: #game-room
@@ -48,11 +48,11 @@ $let[buttons;$forEach[i;$seq[0;8]]{
     $let[isNewLine;$conditional[$i==3||$i==6;yes;no]]
     $let[isDisabled;$conditional[$objectGet[buttons;$i]!=0||$get[gameOver]!=undefined;yes;no]]
     $let[fill;$objectGet[buttons;$i]]
-    {button:$objectGet[style;$fill;label]:$objectGet[style;$fill;color]::xno-$sessionID-$turn-$curPlayer-$i:$isNewLine:$isDisabled}
+    {button:$objectGet[style;$fill;label]:$objectGet[style;$fill;color]::ttt-$sessionID-$turn-$curPlayer-$i:$isNewLine:$isDisabled}
 }]
 $if[$get[gameOver]!=undefined]{
     $let[endMessage;$conditional[$gameOver==draw;The result is a tie.;The winner is <@$gameOver>.]]
-    $let[mentions;<@$player1> <@$player2>]
+    $let[mentions;<@$player1> <@$player2>] 
     $let[embedColor;transparent]
     $let[embedContent;
         {desc:The game has ended. $endMessage}
