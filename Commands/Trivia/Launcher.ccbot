@@ -6,7 +6,6 @@
     Run only in: #game-room
     channelUsed: Run in Channel
 */
-$onlyIf[$authorID==$botOwnerID;{private}{color:db3539}{title:Coming Soon!}]
 $function[getImage;id;i]{
     $if[$i==undefined]{
         $let[i;0]
