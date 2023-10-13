@@ -1,19 +1,48 @@
 /*
     Type: On Button Click
-    Trigger: trivia-next-
+    Trigger: trivia-next|trivia-quit
     Min Perms: None
     Ignore Roles: None
     Run only in: #game-room
     channelUsed: Run in Channel
 */
+$function[getImage;id;i]{
+    $if[$i==undefined]{
+        $let[i;0]
+    }
+    $return[$msg[1157421810288185384;$id;attachment;$i]]
+}
 $arrayCreate[$buttonID;-;button]
-$onlyIf[$regexCheck[$buttonID;-$authorID$]==true;
+$let[action;$arrayGet[2;button]]
+$let[player;$arrayGet[3;button]]
+$onlyIf[$player==$authorID;
+    {private}
     {color:db3539}
-    {author:Error:$msg[1157421810288185384;1157974096198508604;attachment;6]}
+    {author:Error:$getImage[1157974096198508604;6]}
     {desc:Only the player may select this button. Please call </trivia\:1161955757869248532> to start your own session.}
 ]
-$arrayCreate[$getUserVar[triviaSession];|;session]
-$let[difficulty;$arrayGet[1;session]]
-$let[score;$arrayGet[2;session]]
-$let[sessionToken;$arrayGet[3;session]]
-$includeLibrary[trivia]
+$objectCreate[$getUserVar[triviaSession]]
+$let[score;$objectGet[score]]
+$if[$action==next]
+    $let[diffColor;$objectGet[color]]
+    $let[difficulty;$objectGet[difficulty]]
+    $let[score;$objectGet[score]]
+    $objectIncrease[session_no;1]
+    $let[sessionNumber;$objectGet[session_no]]
+    $let[sessionToken;$objectGet[token]]
+    $let[timeLimit;$objectGet[time_limit]]
+    $objectSet[timer_active;true]
+    $setUserVar[triviaSession;$getObject]
+    $includeLibrary[trivia]
+$elseif[$action==quit]
+    $removeButtons[$messageID]
+    $interactionEdit[
+        {color:transparent}
+        {title:Game Over}
+        {thumbnail:$getImage[1162081466755334154;0]}
+        {desc:You have ended this game. Your final score is `$score`.}
+        {footer:Score\: $score}
+    ;$messageID]
+    $deleteUserVar[triviaSession]
+$endelseif
+$endIf

@@ -14,21 +14,16 @@ $function[getImage;id;i]{
 }
 $objectCreate[{
     "data":$getMessageVar[data;$messageID],
+    "user":$getUserVar[triviaSession],
     "outcome":{
         "true":{
             "color":"479f4b",
-            "author":{
-                "title":"Correct",
-                "icon":"$getImage[1157974096198508604;7]"
-            },
-            "desc":"**Your answer\:** `$buttonLabel`\n\nYou have answered correctly. Please click on `Next Question` to get the next question."
+            "icon":7,
+            "desc":"**Your answer\:** `$buttonLabel`\n\nYou have answered correctly. Please click on `Next Question` to get the next question or `Quit` to quit the game."
         },
         "false":{
             "color":"db3539",
-            "author":{
-                "title":"Incorrect",
-                "icon":"$getImage[1157974096198508604;6]"
-            }
+            "icon":6
         }
     }
 }]
@@ -39,18 +34,26 @@ $onlyIf[$objectGet[data;player]==$authorID;
     {desc:Only the player may answer this question. Please call </trivia\:1161955757869248532> to start your own session.}
 ]
 $let[correctAnswer;$objectGet[data;correct_answer]]
-$let[score;$objectGet[data;score]]
 $let[choiceCount;$objectGet[data;choice_count]]
-$let[difficulty;$objectGet[data;difficulty]]
-$let[sessionToken;$objectGet[data;token]]
+$let[score;$objectGet[user;score]]
 $objectSet[outcome;false;desc;**Your answer\:** `$buttonLabel`#NL#**Correct answer\:** `$correctAnswer`#NL##NL#You have answered incorrectly. Your final score is `$score`.]
 $let[isCorrectAnswer;$checkCondition[$buttonLabel==$correctAnswer]]
+$if[$isCorrectAnswer==true]{
+    $let[newScore;$math[$score+1]]
+    $objectSet[user;score;$newScore]
+    $objectSet[user;timer_active;false]
+    $setUserVar[triviaSession;$objectGet[user]]
+$else
+    $let[newScore;$score]
+    $deleteUserVar[triviaSession]
+}
+$deleteMessageVar[data;$messageID]
 $interactionEdit[
     {thumbnail:$getImage[1162081466755334154;0]}
     {title:$msg[$channelID;$messageID;embedtitle]}
     $objectLoop[parameter;value;;outcome;$isCorrectAnswer]{
-        $if[$parameter==author]{
-            {author:$objectValues[:;outcome;$isCorrectAnswer;author]}
+        $if[$parameter==icon]{
+            {author:$msg[$channelID;$messageID;embedauthortext]:$getImage[1157974096198508604;$value]}
         $else
             {$parameter:$value}
         }
@@ -66,16 +69,9 @@ $interactionEdit[
         }
         {button:$value:$style::$index:no:yes}
         $if[$i==$choiceCount&&$isCorrectAnswer==true]{
-            {button:Next Question:grey::trivia-next-$authorID:yes}
+            {button:Next Question:blurple:💡:trivia-next-$authorID:yes}
+            {button:Quit:grey:🚪:trivia-quit-$authorID}
         }
     }
-    $if[$isCorrectAnswer==true]{
-        $let[newScore;$math[$score+1]]
-        $setUserVar[triviaSession;$difficulty|$newScore|$sessionToken]
-        {footer:Score\: $newScore}
-    $else
-        $deleteMessageVar[currentScore;$messageID]
-        $deleteUserVar[triviaSession]
-    }
+    {footer:Score\: $newScore}
 ;$messageID]
-$deleteMessageVar[data;$messageID]

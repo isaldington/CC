@@ -13,10 +13,39 @@ $onlyIf[$regexCheck[$menuID;-$authorID$]==true;
     {desc:This is not your session. Please call </trivia\:1161955757869248532> to start your own session.}
 ]
 $deleteUserVar[triviaLauncher]
-$let[sessionToken;$jsonRequest[https://opentdb.com/api_token.php?command=request;token]]
-$let[difficulty;$eventSelected]
-$let[score;0]
-$arrayCreate[$difficulty|$score|$sessionToken;|;session]
-$setUserVar[triviaSession;$arrayJoin[|;session]]
-$removeMenu[$messageID]
-$includeLibrary[trivia]
+$if[$eventSelected==quit]
+    $deleteMessage[$messageID]
+$else
+    $objectCreate[{
+        "easy":{
+            "color":"78b159",
+            "time":15
+        },
+        "medium":{
+            "color":"fdcc59",
+            "time":30
+        },
+        "hard":{
+            "color":"dd2d44",
+            "time":60
+        }
+    }]
+    $let[sessionToken;$jsonRequest[https://opentdb.com/api_token.php?command=request;token]]
+    $let[difficulty;$eventSelected]
+    $let[score;0]
+    $let[sessionNumber;1]
+    $let[diffColor;$objectGet[$difficulty;color]]
+    $let[timeLimit;$objectGet[$difficulty;time]]
+    $setUserVar[triviaSession;{
+        "color":"$diffColor",
+        "difficulty":"$difficulty",
+        "id":"$messageID",
+        "score":"$score",
+        "session_no":"$sessionNumber",
+        "time_limit":"$timeLimit",
+        "timer_active":true,
+        "token":"$sessionToken"
+    }]
+    $removeMenu[$messageID]
+    $includeLibrary[trivia]
+$endIf
