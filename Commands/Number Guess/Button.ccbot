@@ -1,0 +1,42 @@
+/*
+    Type: On Button Click
+    Trigger: guessnumber-
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: #game-room
+    channelUsed: Run in Channel
+*/
+$arrayCreate[$buttonID;-;button]
+$onlyIf[$arrayGet[3;button]==$authorID;
+    {private}
+    {color:db3539}
+    {author:Error}
+    {desc:Only the player may select this menu. Please start your own session with </guessnumber\:1162460936179818567>.}
+]
+$objectCreate[$getUserVar[numGuessSession]]
+$let[action;$arrayGet[2;button]]
+$if[$action==next]{
+    $let[maxNumber;$objectGet[max_number]]
+    $modal[
+        {title=Guess the Number}
+        {id=guessnumber}
+        {input=
+            {name=Guess}
+            $if[$objectKeyExists[recent_guess]==true]
+                {def=$objectGet[recent_guess]}
+            $else
+                {ph=Enter a number between 1 and $maxNumber}
+            $endIf
+            {id=guess}
+            {max=$charCount[$maxNumber]}
+        }
+    ]
+$else
+    $deleteUserVar[numGuessSession]
+    $removeButtons[$messageID]
+    $interactionEdit[
+        {color:transparent}
+        {title:Guess the Number}
+        {desc:You have quit the game. The number is **$objectGet[target_number]**.}
+    ;$messageID]
+}

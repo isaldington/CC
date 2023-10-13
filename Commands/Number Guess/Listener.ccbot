@@ -1,0 +1,66 @@
+/*
+    Type: On Modal Submit
+    Trigger: guessnumber
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: #game-room
+    channelUsed: Run in Channel
+*/
+$let[guess;$modalAnswer[guess]]
+$objectCreate[$getUserVar[numGuessSession]]
+$onlyIf[$isNumber[$guess]==true&&$guess>0;
+    {private}
+    {color:db3539}
+    {author:Error}
+    {desc:You must choose a number between **1** and **$objectGet[max_number]**. Please try again.}
+]
+$let[targetNumber;$objectGet[target_number]]
+$let[isCorrectAnswer;$checkCondition[$guess==$targetNumber]]
+$if[$isCorrectAnswer==true]{
+    $removeButtons[$messageID]
+    $interactionEdit[
+        {color:GREEN}
+        {title:Guess the Number}
+        {desc:Congratulations! You have guessed the number **$targetNumber** in **$objectGet[guess_count]** tries.}
+    ;$messageID]
+    $deleteUserVar[numGuessSession]
+$else
+    $let[state;$conditional[$guess>$targetNumber;high;low]]
+    $let[maxNumber;$objectGet[max_number]]
+    $arrayCreate[$seq[1;$objectGet[guess_count]]; ;index]
+    $arrayReverse[index]
+    $let[remGuess;$math[$objectGet[max_guess]-$objectGet[guess_count]]]
+    $let[isGameOver;$checkCondition[$remGuess==0]]
+    $objectIncrease[guess_count;1]
+    $objectSet[recent_guess;$guess]
+    $forEach[parameter;number,state;,]{
+        $if[$objectKeyExists[history;$parameter]==true]
+            $arrayCreate[$objectGet[history;$parameter];,;$parameter]
+        $endIf
+        $let[newEntry;$conditional[$parameter==number;$guess;$toLocaleUppercase[$state]]]
+        $arrayPush[$newEntry;$parameter]
+        $objectSet[history;$parameter;$arrayJoin[,;$parameter]]
+        $arrayReverse[$parameter]
+    }
+    $setUserVar[numGuessSession;$getObject]
+    $if[$isGameOver==true]
+        $removeButtons[$messageID]
+        $interactionEdit[
+            {color:db3539}
+            {title:Game Over}
+            {desc:You have failed to guess the number in time. The number is **$targetNumber**.}
+        ;$messageID]
+    $else
+        $interactionEdit[
+            {color:$conditional[$state==high;ff3131;06038d]}
+            {author:$msg[$channelID;$messageID;embedauthortext]}
+            {desc:- Your guess **$guess** is too __**$state**__.#NL#- Please guess another number between **1** and **$maxNumber**.#NL#- Click on the button below to make a guess.}
+            {field:#:$arrayJoin[#NL#;index]:yes}
+            {field:Guess:$arrayJoin[#NL#;number]:yes}
+            {field:Result:$arrayJoin[#NL#;state]:yes}
+            {footer:Remaining Guesses\: $remGuess}
+            {button:Make a Guess:blurple::guessnumber-next-$authorID}
+            {button:Quit:grey::guessnumber-quit-$authorID}
+        ;$messageID]
+    $endIf
+}

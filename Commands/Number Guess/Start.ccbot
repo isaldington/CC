@@ -1,0 +1,51 @@
+/*
+    Type: On Menu Select
+    Trigger: guessnumber-
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: #game-room
+    channelUsed: Run in Channel
+*/
+$onlyIf[$regexCheck[$menuID;-$authorID$]==true;
+    {color:db3539}
+    {author:Error}
+    {desc:Only the player may select this menu. Please start your own session with </guessnumber\:1162460936179818567>.}
+]
+$if[$eventSelected==quit]{
+    $deleteUserVar[numGuessSession]
+    $deleteMessage[$messageID]
+$else
+    $objectCreate[{
+        "Easy":"78b159",
+        "Medium":"fdcc59",
+        "Hard":"dd2d44"
+    }]
+    $arrayCreate[$eventSelected;-;menu]
+    $let[difficulty;$toLocaleUppercase[$arrayGet[1;menu]]]
+    $let[maxNumber;$arrayGet[2;menu]]
+    $let[numGuesses;$arrayGet[3;menu]]
+    $let[guessCount;1]
+    $let[embedColor;$objectGet[$difficulty]]
+    $setUserVar[numGuessSession;{
+        "color":"$embedColor",
+        "difficulty":"$difficulty",
+        "guess_count":$guessCount,
+        "id":"$messageID",
+        "max_guess":$numGuesses,
+        "max_number":$maxNumber,
+        "session":{
+            "channel":"$channelID",
+            "message":"$messageID"
+        },
+        "target_number":$random[1;$maxNumber]
+    }]
+    $interactionEdit[
+        {color:$embedColor}
+        {author:Guess #$guessCount ($difficulty)}
+        {title:Guess the Number}
+        {desc:Guess a number between **1** and **$maxNumber**. Click on the button below to make a guess.}
+        {footer:Remaining Guesses\: $numGuesses}
+        {button:Make a Guess:blurple::guessnumber-next-$authorID}
+        {button:Quit:grey::guessnumber-quit-$authorID}
+    ;$messageID]
+}
