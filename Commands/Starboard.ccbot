@@ -41,14 +41,14 @@ $sendWebhook[
     {thread=$threadID}
     {username=$webhookName}
     {avatar=$webhookIcon}
-    {msg=<@$authorID> has starboarded [a message]($msgURL) by $starboardee. See all [starboarded messages](<https://discord.com/channels/$guild[id]/$starboardChannel>).}
+    {msg=<@$authorID> has starboarded [a message]($msgURL) by <@$starboardee>. See all [starboarded messages](<https://discord.com/channels/$guild[id]/$starboardChannel>).}
 ]
 $objectCreate[{
     "embed":{
         "author":"$starboardee",
         "color":"ffb134",
         "desc":{
-            "Starboardee":"$starboardee",
+            "Starboardee":"<@$starboardee>",
             "Starboarder":"$mention"
         },
         "footer":"$messageID",

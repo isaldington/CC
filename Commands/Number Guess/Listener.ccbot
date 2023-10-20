@@ -6,61 +6,86 @@
     Run only in: #game-room
     channelUsed: Run in Channel
 */
+$function[getImage;id;i]{
+    $let[index;$conditional[$i!=undefined;$i;0]]
+    $return[$msg[1157421810288185384;$id;attachment;$index]]
+}
+$let[errorIcon;$getImage[1157974096198508604;6]]
+$let[gameIcon;$getImage[1163496192500568075;0]]
 $let[guess;$modalAnswer[guess]]
 $objectCreate[$getUserVar[numGuessSession]]
-$onlyIf[$isNumber[$guess]==true&&$guess>0;
+$if[$isNumber[$guess]==false]{
+    $let[reason;`$guess` is not a number]
+$else
+    $let[guessNumber;$math[$guess]]
+    $let[maxNumber;$objectGet[max_number]]
+    $if[$regexCheck[$guessNumber;^\d+\.\d+$]==true]
+        $let[reason;You must choose an integer]
+    $elseif[$guessNumber<0||$guessNumber>$maxNumber]
+        $let[reason;You must choose a number between **0** and **$maxNumber**]
+    $endelseif
+    $endIf
+}
+$onlyIf[$get[reason]==undefined;
     {private}
     {color:db3539}
-    {author:Error}
-    {desc:You must choose a number between **1** and **$objectGet[max_number]**. Please try again.}
+    {author:Error:$errorIcon}
+    {desc:$reason. Please try again.}
 ]
 $let[targetNumber;$objectGet[target_number]]
-$let[isCorrectAnswer;$checkCondition[$guess==$targetNumber]]
+$let[isCorrectAnswer;$checkCondition[$guessNumber==$targetNumber]]
 $if[$isCorrectAnswer==true]{
     $removeButtons[$messageID]
-    $interactionEdit[
-        {color:GREEN}
+    $editMessage[$messageID;
+        {color:479f4b}
+        {author:$nickname:$authorAvatar}
+        {thumbnail:$gameIcon}
         {title:Guess the Number}
-        {desc:Congratulations! You have guessed the number **$targetNumber** in **$objectGet[guess_count]** tries.}
-    ;$messageID]
+        {desc:Congratulations! You have guessed the number **$targetNumber**.}
+        {footer:You Win#NL#Difficulty\: $objectGet[difficulty]#NL#Tries\: $objectGet[guess_count]:$getImage[1157974096198508604;7]}
+    ]
     $deleteUserVar[numGuessSession]
 $else
-    $let[state;$conditional[$guess>$targetNumber;high;low]]
+    $let[state;$conditional[$guessNumber>$targetNumber;high;low]]
     $let[maxNumber;$objectGet[max_number]]
     $arrayCreate[$seq[1;$objectGet[guess_count]]; ;index]
     $arrayReverse[index]
-    $let[remGuess;$math[$objectGet[max_guess]-$objectGet[guess_count]]]
+    $let[guessCount;$objectGet[guess_count]]
+    $let[remGuess;$math[$objectGet[max_guess]-$guessCount]]
     $let[isGameOver;$checkCondition[$remGuess==0]]
     $objectIncrease[guess_count;1]
-    $objectSet[recent_guess;$guess]
     $forEach[parameter;number,state;,]{
         $if[$objectKeyExists[history;$parameter]==true]
             $arrayCreate[$objectGet[history;$parameter];,;$parameter]
         $endIf
-        $let[newEntry;$conditional[$parameter==number;$guess;$toLocaleUppercase[$state]]]
+        $let[newEntry;$conditional[$parameter==number;$guessNumber;$toLocaleUppercase[$state]]]
         $arrayPush[$newEntry;$parameter]
         $objectSet[history;$parameter;$arrayJoin[,;$parameter]]
         $arrayReverse[$parameter]
     }
     $setUserVar[numGuessSession;$getObject]
     $if[$isGameOver==true]
+        $deleteUserVar[numGuessSession]
         $removeButtons[$messageID]
-        $interactionEdit[
+        $editMessage[$messageID;
             {color:db3539}
+            {author:$nickname:$authorAvatar}
+            {thumbnail:$gameIcon}
             {title:Game Over}
             {desc:You have failed to guess the number in time. The number is **$targetNumber**.}
-        ;$messageID]
+            {footer:You Lose#NL#Difficulty\: $objectGet[difficulty]:$errorIcon}
+        ]
     $else
-        $interactionEdit[
+        $editMessage[$messageID;
             {color:$conditional[$state==high;ff3131;06038d]}
-            {author:$msg[$channelID;$messageID;embedauthortext]}
-            {desc:- Your guess **$guess** is too __**$state**__.#NL#- Please guess another number between **1** and **$maxNumber**.#NL#- Click on the button below to make a guess.}
+            {author:$nickname:$authorAvatar}
+            {thumbnail:$gameIcon}
+            {title:Guess the Number}
+            {desc:- Your guess **$guessNumber** is too __**$state**__.#NL#- Please guess another number between **0** and **$maxNumber**.}
             {field:#:$arrayJoin[#NL#;index]:yes}
             {field:Guess:$arrayJoin[#NL#;number]:yes}
             {field:Result:$arrayJoin[#NL#;state]:yes}
-            {footer:Remaining Guesses\: $remGuess}
-            {button:Make a Guess:blurple::guessnumber-next-$authorID}
-            {button:Quit:grey::guessnumber-quit-$authorID}
-        ;$messageID]
+            {footer:Difficulty\: $objectGet[difficulty]#NL#Remaining Guesses\: $remGuess}
+        ]
     $endIf
 }

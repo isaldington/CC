@@ -1,0 +1,87 @@
+/*
+    Type: Library
+    Trigger: guessword
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: #game-room
+    channelUsed: Run in Channel
+*/
+$function[getImage;id;i]{
+    $let[index;$conditional[$i!=undefined;$i;0]]
+    $return[$msg[1157421810288185384;$id;attachment;$index]]
+}
+$let[gameIcon;$getImage[1163496192500568075;1]]
+$let[errorIcon;$getImage[1157974096198508604;6]]
+$let[successIcon;$getImage[1157974096198508604;7]]
+$if[$gameOver==true]
+    $removeButtons[$messageID]
+    $let[word;$objectGet[word]]
+    $objectCreate[{
+        "win":{
+            "color":"479f4b",
+            "message":"Congratulations! You have guessed the word **$word** correctly.",
+            "footer":true
+        },
+        "lose":{
+            "color":"db3539",
+            "message":"Sorry! You have ran out of guesses. The word is **$word**."
+        },
+        "quit":{
+            "color":"transparent",
+            "message":"You have quit the game. The word is **$word**."
+        }
+    }]
+    $let[resultText;$conditional[$outcome==win;You Win;You Lose]]
+    $let[resultIcon;$conditional[$outcome==win;$successIcon;$errorIcon]]
+    $let[footerMsg;$conditional[$objectKeyExists[$outcome;footer]==true;Tries\: $objectGet[guess_count];]]
+    $editMessage[$messageID;
+        {color:$objectGet[$outcome;color]}
+        {author:$nickname:$authorAvatar}
+        {thumbnail:$gameIcon}
+        {title:Guess the Word}
+        {desc:$objectGet[$outcome;message]}
+        {footer:$resultText#NL#$footerMsg:$resultIcon}
+    ]
+    $deleteUserVar[wordGuessSession]
+$else
+    $let[pageID;$conditional[$action==page2;page1;page2]]
+    $objectSet[button;page;label;More Letters]
+    $objectSet[button;page;style;blurple]
+    $objectSet[button;page;emoji;]
+    $objectSet[button;page;id;guessword-$pageID-$authorID]
+    $objectSet[button;page;newLine;yes]
+    $objectSet[button;guess;label;Guess Word]
+    $objectSet[button;guess;style;green]
+    $objectSet[button;guess;emoji;]
+    $objectSet[button;guess;id;guessword-word-$authorID]
+    $objectSet[button;quit;label;Quit]
+    $objectSet[button;quit;style;red]
+    $objectSet[button;quit;emoji;]
+    $objectSet[button;quit;id;guessword-quit1-$authorID]
+    $let[buttons;$objectLoop[parameter;;i;button]{
+        $if[$action==page2&&$i>20]
+            {button:$objectValues[:;button;$parameter]}
+        $elseif[$action!=page2&&($i<21||$i>26)]
+            {button:$objectValues[:;button;$parameter]}
+        $endelseif
+        $endIf
+    }]
+    $if[$get[embedColor]==undefined]
+        $let[embedColor;f89147]
+    $endIf
+    $let[resultIcon;$conditional[$resultText==Correct;$successIcon;$errorIcon]]
+    $if[$get[resultText]==undefined]
+        $let[resultText;]
+        $let[resultIcon;]
+    $endIf
+    $editMessage[$messageID;
+        {color:$embedColor}
+        {author:$nickname:$authorAvatar}
+        {thumbnail:$gameIcon}
+        {title:Guess the Word}
+        {desc:$display}
+        {footer:$resultText#NL#Remaining Guesses\: $remGuess:$resultIcon}
+        $conditional[$arrayLength[history]>0;{field:Guessed Words:$arrayJoin[, ;history]};]
+        $buttons
+    ]
+$endIf

@@ -6,6 +6,10 @@
     Run only in: #game-room
     channelUsed: Run in Channel
 */
+$function[getImage;id;i]{
+    $let[index;$conditional[$i!=undefined;$i;0]]
+    $return[$msg[1157421810288185384;$id;attachment;$index]]
+}
 $let[data;$getUserVar[numGuessSession]]
 $if[$isValidObject[$data]==true]{
     $objectCreate[$data]
@@ -14,37 +18,41 @@ $if[$isValidObject[$data]==true]{
 $onlyIf[$objectKeyExists[session]==false;
     {private}
     {color:db3539}
-    {author:Error}
+    {author:Error:$getImage[1157974096198508604;6]}
     {desc:You already have an active session. [Click here]($sessionURL) to jump to the session.}
 ]
-$arrayPush[- Select a difficulty from the menu below.]
-$arrayPush[- You will be asked to guess a number. You are given a limited number of guesses.]
-$arrayPush[- The range of the number and the number of guesses depends on the difficulty.]
-$arrayPush[- You will be prompted to make a guess. You will then be informed whether your guess was too high or too low if it is incorrect.]
-$arrayPush[- The game will end if you run out of guesses.]
+$objectCreate[[
+    "- Select a difficulty from the menu below.",
+    "- You will be asked to guess a number. You are given a limited number of guesses.",
+    "- The range of the number and the number of guesses depends on the difficulty.",
+    "- You will be prompted to make a guess. You will then be informed whether your guess was too high or too low if it is incorrect.",
+    "- The game will end if you run out of guesses."
+]]
 $interactionReply[
     {color:f89147}
+    {author:$nickname:$authorAvatar}
+    {thumbnail:$getImage[1163496192500568075;0]}
     {title:Guess the Number}
     {desc:Welcome to a game of Guess the Number. Please read the instructions below before playing.}
-    {field:How To Play:$arrayJoin[#NL#]}
+    {field:How To Play:$objectValues[#NL#]}
     {menu:
         {id=guessnumber-$authorID}
         {ph=Select the difficulty level or quit}
         {label=Easy}
         {emoji=💚}
-        {desc=1-99, 10 guesses}
+        {desc=0-99, 10 guesses}
         {value=easy-99-10}
         {label=Medium}
         {emoji=💛}
-        {desc=1-9,999, 16 guesses}
+        {desc=0-9,999, 16 guesses}
         {value=medium-9999-16}
         {label=Hard}
         {emoji=❤️‍🔥}
-        {desc=1-999,999, 20 guesses}
+        {desc=0-999,999, 20 guesses}
         {value=hard-999999-20}
         {label=Quit}
         {emoji=🚪}
-        {desc=You pussy!}
+        {desc=To quit the game}
         {value=quit}
     }
 ]

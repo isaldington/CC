@@ -1,0 +1,108 @@
+/*
+    Type: On Button Click
+    Trigger: guessword-
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: #game-room
+    channelUsed: Run in Channel
+*/
+$arrayCreate[$buttonID;-;button]
+$onlyIf[$authorID==$arrayGet[3;button];
+    {private}
+    {color:db3539}
+    {author:Error:$msg[1157421810288185384;1157974096198508604;attachment;6]}
+    {desc:Only the player may click this button. Please start your own session by calling </guessword\:1163027172412379226>.}
+]
+$let[action;$arrayGet[2;button]]
+$objectCreate[$getUserVar[wordGuessSession]]
+$let[remGuess;$math[$objectGet[max_guess]-$objectGet[guess_count]]]
+$if[$objectKeyExists[previous_guess]==true]{
+    $arrayCreate[$objectGet[previous_guess];,;history]
+}
+$if[$action==quit0]{
+    $deleteMessage[$messageID]
+    $deleteUserVar[wordGuessSession]
+$elseif[$action==quit1]
+    $let[gameOver;true]
+    $let[outcome;quit]
+    $includeLibrary[guessword]
+$endelseif
+$elseif[$action==word]
+    $let[length;$charCount[$objectGet[word]]]
+    $if[$arrayLength[history]>0]
+        $let[prevGuess;$arrayGet[$arrayLength[history];history]]
+    $else
+        $let[prevGuess;]
+    $endIf
+    $modal[
+        {title=Guess the Word}
+        {id=guessword}
+        {input=
+            {name=Word}
+            {ph=Enter your guess}
+            {id=guess}
+            {min=$length}
+            {max=$length}
+            {def=$prevGuess}
+        }
+    ]
+$endelseif
+$elseif[$action==start||$action==page1||$action==page2]
+    $if[$action==start]
+        $let[word;$toUpperCase[tarragon]]
+        /*
+        $let[apiKey;xF/ZlDD5V+s1rQNPtFeE3g==twwqV82Rjzku3yWh]
+        $let[word;$toUpperCase[$jsonRequest[https://api.api-ninjas.com/v1/randomword;word;Error;X-Api-Key:$apiKey]]]
+        */
+        $objectSet[word;$word]
+        $forEach[i;$seq[1;$charCount[$word]]]{
+            $arrayPush[**\_**;guess]
+        }
+        $objectSet[guess;$arrayJoin[,;guess]]
+        $arrayCreate[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z;,;letter]
+        $arrayLoop[letter;i;letter]{
+            $objectSet[button;$letter;label;$toUppercase[$letter]]
+            $objectSet[button;$letter;style;grey]
+            $objectSet[button;$letter;emoji;]
+            $objectSet[button;$letter;id;guessword-letter$letter-$authorID]
+            $objectSet[button;$letter;newline;no]
+        }
+        $setUserVar[wordGuessSession;$getObject]
+    $else
+        $arrayCreate[$objectGet[guess];,;guess]
+    $endIf
+    $let[display;### $arrayJoin[ ;guess]]
+    $let[gameOver;false]
+    $includeLibrary[guessword]
+$endelseif
+$elseif[$regexCheck[$action;^letter[a-z]$]==true]
+    $objectIncrease[guess_count;1]
+    $let[remGuess;$math[$remGuess-1]]
+    $arrayCreate[$objectGet[word];;word]
+    $arrayCreate[$objectGet[guess];,;guess]
+    $let[guess;$regexMatch[$action;[a-z]$]]
+    $arrayLoop[letter;i;word]{
+        $if[$letter==$toUppercase[$guess]]
+            $arraySet[$i;$letter;guess]
+            $let[isCorrectLetter;true]
+        $endIf
+    }
+    $forEach[parameter;guess,word;,]{
+        $let[check$toLocaleUppercase[$parameter];$arrayJoin[,;$parameter]]
+    }
+    $let[gameOver;$checkCondition[$remGuess==0||$checkGuess==$checkWord]]
+    $if[$gameOver==false]
+        $objectSet[guess;$arrayJoin[,;guess]]
+        $let[resultText;$conditional[$isCorrectLetter==true;Correct;Incorrect]]
+        $let[embedColor;$conditional[$isCorrectLetter==true;479f4b;db3539]]
+        $let[resultMessage;$conditional[$isCorrectLetter==true;Congratulations! The word contains;Sorry! The word does not contain]]
+        $let[display;$resultMessage **$toUppercase[$guess]**.#NL#### $arrayJoin[ ;guess]]
+        $objectSet[button;$guess;newline;no]
+        $objectSet[button;$guess;disable;yes]
+        $setUserVar[wordGuessSession;$getObject]
+    $else
+        $let[outcome;$conditional[$checkGuess==$checkWord;win;lose]]
+    $endIf
+    $includeLibrary[guessword]
+$endelseif
+}

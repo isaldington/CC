@@ -15,8 +15,9 @@ $onlyIf[$challengee!=$authorID;
 ]
 $interactionReply[
     <@$challengee>
-    {color:RANDOM}
-    {thumbnail:$msg[1157421810288185384;1161424947881709702;attachment]}
+    {color:f89147}
+    {author:$nickname:$authorAvatar}
+    {thumbnail:$msg[1157421810288185384;1163496192500568075;attachment;3]}
     {title:Noughts and Crosses}
     {desc:$mention has challenged you to a game of noughts and crosses.}
     {footer:Please respond to the challenge by clicking on the appropriate button}

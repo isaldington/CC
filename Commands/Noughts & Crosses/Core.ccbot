@@ -7,12 +7,7 @@
     channelUsed: Run in Channel
 */
 $objectCreate[{
-    "score":[
-        $getMessageVar[score;$sessionID]
-    ],
-    "buttons":[
-        $getMessageVar[buttonFill;$sessionID]
-    ],
+    "data":$getMessageVar[tttSession;$sessionID],
     "style":[
         {
             "color":"grey",
@@ -20,7 +15,7 @@ $objectCreate[{
         },
         {
             "color":"green",
-            "label":"0"
+            "label":"O"
         },
         {
             "color":"red",
@@ -28,7 +23,7 @@ $objectCreate[{
         }
     ]
 }]
-$objectLoop[i;score;;score]{
+$objectLoop[i;score;;data;score]{
     $if[$score==3]{
         $let[gameOver;$player1]
     $elseif[$score==-3]
@@ -36,47 +31,52 @@ $objectLoop[i;score;;score]{
     $endelseif
     }
 }
-$if[$get[gameOver]==undefined&&$regexCheck[$getMessageVar[buttonFill;$sessionID];0]==false]{
+$if[$get[gameOver]==undefined&&$regexCheck[$objectValues[,;data;fill];0]==false]{
     $let[gameOver;draw]
 }
 $arrayCreate[$player1,$player2;,;player]
-$arrayCreate[0,X;,;sign]
+$arrayCreate[O,X;,;sign]
 $arrayMap[player;i;player]{
     - Player $i (`$arrayGet[$i;sign]`) - <@$player>
 }
 $let[buttons;$forEach[i;$seq[0;8]]{
     $let[isNewLine;$conditional[$i==3||$i==6;yes;no]]
-    $let[isDisabled;$conditional[$objectGet[buttons;$i]!=0||$get[gameOver]!=undefined;yes;no]]
-    $let[fill;$objectGet[buttons;$i]]
+    $let[isDisabled;$conditional[$objectGet[data;fill;$i]!=0||$get[gameOver]!=undefined;yes;no]]
+    $let[fill;$objectGet[data;fill;$i]]
     {button:$objectGet[style;$fill;label]:$objectGet[style;$fill;color]::ttt-$sessionID-$turn-$curPlayer-$i:$isNewLine:$isDisabled}
 }]
 $if[$get[gameOver]!=undefined]{
-    $let[endMessage;$conditional[$gameOver==draw;The result is a tie.;The winner is <@$gameOver>.]]
-    $let[mentions;<@$player1> <@$player2>] 
-    $let[embedColor;transparent]
+    $let[resultText;$conditional[$gameOver==draw;Draw;$nickname[$gameOver] Wins]]
+    $let[resultIcon;$conditional[$gameOver==draw;;$userAvatar[$gameOver;;;yes]]]
+    $let[mentions;<@$player1> <@$player2>]
+    $objectCreate[{
+        "$player1":"0437f2",
+        "$player2":"0fff50",
+        "draw":"transparent"
+    }]
+    $let[embedColor;$objectGet[$gameOver]]
     $let[embedContent;
-        {desc:The game has ended. $endMessage}
+        {author:Game Over}
+        {desc:The game has ended.}
+        {footer:$resultText:$resultIcon}
     ]
-    $let[embedTitle;Game Over]
-    $forEach[var;buttonFill,score;,]{
-        $deleteMessageVar[$var;$sessionID]
-    }
+    $deleteMessageVar[tttSession;$sessionID]
+    $deleteMessage[$sessionID]
 $else
     $let[mentions;<@$curPlayer>]
-    $let[embedColor;$msg[$channelID;$sessionID;embedcolor]]
+    $let[embedColor;$conditional[$playerIndex==1;0fff50;0437f2]]
     $let[embedContent;
+        {reply:$sessionID}
+        {author:$nickname[$curPlayer]:$userAvatar[$curPlayer;;;yes]}
         {field:Players:$arrayJoin[#NL#;player]}
-        {field:Current Player:The current turn is <@$curPlayer>'s.}
-        {footer:Turn $turn}
+        {footer:$nickname[$curPlayer]'s Turn}
     ]
-    $let[embedTitle;Noughts and Crosses]
 }
 $sendMessage[
-    {reply:$sessionID}
     $mentions
-    {thumbnail:$msg[1157421810288185384;1161424947881709702;attachment]}
-    {title:$embedTitle}
     {color:$embedColor}
+    {thumbnail:$msg[1157421810288185384;1163496192500568075;attachment;3]}
+    {title:Noughts and Crosses}
     $embedContent
     $buttons
 ]

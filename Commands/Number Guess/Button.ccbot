@@ -6,27 +6,34 @@
     Run only in: #game-room
     channelUsed: Run in Channel
 */
+$function[getImage;id;i]{
+    $let[index;$conditional[$i!=undefined;$i;0]]
+    $return[$msg[1157421810288185384;$id;attachment;$index]]
+}
 $arrayCreate[$buttonID;-;button]
 $onlyIf[$arrayGet[3;button]==$authorID;
     {private}
     {color:db3539}
-    {author:Error}
-    {desc:Only the player may select this menu. Please start your own session with </guessnumber\:1162460936179818567>.}
+    {author:Error:$getImage[1157974096198508604;6]}
+    {desc:Only the player may click this button. Please start your own session by calling </guessnumber\:1162460936179818567>.}
 ]
 $objectCreate[$getUserVar[numGuessSession]]
 $let[action;$arrayGet[2;button]]
 $if[$action==next]{
     $let[maxNumber;$objectGet[max_number]]
+    $if[$objectKeyExists[history]==true]
+        $arrayCreate[$objectGet[history;number];,;number]
+        $let[recentGuess;$arrayGet[$math[$objectGet[guess_count]-1];number]]
+    $else
+        $let[recentGuess;]
+    $endIf
     $modal[
         {title=Guess the Number}
         {id=guessnumber}
         {input=
             {name=Guess}
-            $if[$objectKeyExists[recent_guess]==true]
-                {def=$objectGet[recent_guess]}
-            $else
-                {ph=Enter a number between 1 and $maxNumber}
-            $endIf
+            {def=$recentGuess}
+            {ph=Enter a number between 0 and $maxNumber}
             {id=guess}
             {max=$charCount[$maxNumber]}
         }
@@ -34,9 +41,12 @@ $if[$action==next]{
 $else
     $deleteUserVar[numGuessSession]
     $removeButtons[$messageID]
-    $interactionEdit[
+    $editMessage[$messageID;
         {color:transparent}
+        {author:$nickname:$authorAvatar}
+        {thumbnail:$getImage[1163496192500568075;0]}
         {title:Guess the Number}
         {desc:You have quit the game. The number is **$objectGet[target_number]**.}
-    ;$messageID]
+        {footer:You Lose#NL#Difficulty\: $objectGet[difficulty]:$getImage[1157974096198508604;6]}
+    ]
 }

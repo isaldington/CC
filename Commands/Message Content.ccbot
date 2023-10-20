@@ -114,7 +114,7 @@ $else
     $let[authName;$nickname[$msgAuthor]]
     $let[authAvatar;$userAvatar[$msgAuthor;;;yes]]
     $let[authColor;$userRoleColor[$msgAuthor]]
-    $let[starboardee;<@$msgAuthor>]
+    $let[starboardee;$msgAuthor]
 }
 $if[$getTrigger[type]==word]{
     $arrayFilter[file;;attachment]{

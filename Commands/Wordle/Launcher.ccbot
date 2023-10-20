@@ -1,0 +1,48 @@
+/*
+    Type: On Button Click
+    Trigger: wordle-
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: #game-room
+    channelUsed: Run in Channel
+*/
+$function[getImage;id;i]{
+    $let[index;$conditional[$i==undefined;0;$i]]
+    $return[$msg[1157421810288185384;$id;attachment;$index]]
+}
+$if[$getUserVar[wordleSession]!=undefined]{
+    $objectCreate[$getUserVar[wordleSession]]
+    $let[sessionURL;$msg[$objectGet[session;channel];$objectGet[session;message];url]]
+}
+$onlyIf[$objectKeyExists[session]==false;
+    {private}
+    {color:db3539}
+    {author:Error:$getImage[1157974096198508604;6]}
+    {desc:You already have an active session. [Click here]($sessionURL) to jump to the session.}
+]
+$objectCreate[[
+    "- Click on `Start` to start a session or `Quit` to quit the game.",
+    "- The objective of the game is to guess a **5**-letter word.",
+    "- You are given **6** attempts.",
+    "- Each guess must be a valid **5**-letter word.",
+    "- Each letter will be coloured. They will show you how close your guess is to the word.",
+    " - **Green**\: The letter is in the word and it is in the correct position.",
+    " - **Yellow**\: The letter is in the word but it is not in the correct position.",
+    " - **Grey**\: The letter is not in the word."
+]]
+$interactionReply[
+    {color:f89147}
+    {author:$nickname:$authorAvatar}
+    {thumbnail:$getImage[1164555856361312327;0]}
+    {title:Wordle}
+    {desc:Welcome to a game of Wordle. Please read the instructions below before playing.}
+    {field:How to Play:$objectValues[#NL#]}
+    {button:Start:blurple::wordle-start-$authorID}
+    {button:Quit:red::wordle-quit0-$authorID}
+]
+$setUserVar[wordleSession;{
+    "session":{
+        "channel":"$channelID",
+        "message":"$sentMessageID"
+    }
+}]

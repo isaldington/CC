@@ -1,0 +1,68 @@
+/*
+    Type: On Button Click
+    Trigger: wordle-
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: #game-room
+    channelUsed: Run in Channel
+*/
+$arrayCreate[$buttonID;-;button]
+$onlyIf[$authorID==$arrayGet[3;button];
+    {private}
+    {color:db3539}
+    {author:Error:$msg[1157421810288185384;1157974096198508604;attachment;6]}
+    {desc:Only the player may click on this button. Please start your own session by calling </wordle\:1164298017046790205>.}
+]
+$let[action;$arrayGet[2;button]]
+$if[$action==quit0]{
+    $deleteMessage[$messageID]
+    $deleteUserVar[wordleSession]
+$elseif[$action==quit1]
+    $objectCreate[{
+        "data":$getUserVar[wordleSession],
+        "outcome":{
+            "lose":{
+                "color":"db3539",
+                "icon":6,
+                "message":"You have quit the game.",
+                "title":"You Lose"
+            }
+        }
+    }]
+    $let[gameOver;true]
+    $let[word;$objectGet[data;word]]
+    $includeLibrary[wordle]
+$endelseif
+$elseif[$action==start]
+    $let[initGuess;{"letter":" ","color":"grey"}]
+    $let[initLine;\[$initGuess,$initGuess,$initGuess,$initGuess,$initGuess\]]
+    $objectCreate[{
+        "data":{
+            "guess":{
+                "max":6,
+                "count":0
+            },
+            "history":[$initLine,$initLine,$initLine,$initLine,$initLine,$initLine],
+            "session":{
+                "channel":"$channelID",
+                "message":"$messageID"
+            },
+            "word":"$jsonRequest[http://fajfaj.pythonanywhere.com/wordle/roll;word]"
+        }
+    }]
+    $includeLibrary[wordle]
+$endelseif
+$elseif[$action==guess]
+    $modal[
+        {title=Wordle}
+        {id=wordle}
+        {input=
+            {name=Guess}
+            {ph=Guess a word}
+            {id=guess}
+            {min=5}
+            {max=5}
+        }
+    ]
+$endelseif
+}
