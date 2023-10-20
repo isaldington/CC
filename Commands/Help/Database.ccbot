@@ -209,13 +209,50 @@ $objectCreate[{
                     "<#971780734337581136>"
                 ],
                 "notes":"This command can only be executed on Takeover Days (or the day after for returning your old roles)."
+            }
+        }
+    },
+    "games":{
+        "emoji":"🎲",
+        "icon":{
+            "id":"1157972517185654795",
+            "index":6
+        },
+        "command":{
+            "guessnumber":{
+                "emoji":"🔢",
+                "title":"Guess the Number",
+                "thumbnail":{
+                    "id":"1163496192500568075",
+                    "index":0
+                },
+                "type":"slash",
+                "id":"1162460936179818567",
+                "description":"Play a game of Guess the Number",
+                "channel":[
+                    "<#1161670740064620604>"
+                ]
+            },
+            "guessword":{
+                "emoji":"🅰️",
+                "title":"Guess the Word",
+                "thumbnail":{
+                    "id":"1163496192500568075",
+                    "index":1
+                },
+                "type":"slash",
+                "id":"1163027172412379226",
+                "description":"Play a game of Guess the Word",
+                "channel":[
+                    "<#1161670740064620604>"
+                ]
             },
             "trivia":{
                 "emoji":"💭",
                 "title":"Trivia",
                 "thumbnail":{
-                    "id":"1162081466755334154",
-                    "index":0
+                    "id":"1163496192500568075",
+                    "index":2
                 },
                 "type":"slash",
                 "id":"1161955757869248532",
@@ -236,8 +273,8 @@ $objectCreate[{
                 "emoji":"❌",
                 "title":"Noughts and Crosses",
                 "thumbnail":{
-                    "id":"1162081466755334154",
-                    "index":1
+                    "id":"1163496192500568075",
+                    "index":3
                 },
                 "type":"slash",
                 "id":"1162141266256085112",
@@ -254,6 +291,20 @@ $objectCreate[{
                         "notes":"You cannot select yourself as your opponent."
                     }
                 }
+            },
+            "wordle":{
+                "emoji":"🅰️",
+                "title":"Wordle",
+                "thumbnail":{
+                    "id":"1164555856361312327",
+                    "index":0
+                },
+                "type":"slash",
+                "id":"1164298017046790205",
+                "description":"Play a game of Wordle",
+                "channel":[
+                    "<#1161670740064620604>"
+                ]
             }
         }
     },
