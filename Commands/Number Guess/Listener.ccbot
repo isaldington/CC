@@ -48,8 +48,7 @@ $if[$isCorrectAnswer==true]{
 $else
     $let[state;$conditional[$guessNumber>$targetNumber;high;low]]
     $let[maxNumber;$objectGet[max_number]]
-    $arrayCreate[$seq[1;$objectGet[guess_count]]; ;index]
-    $arrayReverse[index]
+    $arrayCreate[$seq[$objectGet[guess_count];1;-1]; ;index]
     $let[guessCount;$objectGet[guess_count]]
     $let[remGuess;$math[$objectGet[max_guess]-$guessCount]]
     $let[isGameOver;$checkCondition[$remGuess==0]]
@@ -59,9 +58,8 @@ $else
             $arrayCreate[$objectGet[history;$parameter];,;$parameter]
         $endIf
         $let[newEntry;$conditional[$parameter==number;$guessNumber;$toLocaleUppercase[$state]]]
-        $arrayPush[$newEntry;$parameter]
+        $arrayUnshift[$newEntry;$parameter]
         $objectSet[history;$parameter;$arrayJoin[,;$parameter]]
-        $arrayReverse[$parameter]
     }
     $setUserVar[numGuessSession;$getObject]
     $if[$isGameOver==true]
@@ -72,7 +70,7 @@ $else
             {author:$nickname:$authorAvatar}
             {thumbnail:$gameIcon}
             {title:Game Over}
-            {desc:You have failed to guess the number in time. The number is **$targetNumber**.}
+            {desc:Sorry! You have failed to guess the number. The number is **$targetNumber**.}
             {footer:You Lose#NL#Difficulty\: $objectGet[difficulty]:$errorIcon}
         ]
     $else

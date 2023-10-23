@@ -23,7 +23,7 @@ $if[$action==next]{
     $let[maxNumber;$objectGet[max_number]]
     $if[$objectKeyExists[history]==true]
         $arrayCreate[$objectGet[history;number];,;number]
-        $let[recentGuess;$arrayGet[$math[$objectGet[guess_count]-1];number]]
+        $let[recentGuess;$arrayGet[1;number]]
     $else
         $let[recentGuess;]
     $endIf
