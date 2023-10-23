@@ -7,10 +7,8 @@
     channelUsed: Run in Channel
 */
 $function[getImage;id;i]{
-    $if[$i==undefined]{
-        $let[i;0]
-    }
-    $return[$msg[1157421810288185384;$id;attachment;$i]]
+    $let[index;$conditional[$get[i]==undefined;0;$i]]
+    $return[$msg[1157421810288185384;$id;attachment;$index]]
 }
 $initVar[server;avnCalendar;{}]
 $objectCreate[{
@@ -60,7 +58,7 @@ $let[curMonthData;$regexMatch[$calendarEmbed;(?<=\{field:$arrayGet[$math[$setMon
 $if[$charCount[$curMonthData]>1]{
     $arrayCreate[$curMonthData;#NL#;data]
     $arrayLoop[date;;data]{
-        $let[dateNo;$regexMatch[$date;(?<=^-\x20\*\*)\d{1,2}]]
+        $let[dateNo;$math[$regexMatch[$date;(?<=^-\x20\*\*)\d{1,2}]]]
         $let[avnList;$regexMatch[$date;(?<=^-\x20\*\*\d{1,2}/\d{1,2}\*\*\x20-\x20).+]]
         $arrayCreate[$avnList;, ;avn_list]
         $arrayLoop[avnTitle;i;avn_list]
@@ -78,7 +76,7 @@ $arrayLoop[avnTitle;i;new_list]{
     $objectSet[$setDay;$i;$avnTitle]
 }
 $objectLoop[date]{
-    $arrayPush[- **$date/$setMonth** - $objectValues[, ;$date];embed]
+    $arrayPush[- **$padLeft[$date;2;0]/$setMonth** - $objectValues[, ;$date];embed]
 }
 $let[newEmbed;$regexReplace[$calendarEmbed;(?<=\{field:$arrayGet[$math[$setMonth];month]:)[^:]*(?=:no\});;$arrayJoin[#NL#;embed]]]
 $editMessage[$calendarID;$newEmbed;$calendarChannel]
