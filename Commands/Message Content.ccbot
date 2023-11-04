@@ -111,7 +111,11 @@ $if[$userExists[$msgAuthor]==false]{
     $let[authColor;transparent]
     $let[starboardee;`$msgAuthorName`]
 $else
-    $let[authName;$conditional[$nickname[$msgAuthor]==$username[$msgAuthor];$displayName[$msgAuthor];$nickname[$msgAuthor]]]
+    $if[$nickname[$msgAuthor]==$username[$msgAuthor]]
+        $let[authName;$displayName[$msgAuthor]]
+    $else
+        $let[authName;$nickname[$msgAuthor]]
+    $endIf
     $let[authAvatar;$userAvatar[$msgAuthor;;;yes]]
     $let[authColor;$userRoleColor[$msgAuthor]]
     $let[starboardee;$msgAuthor]
