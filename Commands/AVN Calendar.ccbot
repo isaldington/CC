@@ -66,14 +66,15 @@ $if[$charCount[$curMonthData]>1]{
         $endArrayLoop
     }
 }
-$if[$objectKeyExists[$setDay]==true]{
-    $arrayCreate[$objectValues[,;$setDay];,;new_list]
-    $objectRemove[$setDay]
+$let[date;$math[$setDay]]
+$if[$objectKeyExists[$date]==true]{
+    $arrayCreate[$objectValues[,;$date];,;new_list]
+    $objectRemove[$date]
 }
 $arrayPush[$toLocaleUppercase[$getOption[title]] ($getOption[version]);new_list]
 $arraySort[yes;alpha;new_list]
 $arrayLoop[avnTitle;i;new_list]{
-    $objectSet[$setDay;$i;$avnTitle]
+    $objectSet[$date;$i;$avnTitle]
 }
 $objectLoop[date]{
     $arrayPush[- **$padLeft[$date;2;0]/$setMonth** - $objectValues[, ;$date];embed]
