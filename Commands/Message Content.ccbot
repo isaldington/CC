@@ -111,7 +111,7 @@ $if[$userExists[$msgAuthor]==false]{
     $let[authColor;transparent]
     $let[starboardee;`$msgAuthorName`]
 $else
-    $if[$nickname[$msgAuthor]==$username[$msgAuthor]]
+    $if[$nickname[$msgAuthor]!=$username[$msgAuthor]]
         $let[authName;$displayName[$msgAuthor]]
     $else
         $let[authName;$nickname[$msgAuthor]]
@@ -130,11 +130,12 @@ $if[$getTrigger[type]==word]{
 $else
     $let[msgAttachments;]
 }
+$let[channelRegex;$conditional[$regexCheck[$msgChannelName;『.+』];$regexMatch[$msgChannelName;(?<=『).+(?=』)];$msgChannelName]]
 $let[embedTemplate;
     {color:$authColor}
     {author:$authName:$authAvatar:$msgURL}
     {image:$msgImage}
-    {footer:#$regexMatch[$msgChannelName;[\w\x20&,-]+]}
+    {footer:#$channelRegex}
     {timestamp:$dateToTime[$msgCreated]}
 ]
 $let[msgImages;$arrayLoop[file;i;image]{
