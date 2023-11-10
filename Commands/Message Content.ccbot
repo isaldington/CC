@@ -8,7 +8,7 @@
 */
 $function[imageAction;action;type;text]{
     $if[$type==image]{
-        $let[regex;https://.+\.(gif|jpe?g|png|webp)(\?width=\d+&height=\d+)?]
+        $let[regex;https://.+\.(gif|jpe?g|png|webp)(\?.+)?$]
     $elseif[$type==tenor&&$action==get]
         $let[regex;(?<=https://tenor\.com/view/.+-gif-)\d{7,}]
     $endelseif
