@@ -8,7 +8,7 @@
 */
 $function[imageAction;action;type;text]{
     $if[$type==image]{
-        $let[regex;https://.+\.(gif|jpe?g|png|webp)(\?.+)?$]
+        $let[regex;https?://.+\.(gif|jpe?g|png|webp)(\?.+)?$]
     $elseif[$type==tenor&&$action==get]
         $let[regex;(?<=https://tenor\.com/view/.+-gif-)\d{7,}]
     $endelseif
@@ -58,7 +58,7 @@ $forEach[type;image,tenor;,]{
 }
 $if[$get[msgImage]==undefined]{
     $let[msgImage;]
-    $if[$msgContent==&&$regexCheck[$msgAllAttachmentsName;^(https?://.+\.(gif|jpe?g|png|webp)(\?width=\d+&height=\d+)?)?$;m]==false]
+    $if[$msgContent==&&$regexCheck[$msgAllAttachmentsName;^(https?://.+\.(gif|jpe?g|png|webp)(\?.+)?)?$;m]==false]
         $let[msgContent;`This message only contain attachments.`]
     $elseif[$msgContent==&&$msgEmbed==&&$arrayLength[image]==0]
         $let[msgContent;`Message cannot be displayed.`#NL#[Link to original message]($msgURL)]
