@@ -112,9 +112,10 @@ $if[$userExists[$msgAuthor]==false]{
     $let[starboardee;`$msgAuthorName`]
 $else
     $if[$nickname[$msgAuthor]!=$username[$msgAuthor]]
-        $let[authName;$displayName[$msgAuthor]]
-    $else
         $let[authName;$nickname[$msgAuthor]]
+    $else
+        $ignoreErrors[yes;$username[$msgAuthor]]
+        $let[authName;$displayName[$msgAuthor]]
     $endIf
     $let[authAvatar;$userAvatar[$msgAuthor;;;yes]]
     $let[authColor;$userRoleColor[$msgAuthor]]
