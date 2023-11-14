@@ -144,7 +144,7 @@ $if[$arrayLength[error]==0]{
         $endIf
         $let[setTimestamp;$math[$dateToTime[$setMonth-$setDay-$setYear]+$extraTime]]
         $let[timeLimitMS;$parseTime[$objectGet[settings;time_limit]]]
-        $if[$math[$setTimestamp-$timeStamp]>$timeLimitMS]
+        $if[$math[abs($setTimestamp-$timeStamp)]>$timeLimitMS]
             $arrayPush[- Date cannot be beyond **$humanizeMS[$timeLimitMS;1]**.;error]
         $endIf
     $endIf

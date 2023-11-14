@@ -14,7 +14,7 @@ $initVar[server;avnCalendar;{}]
 $objectCreate[{
     "settings":{
         "time":{
-            "past":false,
+            "past":true,
             "present":true,
             "future":true
         },
@@ -28,6 +28,9 @@ $objectCreate[{
 $includeLibrary[datecheck]
 $if[$checkContains[$getOption[title];:;,]==true]{
     $arrayPush[- `title` must not contain colons (\:) or commas (,).;error]
+}
+$if[$setYear<2023]{
+    $arrayPush[- `year` must not be before **2023**.;error]
 }
 $onlyIf[$arrayLength[error]==0;
     $errorMessage
