@@ -7,7 +7,8 @@
     channelUsed: Run in Channel
 */
 $let[rulesChannel;862371285895479327]
-$arrayCreate[$getChannelMessages[$rulesChannel;everyone;ids;,;3];,;messages]
+$cacheChannelMessages[$rulesChannel]
+$arrayCreate[$getChannelMessages[$rulesChannel;everyone;ids;,;3;yes];,;messages]
 $let[introID;$arrayGet[1;messages]]
 $let[rulesID;$arrayGet[2;messages]]
 $let[footerID;$arrayGet[3;messages]]
