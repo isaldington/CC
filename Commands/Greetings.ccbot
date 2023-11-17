@@ -7,10 +7,8 @@
     channelUsed: Run in Channel
 */
 $function[getImage;id;i]{
-    $if[$i==undefined]{
-        $let[i;0]
-    }
-    $return[$msg[1157421810288185384;$id;attachment;$i]]
+    $let[index;$conditional[$i==undefined;0;$i]]
+    $return[$msg[1157421810288185384;$id;attachment;$index]]
 }
 $objectCreate[{
     "command": {
@@ -387,7 +385,7 @@ $objectCreate[{
                     }
                 ]
             },
-            "option":"girl",
+            "option": "girl",
             "cooldown": "1h"
         }
     },
@@ -396,11 +394,12 @@ $objectCreate[{
 $let[spamChannel;860052083150684190]
 $let[modRole;859852356674125864]
 $initVar[user;cooldown_$commandName;$timeStamp]
+$let[cooldownTS;<t\:$math[round($getUserVar[cooldown_$commandName]/1000)]\:R>]
 $onlyIf[$timeStamp>=$getUserVar[cooldown_$commandName]||$channelID==$spamChannel||$hasRole[$authorID;$modRole]==true;
     {private}
     {color:db3539}
     {author:Error:$getImage[1157974096198508604;6]}
-    {desc:This command has recently been called. Please try again <t\:$math[round($getUserVar[cooldown_$commandName]/1000)]\:R>. The cooldown does not apply to <#$spamChannel>.}
+    {desc:This command has recently been called. Please try again $cooldownTS. The cooldown does not apply to <#$spamChannel>.}
 ]
 $let[girlName;$objectGet[takeover;$year$regexMatch[0$month[no];\d{2}$]$day;name]]
 $let[option;$objectGet[command;$commandName;option]]
@@ -419,5 +418,6 @@ $interactionReply[
     {attachment:$toUppercase[$randomString[8]].$format:$fileURL}
 ]
 $if[$hasRole[$authorID;$modRole]==false&&$channelID!=$spamChannel]{
-    $increaseUserVar[cooldown_$commandName;$parseTime[$objectGet[command;$commandName;cooldown]];$authorID;$timeStamp]
+    $let[newTime;$math[$timeStamp+$parseTime[$objectGet[command;$commandName;cooldown]]]]
+    $setUserVar[cooldown_$commandName;$newTime]
 }
