@@ -1,0 +1,32 @@
+/*
+    Type: Interval
+    Trigger: 24h
+    Min Perms: None
+    Ignore Roles: None
+    Run only in: None
+    channelUsed: #sandbox
+*/
+$initVar[server;countdown;10]
+$let[countdown;$getServerVar[countdown]]
+$let[countdownChannel;1049695411453042809]
+$let[id;$conditional[$countdown==10;1178783142656626788;1179183968956985414]]
+$let[index;$modulo[$countdown;10]]
+$let[countdownImage;$msg[1157421810288185384;$id;attachment;$index]]
+$arrayCreate[$getChannelVar[webhook;$countdownChannel];, ]
+$let[newMsg;$sendWebhook[
+    {id=$arrayGet[1]}
+    {token=$arrayGet[2]}
+    {username=Countdown}
+    {avatar=$msg[1157421810288185384;1178786346282782731;attachment;0]}
+    {msg=
+        {attachment:Countdown_$countdown.jpg:$countdownImage}
+    }
+    {return_id=yes}
+]]
+$if[$countdown>0]{
+    $increaseServerVar[countdown;-1]
+$else
+    $deleteServerVar[countdown]
+    $deleteTrigger
+}
+$messagePublish[$countdownChannel;$newMsg]
