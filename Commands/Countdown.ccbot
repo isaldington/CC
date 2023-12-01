@@ -23,10 +23,10 @@ $let[newMsg;$sendWebhook[
     }
     {return_id=yes}
 ]]
+$messagePublish[$countdownChannel;$newMsg]
 $if[$countdown>0]{
     $increaseServerVar[countdown;-1]
 $else
     $deleteServerVar[countdown]
     $deleteTrigger
 }
-$messagePublish[$countdownChannel;$newMsg]
