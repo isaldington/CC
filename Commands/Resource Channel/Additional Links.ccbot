@@ -66,6 +66,22 @@ $objectCreate[[
         }
     },
     {
+        "color":"e5325c",
+        "thumbnail":{
+            "id":"1181606749061533729",
+            "index":0
+        },
+        "title":"Being a DIK Wiki",
+        "desc":[
+            "A wiki for Being a DIK.",
+            "# [<\:Icon_Fandom\:1181605334322786435>](https://beingadik.fandom.com/wiki/Being_A_DIK_Wiki)"
+        ],
+        "image":{
+            "id":"1158153673428443167",
+            "index":2
+        }
+    },
+    {
         "color":"22b2b8",
         "thumbnail":{
             "id":"1158153673428443167",
