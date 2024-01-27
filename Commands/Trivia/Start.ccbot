@@ -1,10 +1,10 @@
 /*
     Type: On Menu Select
-    Trigger: trivia-
-    Min Perms: None
-    Ignore Roles: None
-    Run only in: #game-room
-    channelUsed: Run in Channel
+    Menu ID: trivia-
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
 */
 $onlyIf[$regexCheck[$menuID;-$authorID$]==true;
     {private}
@@ -12,7 +12,7 @@ $onlyIf[$regexCheck[$menuID;-$authorID$]==true;
     {author:Error:$msg[1157421810288185384;1157974096198508604;attachment;6]}
     {desc:This is not your session. Please call </trivia\:1161955757869248532> to start your own session.}
 ]
-$deleteUserVar[triviaLauncher]
+$deleteUserVar[triviaSession]
 $if[$eventSelected==quit]
     $deleteMessage[$messageID]
 $else
@@ -39,8 +39,11 @@ $else
     $setUserVar[triviaSession;{
         "color":"$diffColor",
         "difficulty":"$difficulty",
-        "id":"$messageID",
         "score":"$score",
+        "session":{
+            "channel":"$channelID",
+            "message":"$messageID"
+        },
         "session_no":"$sessionNumber",
         "time_limit":"$timeLimit",
         "timer_active":true,

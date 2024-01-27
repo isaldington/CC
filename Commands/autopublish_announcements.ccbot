@@ -1,0 +1,9 @@
+/*
+    Type: Word
+    Trigger: %all%
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: #announcements
+    Channel Used: Run in Channel
+*/
+$messagePublish

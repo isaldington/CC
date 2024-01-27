@@ -1,0 +1,41 @@
+/*
+    Type: On Modal Submit
+    Slash ID: guessword
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$let[guess;$toUppercase[$modalAnswer[guess]]]
+$let[word;$toUppercase[$guess]]
+$objectCreate[$getUserVar[wordGuessSession]]
+$if[$objectKeyExists[previous_guess]==true]{
+    $arrayCreate[$objectGet[previous_guess];,;history]
+}
+$if[$regexCheck[$guess;^[A-Za-z]+$;i]==false]{
+    $let[reason;`$guess` is not a valid entry]
+$elseif[$arrayInclude[$word;history]==true]
+    $let[reason;You have already guessed that word]
+$endelseif
+}
+$onlyIf[$get[reason]==undefined;
+    {private}
+    {color:db3539}
+    {author:Error$msg[1157421810288185384;1157974096198508604;attachment;6]}
+    {desc:$reason. Please try again.}
+]
+$objectIncrease[guess_count;1]
+$arrayPush[$word;history]
+$objectSet[previous_guess;$arrayJoin[,;history]]
+$let[remGuess;$math[$objectGet[max_guess]-$objectGet[guess_count]]]
+$let[gameOver;$checkCondition[$remGuess==0||$word==$objectGet[word]]]
+$if[$gameOver==true]{
+    $let[outcome;$conditional[$word==$objectGet[word];win;lose]]
+$else
+    $let[resultText;Incorrect]
+    $let[embedColor;db3539]
+    $arrayCreate[$objectGet[guess];,;guess]
+    $let[display;Sorry! Your guess **$word** is incorrect.#NL#### $arrayJoin[ ;guess]]
+    $setUserVar[wordGuessSession;$getObject]
+}
+$includeLibrary[guessword]

@@ -1,0 +1,9 @@
+/*
+    Type: Slash Command
+    Slash: badik-ban
+    Required Permission: None
+    Ignore Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$includeLibrary[badik_ban]

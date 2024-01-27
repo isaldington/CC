@@ -1,0 +1,34 @@
+/*
+    Type: On Nickname Changes
+    Required Permission: None
+    Ignore Roles: None
+    Run only in: None
+    Channel Used: #sandbox
+*/
+$if[$eventOldNickname==]{
+    $let[state;Add]
+$elseif[$eventNewNickname==]
+    $let[state;Reset]
+$endelseif
+$else
+    $let[state;Update]
+}
+$objectCreate[{
+    "embed":{
+        "author":"$authorID",
+        "color":"40e0d0",
+        "desc":{
+            "User":"$mention",
+            "Previous Name":"$eventOldNickname",
+            "New Name":"$eventNewNickname"
+        },
+        "footer":"$userID",
+        "title":"Nickname $state"
+    }
+}]
+$objectLoop[parameter;value;;embed;desc]{
+    $if[$value==]{
+        $objectRemove[embed;desc;$parameter]
+    }
+}
+$includeLibrary[modlog]

@@ -1,10 +1,10 @@
 /*
     Type: On Button Click
-    Trigger: trivia-answer-
-    Min Perms: None
-    Ignore Roles: None
-    Run only in: #game-room
-    channelUsed: Run in Channel
+    Button ID: trivia-answer-
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
 */
 $function[getImage;id;i]{
     $if[$i==undefined]{
@@ -14,7 +14,7 @@ $function[getImage;id;i]{
 }
 $let[object;{
     "data":$getMessageVar[data;$messageID],
-    "user":$getUserVar[triviaSession],
+    "user":$getUserVar[triviaSession;$authorID],
     "outcome":{
         "true":{
             "color":"479f4b",

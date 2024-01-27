@@ -1,0 +1,28 @@
+/*
+    Type: On Timeout
+    When: User Timeout Set/Removed
+    Required Permission: None
+    Ignore Roles: None
+    Channel Used: #sandbox
+*/
+$let[timeoutMS;$math[10000*round ($userGetTimeout/10000)]]
+$let[timeoutDuration;$humanizeMS[$timeoutMS]]
+$objectCreate[{
+    "embed":{
+        "author":"$authorID",
+        "color":"d63e42",
+        "desc":{
+            "User":"$mention",
+            "Moderator":"<@$timeoutBy>"
+        },
+        "footer":"$userID",
+        "title":"Timeout $toLocaleUppercase[$timeoutAction]"
+    }
+}]
+$if[$timeoutAction==add]{
+    $objectSet[embed;desc;Duration;`$regexMatch[$timeoutDuration;^\d+]`$regexReplace[$timeoutDuration;^\d+;]]
+    $objectSet[embed;desc;Reason;$timeoutReason]
+    $let[expiryTime;$math[$timeStamp[yes]+($timeoutMS/1000)]]
+    $objectSet[embed;desc;Expiry;<t\:$expiryTime\:d> <t\:$expiryTime\:t> (<t\:$expiryTime\:R>)]
+}
+$includeLibrary[modlog]

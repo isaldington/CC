@@ -1,0 +1,69 @@
+/*
+    Type: On Modal Submit
+    Modal ID: report_message
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$redirectErrors[997972754915655700]
+$function[getImage;id;i]{
+    $if[$i==undefined]{
+        $let[i;0]
+    }
+    $return[$msg[1157421810288185384;$id;attachment;$i]]
+}
+$arrayCreate[$modalAnswer[url];/]
+$let[msgChannel;$arrayGet[6]]
+$let[msgID;$arrayGet[7]]
+$if[$regexCheck[$modalAnswer[url];^https://discord\.com/channels/$guild[id](?:/\d{18,}){2}$]==false]{
+    $let[reason;Please enter a valid message URL.]
+$elseif[$messageExists[$msgChannel;$msgID]==false]
+    $let[reason;Message not found.]
+}
+$onlyIf[$get[reason]==undefined;
+    {private}
+    {color:db3539}
+    {author:Error:$getImage[1157974096198508604;6]}
+    {desc:$reason}
+]
+$interactionReply[
+    {color:479f4b}
+    {author:Success:$getImage[1157974096198508604;7]}
+    {desc:You have submitted a report. Thank you for keeping this server safe.}
+;yes]
+$includeLibrary[message_content]
+$arrayPush[**User**\: <@$msgAuthor>;report]
+$arrayPush[**Reason**\: $modalAnswer[reason];report]
+$let[reportEmbed;
+    {color:ffcc00}
+    {title:Message Report}
+    {thumbnail:$getImage[1157972358620004352;2]}
+    {footer:Report ID - $timestamp}
+    {timestamp}
+]
+$let[reportChannel;1141108678032896030]
+$let[reportMessage;$channelSendMessage[$reportChannel;
+    {embed:$reportEmbed
+        {desc:$arrayJoin[#NL#;report]}
+    }
+    $output
+    {button:Mark as Complete:green::report-Complete}
+;yes]]
+$arrayPush[**Message\:** [Link to Message]($modalAnswer[url]);report]
+$arrayPush[**Report\:** [Link to Report]($msg[$reportChannel;$reportMessage;url]);report]
+$arrayCreate[$getChannelVar[webhook;859961383261306890];, ;webhook]
+$sendWebhook[
+    {id=$arrayGet[1;webhook]}
+    {token=$arrayGet[2;webhook]}
+    {msg=
+        $reportEmbed
+        {desc:$arrayJoin[#NL#;report]}
+    }
+]
+$onlyIf[$hasRole[$userID;859852356674125864]==false]
+$let[cooldownTime;300]
+$setUserVar[reportCooldown;$math[$timestamp[yes]+$cooldownTime]]
+$setTimeout[$get[cooldownTime]s;Reset Report Cooldown - $authorID;$authorID]{
+    $deleteUserVar[reportCooldown]
+}

@@ -1,10 +1,10 @@
 /*
     Type: On Button Click
-    Trigger: wordle-
-    Min Perms: None
-    Ignore Roles: None
-    Run only in: #game-room
-    channelUsed: Run in Channel
+    Button ID: wordle-
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
 */
 $arrayCreate[$buttonID;-;button]
 $onlyIf[$authorID==$arrayGet[3;button];

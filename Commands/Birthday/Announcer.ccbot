@@ -1,10 +1,7 @@
 /*
     Type: Interval
-    Trigger: 1d
-    Min Perms: None
-    Ignore Roles: None
-    Run only in: None
-    channelUsed: #sandbox
+    Run Every: 1d
+    Channel Used: #sandbox
 */
 $includeLibrary[birthday]
 $let[birthdayRole;874303310067269672]

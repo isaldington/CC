@@ -1,10 +1,6 @@
 /*
     Type: Library
-    Trigger: guessword
-    Min Perms: None
-    Ignore Roles: None
-    Run only in: #game-room
-    channelUsed: Run in Channel
+    Library Name: guessword
 */
 $function[getImage;id;i]{
     $let[index;$conditional[$i!=undefined;$i;0]]
@@ -16,10 +12,11 @@ $let[successIcon;$getImage[1157974096198508604;7]]
 $if[$gameOver==true]
     $removeButtons[$messageID]
     $let[word;$objectGet[word]]
+    $let[guessCount;$objectGet[guess_count]]
     $objectCreate[{
         "win":{
             "color":"479f4b",
-            "message":"Congratulations! You have guessed the word **$word** correctly.",
+            "message":"Congratulations! You have guessed the word **$word**.",
             "footer":true
         },
         "lose":{
@@ -33,7 +30,7 @@ $if[$gameOver==true]
     }]
     $let[resultText;$conditional[$outcome==win;You Win;You Lose]]
     $let[resultIcon;$conditional[$outcome==win;$successIcon;$errorIcon]]
-    $let[footerMsg;$conditional[$objectKeyExists[$outcome;footer]==true;Tries\: $objectGet[guess_count];]]
+    $let[footerMsg;$conditional[$objectKeyExists[$outcome;footer]==true;Tries\: $guessCount;]]
     $editMessage[$messageID;
         {color:$objectGet[$outcome;color]}
         {author:$nickname:$authorAvatar}

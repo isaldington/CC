@@ -1,0 +1,6 @@
+/*
+    Type: On Join/Leave
+    When: User Leave the server
+    Channel Used: #sandbox
+*/
+$includeLibrary[sort_stanroles]

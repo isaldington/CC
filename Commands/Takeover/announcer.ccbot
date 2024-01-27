@@ -1,0 +1,96 @@
+/*
+    Type: Interval
+    Run Every: 1d
+    Channel Used: #sandbox
+*/
+$includeLibrary[takeover]
+$let[date;$year$padLeft[$month[no];2;0]$day]
+$onlyIf[$objectKeyExists[date;$date]==true]
+$let[newsChannel;971780734337581136]
+$let[codeAuthor;699604758729588786]
+$let[girlID;$objectGet[date;$date;role]]
+$let[girlName;$objectGet[role;$girlID;name]]
+$let[noun;$girlName$objectGet[role;$girlID;i]fy]
+$let[onEmoji;$objectGet[role;$girlID;emoji;on]]
+$let[offEmoji;$objectGet[role;$girlID;emoji;off]]
+$let[delay1;1d]
+$let[delay2;2d]
+$let[prevDayTS;$math[$timestamp-86400000]]
+$let[prevDate;$timeToDate[$prevDayTS;%y%%0m%%0d%]]
+$let[prevDayTakeover;$objectKeyExists[date;$prevDate]]
+$arrayPush[- Click on `$noun` to participate. Your roles will be adjusted if necessary.;news]
+$arrayPush[- Click on `$toLocaleUppercase[De$noun]` to end your participation and retrieve your old roles.;news]
+$arrayPush[- $girlName Day will end <t\:$math[$timestamp[yes]+$parseTime[$delay1]/1000]\:R>.;news]
+$if[$prevDayTakeover==true]{
+    $let[prevGirlID;$objectGet[date;$prevDate;role]]
+    $let[prevGirlName;$objectGet[role;$prevGirlID;name]]
+    $let[prevNoun;$prevGirlName$objectGet[role;$prevGirlID;i]fy]
+    $arrayPush[- As we have back-to-back takeover days, the buttons for **$girlName** Day will be available while those for **$prevGirlName** Day are still also available. Please $toLocaleUppercase[De$prevNoun] before $get[noun]ing.;news]
+}
+$let[buttonOffLine;$arrayGet[2;news]]
+$let[newsID;$channelSendMessage[$newsChannel;
+    {color:$getRoleColor[$girlID]}
+    {title:$objectGet[role;$girlID;emoji;girl]  $girlName Day}
+    {desc:$arrayJoin[#NL#;news]}
+    {button:$noun:green:$onEmoji:takeover-On-$date-$girlID}
+    {button:$toLocaleUppercase[De$noun]:red:$offEmoji:takeover-Off-$date-$girlID}
+;yes]]
+$arrayCreate[$getChannelVar[webhook;859961383261306890];, ;webhook]
+$let[webhookID;$arrayGet[1;webhook]]
+$let[webhookToken;$arrayGet[2;webhook]]
+$let[nextDayMS;$math[$timestamp+86400000]]
+$let[nextDay;$timeToDate[$nextDayMS;%y%%0m%%d%]]
+$let[consecTakeover;$checkCondition[$objectKeyExists[date;$nextDay]]]
+$let[offIcon;$getImage[1157972910200332339;9]]
+$setTimeout[$delay1;Takeover Day - End ($girlName);$codeAuthor]{
+    $redirectErrors[997972754915655700]
+    $arrayPush[- $girlName Day has ended.]
+    $arrayPush[$buttonOffLine]
+    $arrayPush[- This message will self-destruct <t\:$math[$timestamp[yes]+($parseTime[$delay2]-$parseTime[$delay1])/1000]\:R>.]
+    $arrayPush[- Should this message be nowhere to be found, you will have to adjust your roles manually via <id\:customize>.]
+    $editMessage[$newsID;
+        $msg[$newsChannel;$newsID;embed]
+        {button:$noun:green:$onEmoji:takeover-On-$date-$girlID::yes}
+        {button:$toLocaleUppercase[De$noun]:red:$offEmoji:takeover-Off-$date-$girlID}
+    ;$newsChannel]
+    $editEmbed[$newsChannel;$newsID;{desc:$arrayJoin[#NL#]}]
+    $if[$consecTakeover==false]{
+        $setServerVar[takeoverDay;false]
+    }
+    $sendWebhook[
+        {id=$webhookID}
+        {token=$webhookToken}
+        {msg=
+            {color:transparent}
+            {author:Takeover Day Deactivated:$offIcon}
+            {desc:**Girl\:** <@&$girlID>}
+            {footer:ID\: $girlID}
+            {timestamp}
+        }
+    ]
+    
+}
+$setTimeout[$delay2;Takeover Day - Reset ($girlName);$codeAuthor]{
+    $deleteMessage[$newsChannel;$newsID]
+    $forEach[var;buttonOn,notStan,tempIDs;,]{
+        $resetUserVar[$var$date]
+    }
+    $objectCreate[$getServerVar[takeoverSchedule]]
+    $objectRemove[$date]
+    $setServervar[takeoverSchedule;$getObject]
+    $if[$consecTakeover==false]{
+        $deleteServerVar[takeoverDay]
+    }
+}
+$sendWebhook[
+    {id=$webhookID}
+    {token=$webhookToken}
+    {msg=
+        {color:758cd4}
+        {author:Takeover Day Activated:$getImage[1157974096198508604;1]}
+        {desc:**Girl\:** <@&$girlID>}
+        {footer:ID\: $girlID}
+        {timestamp}
+    }
+]
+$setServerVar[takeoverDay;true]

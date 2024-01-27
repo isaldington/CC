@@ -1,0 +1,28 @@
+/*
+    Type: Slash Command
+    Slash: remind-cancel
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$function[getImage;id;i]{
+	 $if[$i==undefined]{
+		  $let[i;0]
+	 }
+	 $return[$msg[1157421810288185384;$id;attachment;$i]]
+}
+$onlyIf[$getUserVar[reminder]!=undefined;
+	 {private}
+	 {color:db3539}
+	 {author:Error:$getImage[1157974096198508604;6]}
+	 {desc:You don't have any active reminders.}
+]
+$objectCreate[$getUserVar[reminder]]
+$deleteTrigger[$objectGet[token];no]
+$deleteUserVar[reminder]
+$interactionReply[
+	 {color:479f4b}
+	 {author:Success:$getImage[1157974096198508604;7]}
+	 {desc:The reminder has been cancelled.}
+]

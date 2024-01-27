@@ -1,10 +1,10 @@
 /*
     Type: Slash Command
-    Trigger: birthday-view
-    Min Perms: None
+    Slash: birthday-view
+    Required Permission: None
     Ignore Roles: None
     Run only in: None
-    channelUsed: Run in Channel
+    Channel Used: Run in Channel
 */
 $includeLibrary[birthday]
 $let[member;$getOption[user]]

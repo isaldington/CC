@@ -1,0 +1,28 @@
+/*
+    Type: On Modal Submit
+    Modal ID: quickvote
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$let[options;$regexReplace[$modalAnswer[options];,\s+;g;,]]
+$arrayCreate[$options;,]
+$onlyIf[$arrayLength>=2&&$arrayLength<=8;
+    {private}
+    {color:db3539}
+    {author:Error:$msg[1157421810288185384;1157974096198508604;attachment;6]}
+    {description:You need to specify between **2** and **8** options. You have specified `$arrayLength`.}
+]
+$arrayCreate[🇦,🇧,🇨,🇩,🇪,🇫,🇬,🇭;,;reaction]
+$forEach[i;$seq[1;$arrayLength]]{
+    $arrayPush[$arrayGet[$i;reaction]  $arrayGet[$i];options]
+    $arrayPush[$arrayGet[$i;reaction];choices]
+}
+$interactionReply[
+    {color:RANDOM}
+    {author:Poll}
+    {title:$modalAnswer[topic]}
+    {desc:$arrayJoin[#NL#;options]}
+    {reaction:$arrayJoin[,;choices]}
+]

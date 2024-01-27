@@ -1,0 +1,17 @@
+/*
+    Type: Word
+    Trigger: /(?<=https://discord\.com/channels/859842474682875914/)\d{18,}/\d{18,}/
+    Required Permission: None
+    Ignore Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$suppressErrors
+$let[regex;$regexMatch[$getTrigger[trigger];(?<=^/).+(?=/$)]]
+$let[msgLocation;$regexMatch[$message;$regex;i]]
+$arrayCreate[$msgLocation;/]
+$let[msgChannel;$arrayGet[1]]
+$let[msgID;$arrayGet[2]]
+$onlyIf[$messageExists[$msgChannel;$msgID]==true]
+$includeLibrary[message_content]
+$sendMessage[{reply}$output]

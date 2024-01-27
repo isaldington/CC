@@ -1,10 +1,10 @@
 /*
     Type: Slash Command
-    Trigger: info-user
-    Min Perms: Kick
+    Slash: info-user
+    Required Permission: Kick
     Ignore Roles: None
     Run only in: None
-    channelUsed: Run in Channel
+    Channel Used: Run in Channel
 */
 $let[memberID;$getOption[user]]
 $objectCreate[{

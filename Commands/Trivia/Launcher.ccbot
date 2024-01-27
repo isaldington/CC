@@ -1,11 +1,12 @@
 /*
     Type: Slash Command
-    Trigger: trivia
-    Min Perms: None
-    Ignore Roles: None
-    Run only in: #game-room
-    channelUsed: Run in Channel
+    Slash: trivia
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
 */
+$onlyIf[$authorID==$botOwnerID;{private}{color:db3539}{title:Coming Soon!}]
 $function[getImage;id;i]{
     $if[$i==undefined]{
         $let[i;0]
@@ -16,9 +17,6 @@ $if[$getUserVar[triviaSession]==undefined&&$getUserVar[triviaLauncher]==undefine
     $arrayPush[- Select a difficulty from the menu below.]
     $arrayPush[- You will be given a question. Select the button that corresponds to your answer.]
     $arrayPush[- The game will end should you fail to answer by the deadline. The amount of time you are given depends on the difficulty.]
-    $arrayPush[ - Easy\: **15** *seconds*]
-    $arrayPush[ - Medium\: **30** *seconds*]
-    $arrayPush[ - Hard\: **1** *minute*]
     $arrayPush[- If your answer is correct, you will be allowed to proceed to the next question.]
     $arrayPush[- If your answer is incorrect, the game will end.]
     $arrayPush[- Your final score will be the number of correct questions you have answered.]
@@ -33,34 +31,35 @@ $if[$getUserVar[triviaSession]==undefined&&$getUserVar[triviaLauncher]==undefine
             {ph=Select the difficulty level or quit}
             {label=Easy}
             {emoji=💚}
-            {desc=Haha! N00b!}
+            {desc=15 seconds}
             {value=easy}
             {label=Medium}
             {emoji=💛}
-            {desc=For the average bloke}
+            {desc=30 seconds}
             {value=medium}
             {label=Hard}
             {emoji=❤️‍🔥}
-            {desc=NERD ALERT!}
+            {desc=60 seconds}
             {value=hard}
             {label=Quit}
             {emoji=🚪}
-            {desc=You pussy!}
+            {desc=Quit the game}
             {value=quit}
         }
     ]
-    $setUserVar[triviaLauncher;$sentMessageID]
+    $setUserVar[triviaSession;{
+        "session":{
+            "channel":"$channelID",
+            "message":"$sentMessageID"
+        }
+    }]
 $else
-    $if[$getUserVar[triviaLauncher]!=undefined]
-        $let[sessionID;$getUserVar[triviaLauncher]]
-    $elseif[$getUserVar[triviaSession]!=undefined]
-        $objectCreate[$getUserVar[triviaSession]]
-        $let[sessionID;$objectGet[id]]
-    $endelseif
-    $endIf
+    $objectCreate[$getUserVar[triviaSession]]
+    $let[sessionChannel;$objectGet[session;channel]]
+    $let[sessionMsg;$objectGet[session;message]]
     $interactionReply[
         {color:db3539}
         {author:Error:$getImage[1157974096198508604;6]}
-        {desc:You already have an active session. [Click here]($msg[$channelID;$sessionID;url]) to jump to the session.}
+        {desc:You already have an active session. [Click here]($msg[$sessionChannel;$sessionMsg;url]) to jump to the session.}
     ;yes]
 }

@@ -1,0 +1,21 @@
+/*
+    Type: Library
+    Library Name: information
+*/
+$let[embedContent;$objectLoop[parameter;value;;embed]{
+    $if[$parameter==desc]{
+        $objectLoop[header;body;;embed;desc]
+            $arrayPush[**$header\:** $body;desc]
+        $endObjectLoop
+        {desc:$arrayJoin[#NL#;desc]}
+    $elseif[$parameter==field]
+        {field:$objectValues[:;embed;field]}
+    $endelseif
+    $else
+        {$parameter:$value}
+    }
+}]
+$interactionReply[
+    $embedContent
+    {timestamp}
+]

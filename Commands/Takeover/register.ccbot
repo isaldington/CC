@@ -1,0 +1,73 @@
+/*
+    Type: Slash Command
+    Slash: takeover-reg
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$function[getImage;id;i]{
+    $if[$i==undefined]{
+        $let[i;0]
+    }
+    $return[$msg[1157421810288185384;$id;attachment;$i]]
+}
+$objectCreate[{
+    "user":$getServerVar[birthdayUsers],
+    "girl":{
+        "Camila":"859856135788298240",
+        "Cathy":"859859623862337567",
+        "Isabella":"859847102749474846",
+        "Jade":"859857965669810216",
+        "Jill":"859847212279791617",
+        "Josy":"859847170697854997",
+        "KRJ":"862820633284444160",
+        "Lily":"859859990453420033",
+        "Maya":"859847153807654933",
+        "Melanie":"859858605729120273",
+        "Nicole":"859858181500960780",
+        "Quinn":"859845611709136897",
+        "Riona":"859847238163759114",
+        "Sage":"859847133858627594",
+        "Sally":"861994036566949918",
+        "Sarah":"859855814042189855",
+        "Zoey":"945339598597402624"
+    }
+}]
+$onlyIf[$objectKeyExists[user;$getOption[guest]]==true;
+    {private}
+    {color:db3539}
+    {author:Error:$getImage[1157974096198508604;6]}
+    {desc:<@$getOption[guest]>'s birthday has not been registered. Please register their birthday first.}
+]
+$let[girlID;$objectGet[girl;$getOption[girl]]]
+$let[date;$objectGet[user;$getOption[guest]]]
+$includeLibrary[takeover]
+$let[girlName;$objectGet[role;$girlID;name]]
+$let[cover;$getImage[$spread[,;$objectValues[,;role;$girlID;cover]]]]
+$let[setDay;$textSlice[$date;2;4]]
+$let[setMonth;$textSlice[$date;0;2]]
+$let[setYear;2024]
+$let[startTime;$dateToTime[$setMonth-$setDay-$setYear]]
+$let[endTime;$math[$startTime+$parseTime[1d]]]
+
+$interactionReply[Success!;yes]
+$stop
+
+$eventCreate[
+    {name=$girlName Day}
+    {type=external}
+    {start=$startTime}
+    {end=$endTime}
+    {desc=It's $girlName's Takeover Day in honour of <@$getOption[guest]>! Change your name and pfp, and show her some love.}
+    {location=DIKs & HOTs}
+    {cover=$cover}
+    {return_id=no}
+    {reason=Takeover Day}
+]
+$objectMerge[date;$setYear$date;{
+    "name":"$girlName",
+    "role":"$girlID",
+    "member":"$getOption[guest]"
+}]
+$setServerVar[takeoverSchedule;$objectGet[date]]

@@ -1,10 +1,10 @@
 /*
     Type: On Menu Select
-    Trigger: guessnumber-
-    Min Perms: None
-    Ignore Roles: None
-    Run only in: #game-room
-    channelUsed: Run in Channel
+    Modal ID: guessnumber-
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
 */
 $function[getImage;id;i]{
     $let[index;$conditional[$i!=undefined;$i;0]]

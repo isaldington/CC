@@ -1,17 +1,12 @@
 /*
-    Type: Menu
-    Trigger: takeover_apply
-    Min Perms: None
+    Type: On Menu Select
+    Button ID: takeover_apply
+    Required Permission: None
     Ignore Roles: None
     Run only in: None
-    channelUsed: Run in Channel
+    Channel Used: Run in Channel
 */
-$initVar[server;takeoverApplication;
-    $forEach[girl;Camila,Cathy,Isabella,Jade,Jill,Josy,KRJ,Lily,Maya,Melanie,Nicole,Quinn,Riona,Sage,Sally,Sarah,Zoey;,]{
-        $objectSet[$girl;]
-    }
-    $getObject
-]
+$initVar[server;takeoverApplication;{"Camila":"","Cathy":"","Isabella":"","Jade":"","Jill":"","Josy":"","KRJ":"","Lily":"","Maya":"","Melanie":"","Nicole":"","Quinn":"","Riona":"","Sage":"","Sally":"","Sarah":"","Zoey":""}]
 $objectCreate[$getServerVar[takeoverApplication]]
 $arrayCreate[$objectGet[$eventSelected];,]
 $arrayPush[<@$authorID>]

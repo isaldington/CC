@@ -1,16 +1,16 @@
 /*
-    Type: Button
-    Trigger: giveaway-
-    Min Perms: None
+    Type: On Button Click
+    Button ID: giveaway-
+    Required Permission: None
     Ignore Roles: None
-    Run only in: None
-    channelUsed: Run in Channel
+    Run only In: None
+    Channel Used: Run in Channel
 */
 $function[getImage;id;i]{
-    $if[$i==undefined]{
-        $let[i;0]
-    }
-    $return[$msg[1157421810288185384;$id;attachment;$i]]
+	 $if[$i==undefined]{
+		  $let[i;0]
+	 }
+	 $return[$msg[1157421810288185384;$id;attachment;$i]]
 }
 $initVar[message;participants;]
 $let[action;$regexMatch[$buttonID;(join|leave)$]]
@@ -18,30 +18,30 @@ $onlyIf[$buttonID!=undefined;]
 $arrayCreate[$getMessageVar[participants];,]
 $let[index;$arraySearch[$userID]]
 $if[$action==join&&$index!=-1]
-    $arrayCreate[already, `Leave` to withdraw from;, ;error]
+	 $arrayCreate[already, `Leave` to withdraw from;, ;error]
 $elseif[$action==leave&&$index==-1]
-    $arrayCreate[not, `Join` to participate in;, ;error]
+	 $arrayCreate[not, `Join` to participate in;, ;error]
 $endelseif
 $endIf
 $onlyIf[$arrayLength[error]==0;
-    {private}
-    {color:db3539}
-    {author:Error:$getImage[1157974096198508604;6]}
-    {desc:You are $arrayGet[1;error] participating in this giveaway. Click on $arrayGet[2;error] this giveaway.}
+	 {private}
+	 {color:db3539}
+	 {author:Error:$getImage[1157974096198508604;6]}
+	 {desc:You are $arrayGet[1;error] participating in this giveaway. Click on $arrayGet[2;error] this giveaway.}
 ]
 $if[$action==join]
-    $arrayPush[$userID]
-    $let[userAction;participated in]
+	 $arrayPush[$userID]
+	 $let[userAction;participated in]
 $elseif[$action==leave]
-    $arrayRemove[$index]
-    $let[userAction;withdrawed from]
+	 $arrayRemove[$index]
+	 $let[userAction;withdrew from]
 $endelseif
 $endIf
 $arraySort[yes;num]
 $setMessageVar[participants;$arrayJoin[,]]
 $editEmbed[;;{footer:Participants\: $arrayLength}]
 $interactionReply[
-    {color:green}
-    {author:Success:$getImage[1157974096198508604;7]}
-    {desc:You have $userAction this giveaway.}
+	 {color:green}
+	 {author:Success:$getImage[1157974096198508604;7]}
+	 {desc:You have $userAction this giveaway.}
 ;yes]

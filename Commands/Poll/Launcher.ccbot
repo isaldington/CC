@@ -1,10 +1,10 @@
 /*
     Type: Slash Command
-    Trigger: poll
-    Min Perms: Kick
-    Ignore Roles: None
+    Slash: poll
+    Required Permission: Kick
+    Ignored Roles: None
     Run only in: None
-    channelUsed: Run in Channel
+    Channel Used: Run in Channel
 */
 $objectCreate[{
     "settings":{

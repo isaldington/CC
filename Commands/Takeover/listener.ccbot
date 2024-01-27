@@ -1,0 +1,121 @@
+/*
+    Type: On Button Click
+    Button ID: takeover-
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$redirectErrors[997972754915655700]
+$includeLibrary[takeover]
+$onlyIf[$getServerVar[takeoverDay]!=undefined;]
+$arrayCreate[$buttonID;-;button]
+$let[action;$arrayGet[2;button]]
+$let[date;$arrayGet[3;button]]
+$let[girlID;$arrayGet[4;button]]
+$let[i;$objectGet[role;$girlID;i]]
+$let[name;$objectGet[role;$girlID;name]$i]
+$let[girlColor;$objectGet[role;$girlID;colour]]
+$arrayCreate[$get[name]fied,$i,$get[name]fication,$toLocaleUppercase[De$get[name]fied];,;noun]
+$objectCreate[{
+    "boolean":{
+        "true":[
+            "have already been $arrayGet[1;noun]",
+            "always been $girlColor"
+        ],
+        "false":[
+            "do not need $arrayGet[3;noun]",
+            "not been $arrayGet[1;noun] in the first place"
+        ]
+    },
+    "state":{
+        "On":{
+            "color":"0d7010",
+            "verb":"$arrayGet[1;noun]"
+        },
+        "Off":{
+            "color":"b31c11",
+            "verb":"$arrayGet[4;noun]"
+        }
+    }
+}]
+$initVar[user;buttonOn$date;false]
+$if[$userID==$objectGet[date;$date;member]]{
+    $let[reason;Today is your birthday. You need not participate in the Takeover Day.]
+$elseif[$action==On&&($getUserVar[buttonOn$date]==true||$userRoleColor==$getRoleColor[$girlID])]
+    $let[reason;You $objectGet[boolean;$getUserVar[buttonOn$date];0].]
+$endelseif
+$elseif[$action==Off&&$getUserVar[buttonOn$date]!=true]
+    $let[reason;You have $objectGet[boolean;$checkCondition[$userRoleColor[$userID]==$getRoleColor[$girlID]];1].]
+$endelseif
+}
+$onlyIf[$get[reason]==undefined;
+    {private}
+    {color:db3539}
+    {author:Error:$getImage[1157974096198508604;6]}
+    {desc:$reason}
+]
+$if[$action==On]
+    $if[$userRoles[$userID;ids;,]==||$rolePosition[$highestRole]>$rolePosition[$girlID]]
+        $let[removeMentions;None]
+    $else
+        $arrayCreate[$userRoles[$userID;ids;,];,]
+        $arrayFilter[id]{
+            $checkCondition[$rolePosition[$id]>$rolePosition[970043568649551923]&&$rolePosition[$id]<$rolePosition[$girlID]]
+        }
+        $arrayLoop[id]{
+            $arrayPush[$role[$id;mention];remove]
+        }
+        $let[removeMentions;$arrayJoin[, ;remove]]
+    $endIf
+    $let[filter;$arrayJoin[, ]]
+    $if[$hasRole[$userID;$girlID]==false]
+        $arrayPush[$girlID]
+        $let[addMentions;$role[$girlID;mention]]
+        $setUserVar[notStan$date;true]
+    $else
+        $let[addMentions;None]
+    $endIf
+    $setUserVar[tempIDs$date;$filter]
+    $setUserVar[buttonOn$date;true]
+$elseif[$action==Off]
+    $if[$getUserVar[tempIDs$date]!=]
+        $arrayCreate[$getUserVar[tempIDs$date];, ]
+        $arrayCreate[$getUserVar[tempIDs$date];, ;add]
+        $arrayMap[id;;add]{
+            $role[$id;mention]
+        }
+        $let[addMentions;$arrayJoin[, ;add]]
+    $else
+        $let[addMentions;None]
+    $endIf
+    $if[$getUserVar[notStan$date]==true]
+        $arrayPush[$girlID]
+        $let[removeMentions;$role[$girlID;mention]]
+        $deleteUserVar[notStan$date]
+    $else
+        $let[removeMentions;None]
+    $endIf
+    $deleteUserVar[buttonOn$date]
+    $deleteUserVar[tempIDs$date]
+$endelseif
+$endIf
+$toggleRoles[$userID;$spread[,;$arrayJoin[,]]]
+$interactionReply[
+    {color:479f4b}
+    {author:Success:$getImage[1157974096198508604;7]}
+    {desc:You have now been $objectGet[state;$action;verb].}
+;yes]
+$objectSet[embed;author;$authorID]
+$objectSet[embed;color;$objectGet[state;$action;color]]
+$objectSet[embed;desc;User;$mention]
+$objectSet[embed;desc;Added Roles;$addMentions]
+$objectSet[embed;desc;Removed Roles;$removeMentions]
+$objectSet[embed;footer;$userID]
+$objectSet[embed;title;Takeover Day $action]
+$objectLoop[parameter;value;;embed;desc]{
+    $if[$regexCheck[$value;(?<!None)$]==false]{
+        $objectRemove[embed;desc;$parameter]
+    }
+}
+$includeLibrary[modlog]

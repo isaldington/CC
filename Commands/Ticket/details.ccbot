@@ -1,0 +1,69 @@
+/*
+    Type: On Modal Submit
+    Modal ID: ticket-General|ticket-Private
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$redirectErrors[997972754915655700]
+$function[getImage;id;i]{
+    $if[$i==undefined]{
+        $let[i;0]
+    }
+    $return[$msg[1157421810288185384;$id;attachment;$i]]
+}
+$objectCreate[{
+    "General":{
+        "mention":"<@&859852356674125864>",
+        "thread":""
+    },
+    "Private":{
+        "mention":"<@&971812411013210132> <@&1137093747004412054>",
+        "thread":"1131229297735118988"
+    },
+    "embed":{
+        "author":"$authorID",
+        "color":"596aee",
+        "footer":"$authorID",
+        "title":"New Ticket"
+    }
+}]
+$let[privacyLevel;$regexMatch[$modalID;Private|General]]
+$let[ticketName;$username]
+$let[ticketID;$createThread[
+    {channel=1031832935717945365}
+    {name=$ticketName}
+    {reason=$ticketName's ticket}
+    {duration=7d}
+    {private=yes}
+    {return_id=yes}
+]]
+$channelSendMessage[$ticketID;
+    $objectGet[$privacyLevel;mention]
+    {pin}
+    {color:$userRoleColor[$clientID]}
+    {title:Ticket}
+    {thumbnail:$authorAvatar}
+    {desc:**User\:** $mention}
+    {field:Query:$modalAnswer[query]}
+    {footer:Click on Close Ticket to close this ticket once your enquiries have been resolved:$getImage[1157972660354031636;0]}
+    {button:Close Ticket:red:<\:TicketOpen\:1039861053862985759>:ticket-Close-$privacyLevel}
+]
+$interactionReply[
+    {color:479f4b}
+    {author:Ticket Opened:$getImage[1157974096198508604;7]}
+    {desc:Your ticket is <#$ticketID>.}
+    {footer:The staff have been notified and will soon respond to your enquiry.:$getImage[1157972358620004352;8]}
+;yes]
+$addUsersToThread[$ticketID;$userID]
+$objectSet[embed;desc;User;$mention]
+$objectSet[embed;desc;ID;`$ticketID`]
+$objectSet[embed;desc;Query;$modalAnswer[query]]
+$objectSet[thread;$objectGet[$privacyLevel;thread]]
+$includeLibrary[modlog]
+$setUserVar[ticketID;$ticketID]
+$let[escText;$regexReplace[$modalAnswer[query];[\\"];g;\\$&]]
+$let[escText;$regexReplace[$escText;\n;g;\n]]
+$let[query;$regexReplace[$escText;\t;g;\t]]
+$setChannelVar[ticketData;{"client":"$userID","query":"$query"};$ticketID]

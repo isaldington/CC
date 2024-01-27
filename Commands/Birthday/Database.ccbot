@@ -1,10 +1,6 @@
 /*
     Type: Library
-    Trigger: birthday
-    Min Perms: None
-    Ignore Roles: None
-    Run only in: None
-    channelUsed: Run in Channel
+    Library Name: Birthday
 */
 $function[getImage;id;i]{
     $if[$i==undefined]{

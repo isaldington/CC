@@ -1,12 +1,11 @@
 /*
     Type: Slash Command
-    Trigger: guessword
-    Min Perms: None
-    Ignore Roles: None
-    Run only in: #game-room
-    channelUsed: Run in Channel
+    Slash ID: guessword
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
 */
-$onlyIf[$authorID==$ownerID;{private}{color:db3539}{title:Coming soon!}]
 $function[getImage;id;i]{
     $let[index;$conditional[$i!=undefined;$i;0]]
     $return[$msg[1157421810288185384;$id;attachment;$index]]

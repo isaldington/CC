@@ -1,0 +1,96 @@
+/*
+    Type: On Modal Submit
+    Modal ID: poll
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$function[getImage;id;i]{
+    $if[$i==undefined]{
+        $let[i;0]
+    }
+    $return[$msg[1157421810288185384;$id;attachment;$i]]
+}
+$objectCreate[{
+    "outcome":{
+        "success":{
+            "color":"479f4b",
+            "icon":{
+                "id":"1157974096198508604",
+                "index":7
+            }
+        },
+        "error":{
+            "color":"db3539",
+            "icon":{
+                "id":"1157974096198508604",
+                "index":6
+            }
+        },
+        "poll":{
+            "color":"1be6f1",
+            "icon":{
+                "id":"1157972790482309241",
+                "index":2
+            }
+        }
+    },
+    "data":$newPollData
+}]
+$arrayCreate[$modalAnswer[options];#NL#]
+$onlyIf[$arrayLength>1&&$arrayLength<16;
+    {private}
+    {color:$objectGet[outcome;error;color]}
+    {author:Error:$getImage[$spread[,;$objectValues[outcome;error;icon]]]}
+    {description:You need to specify between **2** and **15** options. You have specified `$arrayLength`.}
+]
+$let[pollChannel;$objectGet[data;channel]]
+$if[$objectGet[data;image]!=]
+    $let[pollImage;$objectGet[data;image]]
+$else
+    $let[pollImage;]
+$endIf
+$let[endTimestamp;$objectGet[data;timestamp]]
+$let[pollEmbed;
+    {color:$objectGet[outcome;poll;color]}
+    {author:Poll:$getImage[$spread[,;$objectValues[outcome;poll;icon]]]}
+    {thumbnail:$pollImage}
+    {title:$modalAnswer[topic]}
+]
+$arrayPush[- Click on an option to cast your vote for it.;instructions]
+$arrayPush[- Click on `Check` to see what you have voted for.;instructions]
+$arrayPush[- Click on `Reset` to reset your vote.;instructions]
+$let[pollID;$channelSendMessage[$pollChannel;
+    $pollEmbed
+    {pin}
+    {desc:**End\:** <t\:$endTimestamp\:f> (<t\:$endTimestamp\:R>)}
+    {field:Instructions:$arrayJoin[#NL#;instructions]}
+    $forEach[i;$seq[1;$arrayLength]]{
+        {button:$arrayGet[$i]:green::poll-Vote$arrayGet[$i]}
+    }
+    {button:Check:blurple::poll-Check:yes}
+    {button:Reset:red::poll-Reset}
+;yes]]
+$interactionReply[
+    {color:$objectGet[outcome;success;color]}
+    {author:Poll Created:$getImage[$spread[,;$objectValues[outcome;success;icon]]]}
+    {desc:[Click here]($msg[$pollChannel;$pollID;url]) to view the poll.}
+;yes]
+$arrayLoop[option]{
+    $setMessageVar[count$option;0;$pollID]
+}
+$setMessageVar[options;$arrayJoin[|];$pollID]
+$setTimeout[$math[($endTimestamp-$timestamp)/1000]s;Poll - End $pollID]{
+    $forEach[option;$getMessageVar[options;$pollID];|]{
+        $arrayPush[$option - **$getMessageVar[count$option;$pollID]**;results]
+        $deleteMessageVar[count$option;$pollID]
+    }
+    $deleteMessage[$pollChannel;$pollID]
+    $channelSendMessage[$pollChannel;
+        $pollEmbed
+        {field:Results:$arrayJoin[#NL#;results]}
+    ]
+    $resetUserVar[vote$pollID]
+    $deleteMessageVar[options;$pollID]
+}
