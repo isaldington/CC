@@ -1,0 +1,37 @@
+/*
+    Type: Library
+    Library Name: base_conversion
+*/
+$function[hexToDec;num]{
+    $let[num;$toLowercase[$num]]
+    $arrayCreate[$num;;num]
+    $arrayReverse[num]
+    $let[totVal;0]
+    $arrayLoop[i;n;num]{
+        $if[$isNumber[$i]==true]{
+            $let[val;$i]
+        $else
+            $let[val;$math[9+$arraySearch[$i;hex]]]
+        }
+        $let[totVal;$math[$totVal+$val*16^($n-1)]]
+    }
+    $return[$totVal]
+}
+$function[decToHex;num]{
+    $let[n;$math[ceil(log($num)/log(16))]]
+    $let[rem;$num]
+    $forEach[i;$seq[1;$n]]{
+        $let[idx;$math[$n-$i]]
+        $let[quot;$math[floor($rem/16^($idx))]]
+        $let[rem;$math[$rem-$quot*16^$idx]]
+        $if[$quot<10]{
+            $let[val;$quot]
+        $else
+            $let[val;$arrayGet[$math[$quot-9];hex]]
+        }
+        $arrayPush[$val;num]
+    }
+    $return[$arrayJoin[;num]]
+    $arrayClear[num]
+}
+$arrayCreate[a,b,c,d,e,f;,;hex]
