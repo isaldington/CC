@@ -1,18 +1,20 @@
 /*
     Type: Library
-    Library Name: guessword
+    Library Name: hangman
 */
 $function[getImage;id;i]{
     $let[index;$conditional[$i!=undefined;$i;0]]
     $return[$msg[1157421810288185384;$id;attachment;$index]]
 }
-$let[gameIcon;$getImage[1163496192500568075;1]]
+$let[gameIcon;$getImage[1202534195155566642;0]]
 $let[errorIcon;$getImage[1157974096198508604;6]]
 $let[successIcon;$getImage[1157974096198508604;7]]
+$let[progIndex;$conditional[$gameOver==true&&$outcome!=win;9;$objectGet[guess_incorrect]]]
+$let[progImage;$getImage[1202532324613292042;$progIndex]]
 $if[$gameOver==true]
     $removeButtons[$messageID]
     $let[word;$objectGet[word]]
-    $let[guessCount;$objectGet[guess_count]]
+    $let[guessCount;$objectGet[guess_total]]
     $objectCreate[{
         "win":{
             "color":"479f4b",
@@ -35,7 +37,8 @@ $if[$gameOver==true]
         {color:$objectGet[$outcome;color]}
         {author:$nickname:$authorAvatar}
         {thumbnail:$gameIcon}
-        {title:Guess the Word}
+        {image:$progImage}
+        {title:Hangman}
         {desc:$objectGet[$outcome;message]}
         {footer:$resultText#NL#$footerMsg:$resultIcon}
     ]
@@ -45,16 +48,16 @@ $else
     $objectSet[button;page;label;More Letters]
     $objectSet[button;page;style;blurple]
     $objectSet[button;page;emoji;]
-    $objectSet[button;page;id;guessword-$pageID-$authorID]
+    $objectSet[button;page;id;hangman-$pageID-$authorID]
     $objectSet[button;page;newLine;yes]
     $objectSet[button;guess;label;Guess Word]
     $objectSet[button;guess;style;green]
     $objectSet[button;guess;emoji;]
-    $objectSet[button;guess;id;guessword-word-$authorID]
+    $objectSet[button;guess;id;hangman-word-$authorID]
     $objectSet[button;quit;label;Quit]
     $objectSet[button;quit;style;red]
     $objectSet[button;quit;emoji;]
-    $objectSet[button;quit;id;guessword-quit1-$authorID]
+    $objectSet[button;quit;id;hangman-quit1-$authorID]
     $let[buttons;$objectLoop[parameter;;i;button]{
         $if[$action==page2&&$i>20]
             {button:$objectValues[:;button;$parameter]}
@@ -75,10 +78,13 @@ $else
         {color:$embedColor}
         {author:$nickname:$authorAvatar}
         {thumbnail:$gameIcon}
-        {title:Guess the Word}
+        {image:$progImage}
+        {title:Hangman}
         {desc:$display}
-        {footer:$resultText#NL#Remaining Guesses\: $remGuess:$resultIcon}
-        $conditional[$arrayLength[history]>0;{field:Guessed Words:$arrayJoin[, ;history]};]
+        {footer:$resultText#NL#Remaining Lives\: $remGuess:$resultIcon}
+        $forEach[var;letter,word;,]{
+            $conditional[$arrayLength[history_$var]>0;{field:Incorrect $toLocaleUppercase[$var]s:$arrayJoin[, ;history_$var]};]
+        }
         $buttons
     ]
 $endIf

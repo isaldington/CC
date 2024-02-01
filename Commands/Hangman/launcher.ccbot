@@ -1,0 +1,52 @@
+/*
+    Type: Slash Command
+    Slash ID: hangman
+    Required Permission: None
+    Ignored Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$function[getImage;id;i]{
+	$let[index;$conditional[$i!=undefined;$i;0]]
+	$return[$msg[1157421810288185384;$id;attachment;$index]]
+}
+$let[data;$getUserVar[wordGuessSession]]
+$if[$isValidObject[$data]==true]{
+	$objectCreate[$data]
+	$let[sessionURL;$msg[$objectGet[session;channel];$objectGet[session;message];url]]
+}
+$onlyIf[$data==undefined;
+	{private}
+	{color:db3539}
+	{author:Error:$getImage[1157974096198508604;6]}
+	{desc:You already have an active session. [Click here]($sessionURL) to jump to the session.}
+]
+$let[numGuess;9]
+$objectCreate[[
+	"- Click on `Start` to begin the game or `Quit` to quit.",
+	"- A word will be randomly chosen. The objective of the game is to guess the word.",
+	"- During each attempt, you are given the option to select a letter, guess the word as a whole, or quit.",
+	" - If you guessed a word, you will only be informed whether the guess is correct or incorrect.",
+	" - If you guessed a letter, the word will be partially filled with the chosen letter in the correct position(s), if the word has it.",
+	" - If you quit, the game ends and the word is revealed.",
+	"- You are given **$numGuess** lives. You lose **1** life for each incorrect guess."
+]]
+$interactionReply[
+	{color:f89147}
+	{author:$nickname:$authorAvatar}
+	{title:Hangman}
+	{thumbnail:$getImage[1202534195155566642;0]}
+	{desc:Welcome to a game of *Hangman*. Please read the instructions below before starting the game.}
+	{field:How to Play:$objectValues[#NL#]}
+	{button:Start:blurple::hangman-start-$authorID}
+	{button:Quit:red::hangman-quit0-$authorID}
+]
+$setUserVar[wordGuessSession;{
+	"guess_incorrect":0,
+	"guess_total":0,
+	"max_guess":$numGuess,
+	"session":{
+		"channel":"$channelID",
+		"message":"$sentMessageID"
+	}
+}]
