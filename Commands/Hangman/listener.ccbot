@@ -17,9 +17,9 @@ $let[action;$arrayGet[2;button]]
 $objectCreate[$getUserVar[wordGuessSession]]
 $let[remGuess;$math[$objectGet[max_guess]-$objectGet[guess_incorrect]]]
 $forEach[var;letter,word;,]{
-    $if[$objectKeyExists[previous_guess;$var]==true]{
-	    $arrayCreate[$objectGet[previous_guess;$var];,;history_$var]
-    }
+	 $if[$objectKeyExists[previous_guess;$var]==true]{
+		 $arrayCreate[$objectGet[previous_guess;$var];,;history_$var]
+	 }
 }
 $if[$action==quit0]{
 	$deleteMessage[$messageID]
@@ -76,16 +76,17 @@ $elseif[$action==start||$action==page1||$action==page2]
 	$includeLibrary[hangman]
 $endelseif
 $elseif[$regexCheck[$action;^letter[a-z]$]==true]
-    $objectIncrease[guess_total;1]
-    $let[guess;$regexMatch[$action;[a-z]$]]
-    $let[capital;$toUppercase[$guess]]
-    $if[$objectKeyExists[previous_guess;letter]==true]
+	 $objectIncrease[guess_total;1]
+	 $let[guess;$regexMatch[$action;[a-z]$]]
+	 $let[capital;$toUppercase[$guess]]
+	 $if[$objectKeyExists[previous_guess;letter]==true]
 	 $arrayCreate[$objectGet[previous_guess;letter];,;history_letter]
-    $endIf
-    $if[$checkContains[$objectGet[word];$capital]==false]
-	    $objectIncrease[guess_incorrect;1]
-	    $arrayPush[$capital;history_letter]
-	    $let[remGuess;$math[$remGuess-1]]
+	 $endIf
+	 $if[$checkContains[$objectGet[word];$capital]==false]
+		 $objectIncrease[guess_incorrect;1]
+		 $arrayPush[$capital;history_letter]
+		 $arraySort[yes;alpha;history_letter]
+		 $let[remGuess;$math[$remGuess-1]]
 	$endIf
 	$arrayCreate[$objectGet[word];;word]
 	$arrayCreate[$objectGet[guess];,;guess]
@@ -99,7 +100,7 @@ $elseif[$regexCheck[$action;^letter[a-z]$]==true]
 		$let[check$toLocaleUppercase[$parameter];$arrayJoin[,;$parameter]]
 	}
 	$let[gameOver;$checkCondition[$remGuess==0||$checkGuess==$checkWord]]
-    $objectSet[previous_guess;letter;$arrayJoin[,;history_letter]]
+	$objectSet[previous_guess;letter;$arrayJoin[,;history_letter]]
 	$if[$gameOver==false]
 		$objectSet[guess;$arrayJoin[,;guess]]
 		$let[resultText;$conditional[$isCorrectLetter==true;Correct;Incorrect]]
