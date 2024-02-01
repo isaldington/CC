@@ -229,16 +229,16 @@ $objectCreate[{
                "<#1161670740064620604>"
             ]
          },
-         "guessword":{
+         "hangman":{
             "emoji":"🅰️",
-            "title":"Guess the Word",
+            "title":"Hangman",
             "thumbnail":{
                "id":"1163496192500568075",
                "index":1
             },
             "type":"slash",
-            "id":"1163027172412379226",
-            "description":"Play a game of Guess the Word",
+            "id":"1202573447306153994",
+            "description":"Play a game of Hangman",
             "channel":[
                "<#1161670740064620604>"
             ]
