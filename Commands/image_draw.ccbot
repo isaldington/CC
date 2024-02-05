@@ -3,21 +3,21 @@
     Library Name: image_draw
 */
 $objectLoop[i]{
-	 $let[type;$objectGet[$i;type]]
-	 $if[$type==fill]{
-		  $imageBorderRad[$objectGet[$i;radius]]
-		  $imageFill[$objectGet[$i;color];$spread[,;$objectValues[,;$i;parameter]]]
-	 $elseif[$type==image]
-		  $imageLoadFromURL[$objectGet[$i;name];$objectGet[$i;url]]
-		  $imageDraw[$objectGet[$i;name];$spread[,;$objectValues[,;$i;parameter]]]
-	 $endelseif
-	 $elseif[$type==text]
-		  $imageTextAlign[$objectGet[$i;alignment]]
-		  $imageTextBaseline[$objectGet[$i;baseline]]
-		  $imageUseFont[$objectGet[$i;font]]
-		  $imageTextSize[$objectGet[$i;size]]
-		  $imageTextWeight[$objectGet[$i;weight]]
-		  $imageTextFill[$objectGet[$i;content];$spread[,;$objectValues[,;$i;parameter]]]
-	 $endelseif
-	 }
+	$let[type;$objectGet[$i;type]]
+	$if[$type==fill]{
+		$imageBorderRad[$objectGet[$i;radius]]
+		$imageFill[$objectGet[$i;color];$spread[,;$objectValues[,;$i;parameter]]]
+	$elseif[$type==image]
+		$imageLoadFromURL[$objectGet[$i;name];$objectGet[$i;url]]
+		$imageDraw[$objectGet[$i;name];$spread[,;$objectValues[,;$i;parameter]]]
+	$endelseif
+	$elseif[$type==text]
+		$imageTextAlign[$objectGet[$i;alignment]]
+		$imageTextBaseline[$objectGet[$i;baseline]]
+		$imageUseFont[$objectGet[$i;font]]
+		$imageTextSize[$objectGet[$i;size]]
+		$imageTextWeight[$objectGet[$i;weight]]
+		$imageTextFill[$objectGet[$i;content];$spread[,;$objectValues[,;$i;parameter]]]
+	$endelseif
+	}
 }

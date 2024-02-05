@@ -8,27 +8,27 @@
 */
 $let[guess;$toLowercase[$modalAnswer[guess]]]
 $onlyIf[$jsonRequest[http://fajfaj.pythonanywhere.com/wordle/check/$guess;isValid]==true;
-    {private}
-    {color:db3539}
-    {author:Error:$msg[1157421810288185384;1157974096198508604;attachment;6]}
-    {desc:That is not a valid guess. Please try again.}
+	{private}
+	{color:db3539}
+	{author:Error:$msg[1157421810288185384;1157974096198508604;attachment;6]}
+	{desc:That is not a valid guess. Please try again.}
 ]
 $objectCreate[{
-    "data":$getUserVar[wordleSession],
-    "outcome":{
-        "win":{
-            "color":"479f4b",
-            "icon":7,
-            "message":"Congratulations! You have guessed the word correctly.",
-            "title":"You Win"
-        },
-        "lose":{
-            "color":"db3539",
-            "icon":6,
-            "message":"Sorry! You have failed to guess the word.",
-            "title":"You Lose"
-        }
-    }
+	"data":$getUserVar[wordleSession],
+	"outcome":{
+		"win":{
+			"color":"479f4b",
+			"icon":7,
+			"message":"Congratulations! You have guessed the word correctly.",
+			"title":"You Win"
+		},
+		"lose":{
+			"color":"db3539",
+			"icon":6,
+			"message":"Sorry! You have failed to guess the word.",
+			"title":"You Lose"
+		}
+	}
 }]
 $objectIncrease[data;guess;count;1]
 $let[word;$objectGet[data;word]]
@@ -37,25 +37,25 @@ $let[guessIndex;$math[$guessCount-1]]
 $arrayCreate[$guess;;guess]
 $arrayCreate[$word;;word]
 $arrayLoop[letter;;word]{
-    $objectIncrease[count;$letter;1]
+	$objectIncrease[count;$letter;1]
 }
 $arrayLoop[letter;i;guess]{
-    $if[$letter==$arrayGet[$i;word]]{
-        $objectIncrease[count;$letter;-1]
-    }
+	$if[$letter==$arrayGet[$i;word]]{
+		$objectIncrease[count;$letter;-1]
+	}
 }
 $arrayLoop[letter;i;guess]{
-    $let[position;$math[$i-1]]
-    $objectSet[data;history;$guessIndex;$position;letter;$letter]
-    $if[$letter==$arrayGet[$i;word]]{
-        $let[fill;green]
-    $elseif[$regexCheck[$word;$letter]==true&&$objectGet[count;$letter]>0]
-        $let[fill;yellow]
-        $objectIncrease[count;$letter;-1]
-    $endelseif
-    $else
-        $let[fill;grey]
-    }
-    $objectSet[data;history;$guessIndex;$position;color;$fill]
+	$let[position;$math[$i-1]]
+	$objectSet[data;history;$guessIndex;$position;letter;$letter]
+	$if[$letter==$arrayGet[$i;word]]{
+		$let[fill;green]
+	$elseif[$regexCheck[$word;$letter]==true&&$objectGet[count;$letter]>0]
+		$let[fill;yellow]
+		$objectIncrease[count;$letter;-1]
+	$endelseif
+	$else
+		$let[fill;grey]
+	}
+	$objectSet[data;history;$guessIndex;$position;color;$fill]
 }
 $includeLibrary[wordle]

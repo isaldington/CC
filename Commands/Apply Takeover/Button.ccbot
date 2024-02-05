@@ -9,55 +9,55 @@
 $objectCreate[$getServerVar[birthdayUsers]]
 $arrayCreate[207962211233038338,224881047463002112,253576624962928640,258051817491922944,262286305982021634,302121096852013057,352917446434488320,418744768655392769,466556481496547338,479827457017380884,511742114120335361,514496302164475918,535634881435271168,536024851098632244,597330838253862933,635641386024042496,699604758729588786,750097538886926386,790025711032991767,806825901537886208,812212598594338845,820614948438409227,835412642893791263,840387358557732876,874288760475492403;,;blacklist]
 $if[$arrayInclude[$userID;blacklist]==true]{
-    $let[reason;You already had a Takeover Day in your honour.]
+	$let[reason;You already had a Takeover Day in your honour.]
 $elseif[$objectKeyExists[$userID]==false]
-    $let[reason;Your birthday has not been registered. Please call </birthday-add\:1129996188406525993> in <#860052083150684190> to register your birthday.]
+	$let[reason;Your birthday has not been registered. Please call </birthday-add\:1129996188406525993> in <#860052083150684190> to register your birthday.]
 $endelseif
 $elseif[$getUserVar[takeover_hasApplied]==true]
-    $let[reason;You have already made an application.]
+	$let[reason;You have already made an application.]
 $endelseif
 }
 $onlyIf[$get[reason]==undefined;
-    {private}
-    {color:db3539}
-    {author:Error:$msg[1157421810288185384;1157974096198508604;attachment;6]}
-    {desc:$reason}
+	{private}
+	{color:db3539}
+	{author:Error:$msg[1157421810288185384;1157974096198508604;attachment;6]}
+	{desc:$reason}
 ]
 $objectCreate[{
-    "Camila":"<:Camila:1068428302328537129>",
-    "Cathy":"<:Cathy:1068428310985580584>",
-    "Isabella":"<:Bella:1068428291666608168>",
-    "Jade":"<:Jade:1068428329310502982>",
-    "Jill":"<:Jill:1068428334347849818>",
-    "Josy":"<:Josy:1068428344384827432>",
-    "KRJ":"<:KRJHappy:1060911802709463162>",
+	"Camila":"<:Camila:1068428302328537129>",
+	"Cathy":"<:Cathy:1068428310985580584>",
+	"Isabella":"<:Bella:1068428291666608168>",
+	"Jade":"<:Jade:1068428329310502982>",
+	"Jill":"<:Jill:1068428334347849818>",
+	"Josy":"<:Josy:1068428344384827432>",
+	"KRJ":"<:KRJHappy:1060911802709463162>",
     "Lily":"<:Lily:1068428349090828349>",
-    "Maya":"<:Maya:1068428354702815272>",
-    "Melanie":"<:Melanie:1068428363863183422>",
+	"Maya":"<:Maya:1068428354702815272>",
+	"Melanie":"<:Melanie:1068428363863183422>",
     "Nicole":"<:Nicole:1068428374604795964>",
-    "Quinn":"<:Quinn:1068428384104894524>",
-    "Riona":"<:Riona:1068428388412444713>",
+	"Quinn":"<:Quinn:1068428384104894524>",
+	"Riona":"<:Riona:1068428388412444713>",
     "Sage":"<:Sage:1068428395685351444>",
-    "Sally":"<:Sally:1068428400357810226>",
-    "Sarah":"<:Sarah:1068428410709364767>",
-    "Zoey":"<:Zoey:1068428422063325216>"
+	"Sally":"<:Sally:1068428400357810226>",
+	"Sarah":"<:Sarah:1068428410709364767>",
+	"Zoey":"<:Zoey:1068428422063325216>"
 }]
 $arrayCreate[$objectKeys[,];,]
 $let[step;16]
 $let[nTot;$math[ceil($arrayLength/$step)]]
 $interactionReply[
-    {menu:
-        {id=takeover_apply}
-        {ph=Select a girl}
-        {max=1}
-        $forEach[n;$seq[1;$nTot]]{
-            $arrayCreate[$objectKeys[,];,]
-            $arraySlice[$math[$step*($n-1)+1];$math[min($arrayLength,$step*$n)]]
-            $forEach[girl;$arrayJoin[,];,]
-                {emoji=$objectGet[$girl]}
-                {label=$girl}
-                {value=$girl}
-            $endForEach
-        }
-    }
+	{menu:
+		{id=takeover_apply}
+		{ph=Select a girl}
+		{max=1}
+		$forEach[n;$seq[1;$nTot]]{
+			$arrayCreate[$objectKeys[,];,]
+			$arraySlice[$math[$step*($n-1)+1];$math[min($arrayLength,$step*$n)]]
+			$forEach[girl;$arrayJoin[,];,]
+				{emoji=$objectGet[$girl]}
+				{label=$girl}
+				{value=$girl}
+			$endForEach
+		}
+	}
 ;yes]

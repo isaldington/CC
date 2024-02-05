@@ -7,48 +7,48 @@
     Channel Used: Run in Channel
 */
 $function[getImage;id;i]{
-	 $if[$i==undefined]{
-		  $let[i;0]
-	 }
-	 $return[$msg[1157421810288185384;$id;attachment;$i]]
+	$if[$i==undefined]{
+		$let[i;0]
+	}
+	$return[$msg[1157421810288185384;$id;attachment;$i]]
 }
 $let[period;$getOption[period]]
 $if[$month[no]==12]{
-	 $let[numDay;31]
+	$let[numDay;31]
 $else
-	 $let[curMon;$padLeft[$month[no];2;0]-01-$year]
-	 $let[nexMon;$padLeft[$math[$month[no]+1];2;0]-01-$year]
-	 $let[numDay;$math[($dateToTime[$nexMon]-$dateToTime[$curMon])/86400000]]
+	$let[curMon;$padLeft[$month[no];2;0]-01-$year]
+	$let[nexMon;$padLeft[$math[$month[no]+1];2;0]-01-$year]
+	$let[numDay;$math[($dateToTime[$nexMon]-$dateToTime[$curMon])/86400000]]
 }
 $if[$getUserVar[reminder]!=undefined]{
-	 $objectCreate[$getUserVar[reminder]]
-	 $arrayPush[You already have an active reminder. Call </remind-cancel:1146924806298677258> to cancel it.]
-	 $arrayPush[- **Time**\: <t\:$objectGet[time]\:f> (<t\:$objectGet[time]\:R>)]
-	 $arrayPush[- **Message**\:$objectGet[message]]
-	 $let[reason;$arrayJoin[#NL#]]
+	$objectCreate[$getUserVar[reminder]]
+	$arrayPush[You already have an active reminder. Call </remind-cancel:1146924806298677258> to cancel it.]
+	$arrayPush[- **Time**\: <t\:$objectGet[time]\:f> (<t\:$objectGet[time]\:R>)]
+	$arrayPush[- **Message**\:$objectGet[message]]
+	$let[reason;$arrayJoin[#NL#]]
 $elseif[$regexCheck[$period;^\d+[dhmw]$;i]==false]
-	 $let[reason;Invalid period. It must be a number followed by `m`/`h`/`d`/`w`.]
+	$let[reason;Invalid period. It must be a number followed by `m`/`h`/`d`/`w`.]
 $endelseif
 $elseif[$parseTime[$period]>$math[$numDay*86400000]]
-	 $let[reason;The maximum period is 1 month. Please enter a shorter period.]
+	$let[reason;The maximum period is 1 month. Please enter a shorter period.]
 $endelseif
 }
 $onlyIf[$get[reason]==undefined;
-	 {private}
-	 {color:db3539}
-	 {author:Error:$getImage[1157974096198508604;6]}
-	 {desc:$reason}
+	{private}
+	{color:db3539}
+	{author:Error:$getImage[1157974096198508604;6]}
+	{desc:$reason}
 ]
 $let[reminderMsg;$getOption[message]]
 $let[reminderToken;$setTimeout[$period;Reminder - $authorID;;yes]{
-	 $sendMessage[
-		  <@$authorID>
-		  {color:ffcf03}
-		  {title:Reminder}
-		  {thumbnail:$getImage[1157972790482309241;7]}
-		  {desc:$reminderMsg}
-	 ]
-	 $deleteUserVar[reminder]
+	$sendMessage[
+	    <@$authorID>
+		{color:ffcf03}
+		{title:Reminder}
+		{thumbnail:$getImage[1157972790482309241;7]}
+		{desc:$reminderMsg}
+	]
+	$deleteUserVar[reminder]
 }]
 $let[time;$math[round(($timeStamp+$parseTime[$period])/1000)]]
 $objectSet[message;$reminderMsg]
@@ -56,7 +56,7 @@ $objectSet[time;$time]
 $objectSet[token;$reminderToken]
 $setUserVar[reminder;$getObject]
 $interactionReply[
-	 {color:479f4b}
-	 {author:Success:$getImage[1157974096198508604;7]}
-	 {desc:The reminder has been set for <t\:$time\:f> (<t\:$time\:R>).}
+	{color:479f4b}
+	{author:Success:$getImage[1157974096198508604;7]}
+	{desc:The reminder has been set for <t\:$time\:f> (<t\:$time\:R>).}
 ]

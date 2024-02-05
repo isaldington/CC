@@ -8,91 +8,91 @@
 */
 $redirectErrors[997972754915655700]
 $function[getImage;id;i]{
-    $if[$i==undefined]{
-        $let[i;0]
-    }
-    $return[$msg[1157421810288185384;$id;attachment;$i]]
+	$if[$i==undefined]{
+		$let[i;0]
+	}
+	$return[$msg[1157421810288185384;$id;attachment;$i]]
 }
 $let[action;$regexMatch[$buttonID;(?<=ticket-)[A-Za-z]+]]
 $let[privacyLevel;$regexMatch[$buttonID;Private|General]]
 $if[$action==Open]
-    $onlyIf[$getUserVar[ticketID]==undefined;
-        {private}
-        {color:b31c11}
-        {author:Error:$getImage[1157974096198508604;6]}
-        {desc:You already have an active ticket <#$getUserVar[ticketID]>.}
-    ]
-    $modal[
-        {id=ticket-$privacyLevel}
-        {title=Open a $privacyLevel Ticket}
-        {input=
-            {id=query}
-            {name=Enquiry}
-            {ph=Describe your enquiry}
-            {type=long}
-            {min=20}
-            {max=200}
-        }
-    ]
+	$onlyIf[$getUserVar[ticketID]==undefined;
+		{private}
+		{color:b31c11}
+		{author:Error:$getImage[1157974096198508604;6]}
+		{desc:You already have an active ticket <#$getUserVar[ticketID]>.}
+	]
+	$modal[
+		{id=ticket-$privacyLevel}
+		{title=Open a $privacyLevel Ticket}
+		{input=
+			{id=query}
+			{name=Enquiry}
+			{ph=Describe your enquiry}
+			{type=long}
+			{min=20}
+			{max=200}
+		}
+	]
 $elseif[$action==Close]
-    $interactionReply[
-        {color:ffcd69}
-        {author:Close Ticket:$getImage[1157972790482309241;3]}
-        {title:Are you sure you want to close this ticket?}
-        {desc:Click on `Yes` to confirm.#NL#Click on `No` to cancel.}
-        {button:Yes:green:👍🏻:ticket-Confirm-$privacyLevel}
-        {button:No:red:👎🏻:ticket-Cancel}
-    ;yes]
+	$interactionReply[
+		{color:ffcd69}
+		{author:Close Ticket:$getImage[1157972790482309241;3]}
+		{title:Are you sure you want to close this ticket?}
+		{desc:Click on `Yes` to confirm.#NL#Click on `No` to cancel.}
+		{button:Yes:green:👍🏻:ticket-Confirm-$privacyLevel}
+		{button:No:red:👎🏻:ticket-Cancel}
+	 ;yes]
 $endelseif
 $elseif[$action==Cancel]
-    $interactionDelete[$messageID]
+	$interactionDelete[$messageID]
 $endelseif
 $elseif[$action==Confirm]
-    $objectCreate[$getChannelVar[ticketData]]
-    $let[memberID;$objectGet[client]]
-    $let[query;$objectGet[query]]
-    $let[ticketID;$channelID]
-    $objectCreate[{
-        "embed":{
-            "author":"$memberID",
-            "color":"b31c11",
-            "desc":{
-                "User":"<@$memberID>",
-                "Ticket ID":"`$ticketID`",
-                "Closed By":"$mention"
-            },
-            "footer":"$memberID",
-            "title":"Ticket Closed"
-        },
-        "log_thread":{
-            "General":"",
-            "Private":"1131229297735118988"
-        },
-        "transcript_channel":{
-            "General":"1039597558273675354",
-            "Private":"1131163960519958600"
-        }
-    }]
-    $objectSet[embed;desc;Query;$query]
-    $objectSet[thread;$objectGet[log_thread;$privacyLevel]]
-    $if[$userExists[$memberID]==true]
-        $let[embedColor;$userRoleColor[$memberID]]
-    $else
-        $let[embedColor;transparent]
-    $endIf
-    $transcriptChannel[$ticketID;$objectGet[transcript_channel;$privacyLevel];
-        {color:$embedColor}
-        {author:$username[$memberID]:$userAvatar[$memberID]}
-        {title:Ticket Transcript}
-        {desc:**User\:** <@$memberID>}
-        {field:Query:$query}
-        {footer:ID\: $memberID}
-        {timestamp}
-    ;transcript_$get[ticketID]_$username[$memberID];no]
-    $deleteThreads[$ticketID]
-    $arrayCreate[$getChannelVar[webhook;859961383261306890];, ]
-    $includeLibrary[modlog]
-    $deleteUserVar[ticketID;$memberID]
-    $deleteChannelVar[ticketData;$ticketID]
+	$objectCreate[$getChannelVar[ticketData]]
+	$let[memberID;$objectGet[client]]
+	$let[query;$objectGet[query]]
+	$let[ticketID;$channelID]
+	$objectCreate[{
+		"embed":{
+			"author":"$memberID",
+			"color":"b31c11",
+			"desc":{
+				"User":"<@$memberID>",
+				"Ticket ID":"`$ticketID`",
+				"Closed By":"$mention"
+			},
+			"footer":"$memberID",
+			"title":"Ticket Closed"
+		},
+		"log_thread":{
+			"General":"",
+			"Private":"1131229297735118988"
+		},
+		"transcript_channel":{
+		    "General":"1039597558273675354",
+			"Private":"1131163960519958600"
+		}
+	}]
+	$objectSet[embed;desc;Query;$query]
+	$objectSet[thread;$objectGet[log_thread;$privacyLevel]]
+	$if[$userExists[$memberID]==true]
+		$let[embedColor;$userRoleColor[$memberID]]
+	$else
+		$let[embedColor;transparent]
+	$endIf
+	$transcriptChannel[$ticketID;$objectGet[transcript_channel;$privacyLevel];
+		{color:$embedColor}
+		{author:$username[$memberID]:$userAvatar[$memberID]}
+		{title:Ticket Transcript}
+		{desc:**User\:** <@$memberID>}
+		{field:Query:$query}
+		{footer:ID\: $memberID}
+		{timestamp}
+	;transcript_$get[ticketID]_$username[$memberID];no]
+	$deleteThreads[$ticketID]
+	$arrayCreate[$getChannelVar[webhook;859961383261306890];, ]
+	$includeLibrary[modlog]
+	$deleteUserVar[ticketID;$memberID]
+	$deleteChannelVar[ticketData;$ticketID]
 $endelseif
 $endIf

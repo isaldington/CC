@@ -7,106 +7,106 @@
     Channel Used: Run in Channel
 */
 $objectCreate[{
-	 "settings":{
-		  "time":{
-				"past":false,
-				"present":false,
-				"future":true
-		  },
-		  "option":{
-				"year":true,
-				"time":true
-		  },
-		  "time_limit":"30d"
-	 }
+	"settings":{
+		"time":{
+			"past":false,
+			"present":false,
+			"future":true
+		},
+		"option":{
+			"year":true,
+			"time":true
+		},
+		"time_limit":"30d"
+	}
 }]
 $includeLibrary[datecheck]
 $let[giveawayChannel;1025793930891108425]
 $let[winnerCount;$getOption[winner]]
 $if[$regexCheck[$getOption[image];^$|(?<=\d{19,}/).+\.(?:jpe?g|png|webp)(?=\?ex);i]==false]{
-	 $arrayPush[- Image must be `jpg`,`png`, or `webp`.;error]
+	$arrayPush[- Image must be `jpg`,`png`, or `webp`.;error]
 }
 $if[$regexCheck[$winnerCount;^\d+$]==false||$winnerCount<1]{
-	 $arrayPush[- `Winner` must be a positive whole number.;error]
+	$arrayPush[- `Winner` must be a positive whole number.;error]
 }
 $onlyIf[$arrayLength[error]==0;
-	 $errorMessage
-	 {desc:$arrayJoin[#NL#;error]}
-	 {footer:Error Count\: $arrayLength[error]}
+	$errorMessage
+	{desc:$arrayJoin[#NL#;error]}
+	{footer:Error Count\: $arrayLength[error]}
 ]
 $if[$getOption[image]!=]{
-	 $let[giveawayIcon;$getOption[image]]
+	$let[giveawayIcon;$getOption[image]]
 $else
-	 $let[giveawayIcon;$getImage[1157972517185654795;7]]
+	$let[giveawayIcon;$getImage[1157972517185654795;7]]
 }
 $let[sponsor;<@$getOption[sponsor]>]
 $let[setTimestampS;$math[round($setTimestamp/1000)]]
 $objectCreate[{
-	 "Prize":"$getOption[prize]",
-	 "Sponsor":"$sponsor",
-	 "Winners":"$getOption[winner]",
-	 "End":"<t\:$setTimestampS\:f> (<t\:$setTimestampS\:R>)"
+	"Prize":"$getOption[prize]",
+	"Sponsor":"$sponsor",
+	"Winners":"$getOption[winner]",
+	"End":"<t\:$setTimestampS\:f> (<t\:$setTimestampS\:R>)"
 }]
 $objectLoop[parameter;value]{
-	 $arrayPush[**$parameter\:** $value;start]
-	 $if[$parameter!=End]{
-		  $arrayPush[**$parameter\:** $value;end]
-	 }
+	$arrayPush[**$parameter\:** $value;start]
+	$if[$parameter!=End]{
+		$arrayPush[**$parameter\:** $value;end]
+	}
 }
 $let[endDetails;$arrayJoin[#NL#;end]]
 $arrayPush[- Click `Join` to participate in this giveaway.;instructions]
 $arrayPush[- Click `Leave` to withdraw from this giveaway.;instructions]
 $let[giveawayMessage;$channelSendMessage[$giveawayChannel;
-	 {color:$userRoleColor[$clientID]}
-	 {title:Giveaway}
-	 {thumbnail:$giveawayIcon}
-	 {desc:$arrayJoin[#NL#;start]}
-	 {field:Instructions:$arrayJoin[#NL#;instructions]}
-	 {footer:Participants\: 0}
-	 {button:Join:green::giveaway-join}
-	 {button:Leave:red::giveaway-leave}
+	{color:$userRoleColor[$clientID]}
+	{title:Giveaway}
+	{thumbnail:$giveawayIcon}
+	{desc:$arrayJoin[#NL#;start]}
+	{field:Instructions:$arrayJoin[#NL#;instructions]}
+	{footer:Participants\: 0}
+	{button:Join:green::giveaway-join}
+	{button:Leave:red::giveaway-leave}
 ;yes]]
 $interactionReply[
-	 {color:479f4b}
-	 {author:Giveaway Created:$getImage[1157974096198508604;7]}
-	 {desc:[Click here]($msg[$giveawayChannel;$giveawayMessage;url]) to view the giveaway.}
+	{color:479f4b}
+	{author:Giveaway Created:$getImage[1157974096198508604;7]}
+	{desc:[Click here]($msg[$giveawayChannel;$giveawayMessage;url]) to view the giveaway.}
 ;yes]
 $setTimeout[$math[$setTimestampS-$timestamp[yes]]s;Giveaway - End $giveawayMessage]{
-	 $useChannel[$giveawayChannel]
-	 $initVar[message;participants;;$giveawayMessage]
-	 $arrayCreate[$getMessageVar[participants;$giveawayMessage];,]
-	 $deleteMessage[$giveawayChannel;$giveawayMessage]
-	 $let[participantCount;$arrayLength]
-	 $forEach[i;$seq[1;$mathMin[$winnerCount;$arrayLength]]]{
-		  $let[index;$random[1;$arrayLength]]
-		  $resetRandom
-		  $arrayPush[$arrayGet[$index];winner]
-		  $arrayRemove[$index]
-	 }
-	 $arraySort[yes;num;winner]
-	 $arrayMap[id;;winner]{
-		  <@$id>
-	 }
-	 $if[$arrayLength[winner]>0]{
-		  $let[winner;$arrayJoin[, ;winner]]
-		  $let[msgWinner;$winner]
-		  $let[plural;$conditional[$arrayLength[winner]>1;s;]]
-		  $let[results;Congratulations to the lucky winner$plural $winner! The sponsor $sponsor will soon be in touch to hand the prize over.]
-	 $else
-		  $let[winner;]
-		  $let[msgWinner;N/A]
-		  $let[results;Unfortunately, no winner had been selected as there were no participants.]
-	 }
-	 $arrayCreate[$endDetails;#NL;results]
-	 $arrayPush[**Winner\:** $msgWinner;results]
-	 $let[resultsContent;$arrayJoin[#NL#;results]]
-	 $let[resultsMessage;$sendMessage[
-		  $arrayJoin[ ;winner] $sponsor
-		  {color:$userRoleColor[$clientID]}
-		  {title:Giveaway}
-		  {thumbnail:$giveawayIcon}
-		  {desc:$endDetails#NL##NL#$results}
-		  {footer:Participants\: $participantCount}
-	 ;yes]]
-	 $deleteMessageVar[participants;$giveawayMessage]
+	$useChannel[$giveawayChannel]
+	$initVar[message;participants;;$giveawayMessage]
+	$arrayCreate[$getMessageVar[participants;$giveawayMessage];,]
+	$deleteMessage[$giveawayChannel;$giveawayMessage]
+	$let[participantCount;$arrayLength]
+	$forEach[i;$seq[1;$mathMin[$winnerCount;$arrayLength]]]{
+		$let[index;$random[1;$arrayLength]]
+		$resetRandom
+		$arrayPush[$arrayGet[$index];winner]
+		$arrayRemove[$index]
+	}
+	$arraySort[yes;num;winner]
+	$arrayMap[id;;winner]{
+		<@$id>
+	}
+	$if[$arrayLength[winner]>0]{
+		$let[winner;$arrayJoin[, ;winner]]
+		$let[msgWinner;$winner]
+		$let[plural;$conditional[$arrayLength[winner]>1;s;]]
+		$let[results;Congratulations to the lucky winner$plural $winner! The sponsor $sponsor will soon be in touch to hand the prize over.]
+	$else
+		$let[winner;]
+		$let[msgWinner;N/A]
+		$let[results;Unfortunately, no winner had been selected as there were no participants.]
+	}
+	$arrayCreate[$endDetails;#NL;results]
+	$arrayPush[**Winner\:** $msgWinner;results]
+	$let[resultsContent;$arrayJoin[#NL#;results]]
+	$let[resultsMessage;$sendMessage[
+		$arrayJoin[ ;winner] $sponsor
+		{color:$userRoleColor[$clientID]}
+		{title:Giveaway}
+		{thumbnail:$giveawayIcon}
+		{desc:$endDetails#NL##NL#$results}
+		{footer:Participants\: $participantCount}
+	;yes]]
+	$deleteMessageVar[participants;$giveawayMessage]
 }

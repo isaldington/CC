@@ -10,12 +10,12 @@ $let[guess;$toUppercase[$modalAnswer[guess]]]
 $let[word;$toUppercase[$guess]]
 $objectCreate[$getUserVar[wordGuessSession]]
 $forEach[var;letter,word;,]{
-	 $if[$objectKeyExists[previous_guess;$var]==true]{
-		 $arrayCreate[$objectGet[previous_guess;$var];,;history_$var]
-	 }
+	$if[$objectKeyExists[previous_guess;$var]==true]{
+		$arrayCreate[$objectGet[previous_guess;$var];,;history_$var]
+	}
 }
 $if[$regexCheck[$guess;^[A-Za-z]+$;i]==false]{
-	$let[reason;`$guess` is not a valid entry]
+    $let[reason;`$guess` is not a valid entry]
 $elseif[$arrayInclude[$word;history_word]==true]
 	$let[reason;You have already guessed that word]
 $endelseif
@@ -28,9 +28,9 @@ $onlyIf[$get[reason]==undefined;
 ]
 $objectIncrease[guess_total;1]
 $if[$toUppercase[$guess]!=$objectGet[word]]{
-	 $objectIncrease[guess_incorrect;1]
-	 $arrayPush[$word;history_word]
-	 $arraySort[yes;alpha;history_word]
+	$objectIncrease[guess_incorrect;1]
+	$arrayPush[$word;history_word]
+	$arraySort[yes;alpha;history_word]
 }
 $objectSet[previous_guess;word;$arrayJoin[,;history_word]]
 $let[remGuess;$math[$objectGet[max_guess]-$objectGet[guess_incorrect]]]

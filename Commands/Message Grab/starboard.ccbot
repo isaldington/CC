@@ -9,11 +9,11 @@
 $let[starboardChannel;1100392045392183378]
 $onlyIf[$channelID!=$starboardChannel&&$regexCheck[$getServerVar[starboard];(?<!\d)$messageID(?!\d)]==false]
 $if[$checkContains[$channel[$channelID;type];thread]==true]{
-    $let[threadID;$channelID]
-    $let[chnlID;$channel[$channelID;parentid]]
+	$let[threadID;$channelID]
+	$let[chnlID;$channel[$channelID;parentid]]
 $else
-    $let[threadID;]
-    $let[chnlID;$channelID]
+	$let[threadID;]
+	$let[chnlID;$channelID]
 }
 $onlyIf[$getChannelVar[webhook;$chnlID]!=undefined]
 $let[webhookName;Starboard]
@@ -21,37 +21,37 @@ $let[webhookIcon;$msg[1157421810288185384;1157972910200332339;attachment;6]]
 $let[msgChannel;$channelID]
 $let[msgID;$messageID]
 $forEach[id;$starboardChannel,$chnlID;,]{
-    $arrayCreate[$getChannelVar[webhook;$id];, ]
-    $arrayPush[$arrayGet[1];webhook]
-    $arrayPush[$arrayGet[2];webhook]
-    $arrayClear
+	$arrayCreate[$getChannelVar[webhook;$id];, ]
+	$arrayPush[$arrayGet[1];webhook]
+	$arrayPush[$arrayGet[2];webhook]
+	$arrayClear
 }
 $includeLibrary[message_content]
 $let[starboardID;$sendWebhook[
-    {id=$arrayGet[1;webhook]}
-    {token=$arrayGet[2;webhook]}
-    {username=$webhookName}
-    {avatar=$webhookIcon}
-    {msg=$output}
-    {return_id=yes}
+	{id=$arrayGet[1;webhook]}
+	{token=$arrayGet[2;webhook]}
+	{username=$webhookName}
+	{avatar=$webhookIcon}
+	{msg=$output}
+	{return_id=yes}
 ]]
 $objectCreate[{
-    "embed":{
-        "author":"$starboardee",
-        "color":"ffb134",
-        "desc":{
-            "Starboardee":"<@$starboardee>",
-            "Starboarder":"$mention"
-        },
-        "footer":"$messageID",
-        "title":"Message Starboard",
-        "url":"$msgURL"
-    }
+	"embed":{
+		"author":"$starboardee",
+		"color":"ffb134",
+		"desc":{
+		    "Starboardee":"<@$starboardee>",
+			"Starboarder":"$mention"
+		 },
+		 "footer":"$messageID",
+		 "title":"Message Starboard",
+		 "url":"$msgURL"
+	}
 }]
 $includeLibrary[modlog]
 $arrayCreate[$getServerVar[starboard];,;starboard]
 $if[$arrayLength==200]{
-    $arrayRemove[1;starboard]
+	$arrayRemove[1;starboard]
 }
 $arrayPush[$messageID;starboard]
 $setServerVar[starboard;$arrayJoin[,;starboard]]

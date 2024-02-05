@@ -9,38 +9,38 @@
 $arrayCreate[$buttonID;-]
 $let[action;$arrayGet[2]]
 $if[$action==Create]{
-    $onlyIf[$getUserVar[reportCooldown]==undefined;
-        {private}
-        {color:db3539}
-        {author:Error:$msg[1157421810288185384;1157974096198508604;attachment;6]}
-        {desc:You have recently filed a report. You can file another report <t:$getUserVar[reportCooldown]:R>.}
-    ]
-    $modal[
-        {title=Report a Message}
-        {id=report_message}
-        {input=
-            {name=Link}
-            {ph=Enter the message's link}
-            {id=url}
-        }
-        {input=
-            {name=Reason}
-            {ph=Why you want to report the message}
-            {id=reason}
-        }
-    ]
+	$onlyIf[$getUserVar[reportCooldown]==undefined;
+		{private}
+		{color:db3539}
+		{author:Error:$msg[1157421810288185384;1157974096198508604;attachment;6]}
+		{desc:You have recently filed a report. You can file another report <t:$getUserVar[reportCooldown]:R>.}
+	]
+	$modal[
+		{title=Report a Message}
+		{id=report_message}
+		{input=
+			{name=Link}
+			{ph=Enter the message's link}
+			{id=url}
+		}
+		{input=
+			{name=Reason}
+			{ph=Why you want to report the message}
+			{id=reason}
+		}
+	]
 $elseif[$action==Complete]
-    $arrayPush[$msg[$channelID;$messageID;embeddesc];message]
-    $arrayPush[**Completed By\:** <@$userID>;message]
-    $editMessage[$messageID;
-        {embed:
-            {color:transparent}
-            {title:Message Report}
-            {desc:$arrayJoin[#NL#;message]}
-            {timestamp:$timestamp}
-        }
-        {embed:$msg[$channelID;$messageID;embed;1]}
-    ;$channelID]
-    $removeButton[$messageID]
+	$arrayPush[$msg[$channelID;$messageID;embeddesc];message]
+	$arrayPush[**Completed By\:** <@$userID>;message]
+	$editMessage[$messageID;
+		{embed:
+			{color:transparent}
+			{title:Message Report}
+			{desc:$arrayJoin[#NL#;message]}
+			{timestamp:$timestamp}
+		}
+		{embed:$msg[$channelID;$messageID;embed;1]}
+	;$channelID]
+	$removeButton[$messageID]
 $endelseif
 }
