@@ -1,0 +1,92 @@
+/*
+    Type: Slash Command
+    Slash: edit-faq
+    Required Permission: None
+    Ignore Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$let[faqChannel;1143958558631796806]
+$let[date;$day/$padLeft[$month[no];2;0]/$year]
+$cacheChannelMessages[$faqChannel]
+$arrayCreate[$getChannelMessages[$faqChannel;everyone;ids;,;3;yes];,;messages]
+$objectCreate[[
+    {
+        "color":"0950a1",
+        "thumbnail":{
+            "id":"1157972517185654795",
+            "index":5
+        },
+        "title":"Frequently Asked Questions",
+        "desc":"Listed below are the most commonly asked questions regarding technical aspects of the game or this server. If the answers below did not address your question, you are more than welcome to ask.",
+        "footer":"Last Updated - $date"
+    },
+    {
+        "color":"ef77b4",
+        "thumbnail":{
+            "id":"1158153673428443167",
+            "index":4
+        },
+        "title":"Being a DIK",
+        "field":{
+            "Where can I purchase being a DIK?":"Being a DIK is available on [GOG](https://www.gog.com/en/game/being_a_dik_season_1_2_guide_bundle), [Patreon](https://www.patreon.com/DrPinkCake), and [Steam](https://store.steampowered.com/bundle/24337/Being_a_DIK_Season_1__2__The_complete_official_guide_Season_1__2/).",
+            "Which platforms are supported?":"The GOG and Steam versions only support **__Windows__** while the Patreon version also supports **__Linux__** and **__macOS__**. **__Android__** and **__iOS__** are **__NOT__** supported.",
+            "What is the most recent version?":"**__Season 2__** (GOG/Steam), **__Season 3 Episode 9__** (Patreon).",
+            "Which tier should I pledge in order to access the game?":"It depends on whether you already have a copy of the game, and which version you have.\n- If you are a complete newcomer, you need to pledge at the **__Huge DIK__** (*$25*) tier.\n - You will gain access to the entire game, including Seasons 1-2.\n - Maintaining your pledge at this tier will grant you access to updates **__ON__** the release date.\n- If you already have Seasons 1-2 on GOG or Steam, you can pledge at the **__DIK__** (*$10*) tier.\n - You will only have access to Season 3.\n - You can play Seasons 1-2 on your existing version, then transfer the save to the Patreon version.\n - Maintaining your pledge at this tier will grant you access to updates **__3 DAYS__** after the release date.\n- If you already have the most recent update (Episode 9/v0.9.1), you can pledge at the **__Mini DIK__** (*$5*) tier.\n - You will only have access to patches. You need the base game in order to play.\n - Maintaining your pledge at this tier will grant you access to updates **__2 WEEKS__** after the release date.",
+            "Will I lose my game if I quit my pledge or downgrade the tier?":"No, the game has no digital rights management (DRM) built into it. You will still retain access to your existing copy. However, you will lose the benefits of your current pledge. For example, you will no longer have access to new copies of the game if your tier is below **__HUGE DIK__**, even if you had pledged at that tier or above in the past. Should you lose your copy, you will need to re-pledge to regain access.",
+            "Why is Season 3 available on Patreon but not GOG or Steam?":"Season 3 is a work-in-progress. Due to the differing business model of Patreon from GOG and Steam, Season 3 will only be available in the latter once it is complete while it can be released in parts in Patreon.",
+            "When will Season 3 be available on GOG and Steam?":"Season 3 will be available on GOG and Steam once it is complete. Season 3 will consist of the Interlude and Episodes 9-12. The latest version is up to **__Episode 9__**. There is no set date for the complete release but current trends suggest completion in **__2025__** or **__2026__**. Note that this is only a rough estimate.",
+            "Can I transfer my saves between versions of the game?":"The GOG and Steam versions have a one-way compatibility with the Patreon version but not with each other.\n= You can only transfer saves between Seasons 2 & 3.\n- You can transfer saves from the GOG/Steam version to the Patreon version.\n- When Season 3 is out for GOG & Steam, you **__CANNOT__** transfer saves from the Patreon version to the GOG/Steam version.",
+            "How can I transfer my saves?":"Run the Season 3 executable, and click on `Import` in the main menu. At the top right corner, click on `Change Source`. You will then see your GOG/Steam saves.",
+            "When is the next episode released?":"DrPinkCake will only announce the release date when it is ready, and based on previous occurences, about 1-2 weeks in advance. A message regarding the release will be posted on <#971780734337581136> along with an @everyone ping so you won't have to worry about missing the announcement."
+        }
+    },
+    {
+        "color":"f89147",
+        "thumbnail":{
+            "id":"1158153673428443167",
+            "index":6
+        },
+        "title":"DIKs & HOTs Server",
+        "field":{
+            "How can I speak to the staff?":"You can speak to the staff through <#1031832935717945365>. Please refrain from opening a direct message with individual staff members when wishing to speak about the server's affairs.",
+            "Why is the @Moderator role not mentionable?":"The role is only meant for indicating that a user is a staff member. Use <#1031832935717945365> should you wish to speak to the staff.",
+            "How can I adjust my roles?":"You can adjust your roles through [`# Channels & Roles`](https://discord.com/channels/859842474682875914/customize-community).",
+            "Do the stan roles have any significance?":"No, they are purely cosmetic.",
+            "I have multiple roles. Can I choose which colour I appear as?":"No. Due to Discord's role system, no two roles could have the same position within the hierarchy.\n- Your colour is determined by the role with the highest position. The order in which you added your roles is irrelevant.\n- For example, <@&859847133858627594> has the highest position. If you have that role, you will appear in that colour.",
+            "What is the difference between 🌐『general-1』and 🌐『general-2』?":"They are both general chat channels but <#859842474682875917> is the primary channel while <#859843384567136256> is the secondary channel. The latter can be used if the former is busy, although it can be used at anytime.",
+            "Is there a spoiler channel for Being a DIK?":"Yes, in fact there are two\; <#909614102190637096> and <#1049353878610657420>. A special role is required to access the channels. The role is user-pickable, although only available near an episode's release.",
+            "What are Takeover Days?":"A day to pay tribute to a particular girl. Usually set on a member's birthday.\n- Change your name and profile picture according to the specified girl.\n - For users without Nitro, then changing your name is sufficient. You will not be required to change your profile picture.\n- Pay tribute to the girl by posting their in-game renders and fan-arts.",
+            "When are the Takeover Days held?":"Check the calendar for the dates.",
+            "How can I participate in the Takeover Days":"During the Takeover Days, a message will be posted on <#971780734337581136> with two buttons.\n- Click on the green button to participate. Your roles will be adjusted to conform to the girl of the day.\n- Click on the red button to end your participation. Your old roles will be restored."
+        }
+    }
+]]
+$arrayCreate[$getChannelVar[webhook;$faqChannel];, ]
+$forEach[i;$objectKeys[,];,]{
+    $let[embedContent;
+        $objectLoop[parameter;value;;$i]
+            $if[$parameter==field]{
+                $objectLoop[question;answer;n;$i;field]
+                    $arrayPush[$answer;$i-$n]
+                    {field:$question:$arrayJoin[#NL#;$i-$n]}
+                    $let[numQ$i;$n]
+                $endObjectLoop
+            $elseif[$parameter==thumbnail]
+                {thumbnail:$msg[1157421810288185384;$objectGet[$i;thumbnail;id];attachment;$objectGet[$i;thumbnail;index]]}
+            $endelseif
+            $else
+                {$parameter:$value}
+            }
+        $endObjectLoop
+        $if[$i>0]{
+            {footer:Number of Questions - $get[numQ$i]}
+        }
+    ]
+    $editWebhookMessage[$arrayGet[1];$arrayGet[2];$arrayShift[messages];$embedContent]
+}
+$interactionReply[
+    {color:GREEN}
+    {author:Success:$msg[1157421810288185384;1157974096198508604;attachment;7]}
+    {desc:The message on <#$faqChannel> has been successfully edited. [Click here]($msg[$faqChannel;$arrayGet[1;messages];url]) to see the changes.}
+]

@@ -1,0 +1,162 @@
+/*
+    Type: Slash Command
+    Slash: edit-map
+    Required Permission: None
+    Ignore Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$let[mapChannel;1144926980274405387]
+$cacheChannelMessages[$mapChannel]
+$let[mapID;$getChannelMessages[$mapChannel;everyone;ids;,;1]]
+$let[date;$day/$padLeft[$month[no];2;0]/$year]
+$let[stanRoles;<@&859855442075320321> / <@&972964959124353104> / <@&859856135788298240> / <@&859859623862337567> / <@&863046351477800968> / <@&859861037322469407> / <@&863760022857449476> / <@&859847102749474846> / <@&859857965669810216> / <@&859847212279791617> / <@&859847170697854997> / <@&862820633284444160> / <@&859859990453420033> / <@&945346595891843122> / <@&859847153807654933> / <@&859858605729120273> / <@&859855063299129374> / <@&859861208101290045> / <@&859858181500960780> / <@&945344852873314304> / <@&859845611709136897> / <@&859847238163759114> / <@&859847133858627594> / <@&861994036566949918> / <@&945345215479287859> / <@&859855814042189855> / <@&1055185484525092946> / <@&945339598597402624>]
+$objectCreate[[
+	{
+		"color":"f89417",
+		"thumbnail":{
+			"id":"1157972660354031636",
+			"index":2
+		},
+		"title":"Map",
+		"desc":"To help you navigate through the server, below are brief descriptions of the key channels and roles.",
+		"footer":"Last Updated - $date"
+	},
+	{
+		"color":"1db100",
+		"thumbnail":{
+			"id":"1157972910200332339",
+			"index":0
+		},
+		"title":"Roles",
+		"field":{
+			"Staff":{
+				"<@&1137093747004412054>":"Server owner.",
+				"<@&971812411013210132>":"Server administrators. Entrusted with making changes to the server, including the rules.",
+				"<@&859852356674125864>":"Server moderators. Enforces the server's rules."
+			},
+			"Creators":{
+				"<@&970377268436279346>":"AVN developers. Given to those who have their title's dedicated discussion channel in <#970419293151973516>.",
+				"<@&859867761512415273>":"Fan artists. Given to those who have their dedicated gallery in <#888058327047745647>."
+			},
+			"Stan Roles":{
+				"$stanRoles":"User-pickable stan roles."
+			},
+			"Miscellaneous":{
+				"<@&874303310067269672>":"Given to those who are celebrating their birthday.",
+				"<@&970043568649551923>":"Moderators of the Being a DIK subreddit.",
+				"<@&976586781619290153>":"Grants access to <#976229063310057512>.",
+				"<@&976587148486664263>":"Grants access to <#976230132916301824>.",
+				"<@&859848778906468373>":"Users who have boosted the server.",
+				"<@&1152374413652660285>":"Managers of this server's sister servers.",
+				"<@&1138058129020567572>":"Grants access to <#909614102190637096> and <#1049353878610657420>. Only available during the spoiler-free period.",
+				"<@&859854353694588958>":"Allows the user to call more music bot commands.",
+				"<@&992967726920388638>":"Default role for bots."
+			}
+		}
+	},
+	{
+	    "color":"0076ba",
+		"thumbnail":{
+			"id":"1157972358620004352",
+			"index":9
+		},
+		"title":"Channels",
+		"field":{
+			"Resources":{
+				"<#862371285895479327>":"Server rules",
+				"<#1144926980274405387>":"Guide to the server's channels and roles",
+				"<#1143958558631796806>":"Frequently asked questions",
+				"<#1143302362606342154>":"External links that might be helpful"
+			},
+			"Information":{
+				"<#971780734337581136>":"News regarding server affairs",
+				"<#1150812106191544492>":"Release dates of AVNs",
+				"<#1023496985141055558>":"Tweets from <@437639638882975746>",
+				"<#1003163605606342696>":"New emotes and stickers",
+				"<#1025793930891108425>":"Where giveaways are hosted",
+				"<#987658592649891860>":"The annual DIKs & HOTs Awards",
+				"<#1100392045392183378>":"Notable messages in the server",
+				"<#1198927780591706152>":"Notification for new members of the server"
+			},
+			"Support":{
+				"<#1031832935717945365>":"Get assistance regarding server affairs"
+			},
+			"Chat":{
+				"<#859842474682875917>":"Primary chat channel",
+				"<#859843384567136256>":"Secondary chat channel",
+				"<#859853722044596294>":"Being a DIK discussion",
+				"<#1020588811316641822>":"Other AVNs discussion"
+			},
+			"Media":{
+				"<#877565162511532082>":"Anime & manga discussion",
+				"<#859843459660644373>":"Fan-arts gallery",
+				"<#943554267229323284>":"Video games discussion",
+				"<#859854258421497856>":"Memes gallery",
+				"<#976230362235691088>":"NSFW gallery (vanilla)",
+				"<#976230132916301824>, <#976229063310057512>":"NSFW gallery (kinkier)"
+			},
+			"Legendary Developers":{
+				"<#1010155353465421885>":"Acquainted discussion",
+				"<#972544373227143278>":"Chasing Sunsets discussion",
+				"<#970420125159280680>":"Eternum discussion"
+			},
+			"Legendary Artists":{
+				"<#952636469795754014>":"DAZ Studio discussion",
+				"<#947263244081434664>, etc":"Artist-specific fan-arts gallery"
+			},
+			"Miscellaneous":{
+				"<#860052083150684190>":"Bot commands spam"
+			},
+			"Spoilers":{
+				"notes":"These channels will only be accessible during the spoiler-free period.",
+				"<#909614102190637096>":"New episode discussion",
+				"<#1049353878610657420>":"New episode help"
+			},
+			"Music":{
+				"<#863057726928846848>":"Music sharing",
+				"<#972231653927825439> / <#863024094197841921> / <#883149350954483722> / <#859844410350895166>":"Listening to music bots"
+			},
+			"Voice Channels":{
+				"<#1075420061562585209> / <#870423000133013544> / <#1075423785982885919> / <#1075423695285268530> / <#859878885801852940>":"Streaming, voice chats"
+			},
+			"Non-Standard":{
+				"[`# Channels and Roles`](https\://discord.com/channels/859842474682875914/customize-community)":"Adjust user-pickable roles and viewable channels"
+			}
+		}
+	}
+]]
+$let[content;$objectLoop[i]{
+	$let[embedContent;
+	$objectLoop[parameter;value;;$i]
+		$if[$parameter==field]{
+			$objectLoop[category;;;$i;field]
+				$objectLoop[header;body;;$i;field;$category]
+					$if[$header==notes]
+						$arrayPush[**Note -** $body;$i-$category]
+					$else
+						$arrayPush[- $header - $body;$i-$category]
+					$endIf
+				$endObjectLoop
+				{field:$category:$arrayJoin[#NL#;$i-$category]}
+			$endObjectLoop
+		$elseif[$parameter==thumbnail]
+			$objectLoop[var;num;;$i;thumbnail]
+				$let[$var;$num]
+			$endObjectLoop
+			{thumbnail:$msg[1157421810288185384;$id;attachment;$index]}
+		$endelseif
+		$else
+			{$parameter:$value}
+		}
+	$endObjectLoop
+    ]
+	{embed:$embedContent}
+}]
+$arrayCreate[$getChannelVar[webhook;$mapChannel];, ;webhook]
+$editWebhookMessage[$arrayGet[1;webhook];$arrayGet[2;webhook];$mapID;$content]
+$interactionReply[
+    {color:GREEN}
+    {author:Success:$msg[1157421810288185384;1157974096198508604;attachment;7]}
+    {desc:The message on <#$mapChannel> has been successfully edited. [Click here]($msg[$mapChannel;$mapID;url]) to see the changes.}
+]
