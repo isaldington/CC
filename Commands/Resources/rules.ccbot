@@ -220,5 +220,5 @@ $forEach[i;$objectKeys[,];,]{
 $interactionReply[
 	 {color:GREEN}
 	 {author:Success:$msg[1157421810288185384;1157974096198508604;attachment;7]}
-	 {desc:The message on <#$mapChannel> has been successfully edited. [Click here]($msg[$rulesChannel;$arrayGet[1;messages];url]) to see the changes.}
+	 {desc:The message on <#$mapChannel> has been successfully edited. [Jump]($msg[$rulesChannel;$arrayGet[1;messages];url]) to the messages.}
 ]

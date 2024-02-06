@@ -56,7 +56,7 @@ $objectCreate[[
 		}
 	},
 	{
-	    "color":"0076ba",
+		 "color":"0076ba",
 		"thumbnail":{
 			"id":"1157972358620004352",
 			"index":9
@@ -118,7 +118,7 @@ $objectCreate[[
 				"<#972231653927825439> / <#863024094197841921> / <#883149350954483722> / <#859844410350895166>":"Listening to music bots"
 			},
 			"Voice Channels":{
-				"<#1075420061562585209> / <#870423000133013544> / <#1075423785982885919> / <#1075423695285268530> / <#859878885801852940>":"Streaming, voice chats"
+				"<#1075420061562585209> / <#870423000133013544> / <#1075423785982885919> / <#1075423695285268530> / <#859878885801852940> / <#1202261280577306694>":"Streaming, voice chats"
 			},
 			"Non-Standard":{
 				"[`# Channels and Roles`](https\://discord.com/channels/859842474682875914/customize-community)":"Adjust user-pickable roles and viewable channels"
@@ -150,13 +150,13 @@ $let[content;$objectLoop[i]{
 			{$parameter:$value}
 		}
 	$endObjectLoop
-    ]
+	]
 	{embed:$embedContent}
 }]
 $arrayCreate[$getChannelVar[webhook;$mapChannel];, ;webhook]
 $editWebhookMessage[$arrayGet[1;webhook];$arrayGet[2;webhook];$mapID;$content]
 $interactionReply[
-    {color:GREEN}
-    {author:Success:$msg[1157421810288185384;1157974096198508604;attachment;7]}
-    {desc:The message on <#$mapChannel> has been successfully edited. [Click here]($msg[$mapChannel;$mapID;url]) to see the changes.}
+	 {color:GREEN}
+	 {author:Success:$msg[1157421810288185384;1157974096198508604;attachment;7]}
+	 {desc:The message on <#$mapChannel> has been successfully edited. [Jump]($msg[$mapChannel;$mapID;url]) to the message.}
 ]
