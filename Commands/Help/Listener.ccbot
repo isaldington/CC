@@ -20,8 +20,8 @@ $if[$type==category]{
     $deleteMessageVar[launchStage;$messageID]
     $arrayCreate[$objectKeys[,;$eventSelected;command];,]
     $arrayFilter[command]{
-        $if[$objectGet[$eventSelected;command;$command;role]!=undefined]
-            $hasAnyRole[$userID;$spread[,;$objectGet[$eventSelected;command;$command;role]]]
+        $if[$objectKeyExists[$eventSelected;command;$command;role]==true]
+            $hasAnyRole[$userID;$spread[,;$objectValues[,;$eventSelected;command;$command;role]]]
         $endIf
     }
     $let[commandList;$arrayJoin[,]]
