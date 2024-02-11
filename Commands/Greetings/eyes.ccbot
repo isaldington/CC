@@ -1,0 +1,9 @@
+/*
+    Type: Slash Command
+    Slash: eyes
+    Required Permission: None
+    Ignore Roles: None
+    Run only in: None
+    Channel Used: Run in Channel
+*/
+$includeLibrary[greetings]

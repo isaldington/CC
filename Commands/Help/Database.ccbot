@@ -56,7 +56,7 @@ $objectCreate[{
 				"emoji":"🎂",
 				"title":"Remove Birthday",
 				"thumbnail":{
-				    "id":"1157974096198508604",
+					 "id":"1157974096198508604",
 					"index":0
 				},
 				"type":"slash",
@@ -95,7 +95,7 @@ $objectCreate[{
 				"emoji":"🎂",
 				"title":"View Birthday",
 				"thumbnail":{
-				    "id":"1157974096198508604",
+					 "id":"1157974096198508604",
 					"index":0
 				},
 				"type":"slash",
@@ -122,6 +122,28 @@ $objectCreate[{
 			"index":6
 		},
 		"command":{
+		    "eyes":{
+		        "emoji":"👀",
+		        "title":"Eyes",
+		        "thumbnail":{
+		            "id":"1206134687488155718",
+		            "index":0
+                },
+                "type":"slash",
+                "id":"1206127314153242685",
+                "description":"Generate a girl's eyes image",
+                "channel":[
+                    "`ALL`"
+                ],
+                "argument":{
+                    "girl":{
+                        "type":"slash",
+                        "description":"Select the girl",
+                        "example":"Lily",
+                        "required":"No"
+                    }
+                }
+            },
 			"gm":{
 				"emoji":"☀️",
 				"title":"Good Morning",
@@ -145,7 +167,7 @@ $objectCreate[{
 					}
 				}
 			},
-		    "gn":{
+			 "gn":{
 				"emoji":"🌙",
 				"title":"Good Night",
 				"thumbnail":{
@@ -195,7 +217,7 @@ $objectCreate[{
 				"emoji":"❤️‍🔥",
 				"title":"Takeover Day",
 				"thumbnail":{
-				    "id":"1157972517185654795",
+					 "id":"1157972517185654795",
 					"index":9
 				},
 				"type":"button",
@@ -211,7 +233,7 @@ $objectCreate[{
 	"games":{
 		"emoji":"🎲",
 		"icon":{
-		    "id":"1157972517185654795",
+			 "id":"1157972517185654795",
 			"index":6
 		 },
 		"command":{
@@ -247,7 +269,7 @@ $objectCreate[{
 				"emoji":"💭",
 				"title":"Trivia",
 				"thumbnail":{
-				    "id":"1163496192500568075",
+					 "id":"1163496192500568075",
 					"index":2
 				},
 				"type":"slash",
@@ -258,8 +280,8 @@ $objectCreate[{
 				],
 				"argument":{
 					"difficulty":{
-					    "type":"menu",
-					    "description":"The difficulty of the questions",
+						 "type":"menu",
+						 "description":"The difficulty of the questions",
 						"example":"Medium",
 						"required":"Yes"
 					}
@@ -280,7 +302,7 @@ $objectCreate[{
 				],
 				"argument":{
 					"opponent":{
-					    "type":"slash",
+						 "type":"slash",
 						"description":"Select your opponent",
 						"example":"<@699604758729588786>",
 						"required":"Yes",
@@ -311,7 +333,7 @@ $objectCreate[{
 			"index":0
 		},
 		"command":{
-		    "info-bot":{
+			 "info-bot":{
 				"emoji":"🤖",
 				"title":"Bot Information",
 				"thumbnail":{
@@ -334,7 +356,7 @@ $objectCreate[{
 				"title":"Channel Information",
 				"thumbnail":{
 					"id":"1157972660354031636",
-				    "index":8
+					 "index":8
 				},
 				"role":[
 					"859852356674125864"
@@ -377,7 +399,7 @@ $objectCreate[{
 				"argument":{
 					"role":{
 						"type":"slash",
-					    "description":"The target role",
+						 "description":"The target role",
 						"example":"<@&945346595891843122>",
 						"required":"Yes"
 					}
@@ -387,8 +409,8 @@ $objectCreate[{
 				"emoji":"🌐",
 				"title":"Server Information",
 				"thumbnail":{
-				    "id":"1157972517185654795",
-				    "index":2
+					 "id":"1157972517185654795",
+					 "index":2
 				},
 				"role":[
 					"971812411013210132",
@@ -438,8 +460,8 @@ $objectCreate[{
 		},
 		"command":{
 			"leaderboard":{
-			    "emoji":"🏆",
-			    "title":"Leaderboard",
+				 "emoji":"🏆",
+				 "title":"Leaderboard",
 				"thumbnail":{
 					"id":"1157972660354031636",
 					"index":1
@@ -524,7 +546,7 @@ $objectCreate[{
 				"channel":[
 					"<#859925779831586827>",
 					"<#975385494575788032>"
-			    ]
+				 ]
 			},
 			"badik-unban":{
 				"emoji":"🔨",
@@ -562,7 +584,7 @@ $objectCreate[{
 				"role":[
 					"859852356674125864"
 				],
-			    "type":"slash",
+				 "type":"slash",
 				"id":"1066048533020540972",
 				"description":"Warn a user",
 				"channel":[
@@ -594,7 +616,7 @@ $objectCreate[{
 				"emoji":"⚠️",
 				"title":"Warn Information",
 				"thumbnail":{
-				    "id":"1157972358620004352",
+					 "id":"1157972358620004352",
 					"index":8
 				},
 				"role":[
@@ -668,6 +690,69 @@ $objectCreate[{
 			}
 		}
 	},
+	"resources":{
+		 "emoji":"📝",
+		 "icon":{
+			  "id":"1157972358620004352",
+			  "index":3
+		  },
+		  "command":{
+				"edit-faq":{
+					 "emoji":"⁉️",
+					 "title":"Edit FAQ",
+					 "thumbnail":{
+						  "id":"1157972517185654795",
+						  "index":5
+					 },
+					 "role":[
+					"971812411013210132",
+					"1137093747004412054"
+				],
+					 "type":"slash",
+					 "id":"1204224990170325025",
+					 "description":"Edit the FAQ",
+					 "channel":[
+						  "`ALL`"
+					 ]
+				},
+				"edit-map":{
+					 "emoji":"🗺️",
+					 "title":"Edit Map",
+					 "thumbnail":{
+						  "id":"1157972660354031636",
+						  "index":3
+					 },
+					 "role":[
+					"971812411013210132",
+					"1137093747004412054"
+				],
+					 "type":"slash",
+					 "id":"1204224990170325025",
+					 "description":"Edit the server map",
+					 "channel":[
+						  "`ALL`"
+					 ]
+				},
+				"edit-rules":{
+					 "emoji":"📖",
+					 "title":"Edit Rules",
+					 "thumbnail":{
+						  "id":"1157972910200332339",
+						  "index":2
+					 },
+					 "role":[
+					"971812411013210132",
+					"1137093747004412054"
+				],
+					 "type":"slash",
+					 "id":"1204224990170325025",
+					 "description":"Edit the rules",
+					 "channel":[
+						  "`ALL`"
+					 ]
+				}
+		  }
+	},
 	"support":{
 		"emoji":"👥",
 		"icon":{
@@ -706,7 +791,7 @@ $objectCreate[{
 					}
 				}
 			},
-		    "help":{
+			 "help":{
 				"emoji":"❓",
 				"title":"Help",
 				"thumbnail":{
@@ -773,7 +858,7 @@ $objectCreate[{
 					"ALL"
 				],
 				"argument":{
-				    "rule":{
+					 "rule":{
 						"type":"slash",
 						"description":"The rule you want to view",
 						"example":"3. No Advertising",
@@ -899,11 +984,11 @@ $objectCreate[{
 				"role":[
 					"859852356674125864"
 				],
-			    "type":"slash",
+				 "type":"slash",
 				"id":"1116739034132250644",
 				"description":"Start a giveaway",
 				"channel":[
-				    "`ALL`"
+					 "`ALL`"
 				],
 				"argument":{
 					"sponsor":{
@@ -1019,7 +1104,7 @@ $objectCreate[{
 					 "topic":{
 						"type":"modal",
 						"description":"The poll's topic",
-					    "example":"Favourite Food",
+						 "example":"Favourite Food",
 						"required":"Yes"
 					},
 					"options":{
