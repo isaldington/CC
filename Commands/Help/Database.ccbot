@@ -122,28 +122,28 @@ $objectCreate[{
 			"index":6
 		},
 		"command":{
-		    "eyes":{
-		        "emoji":"👀",
-		        "title":"Eyes",
-		        "thumbnail":{
-		            "id":"1206134687488155718",
-		            "index":0
-                },
-                "type":"slash",
-                "id":"1206127314153242685",
-                "description":"Generate a girl's eyes image",
-                "channel":[
-                    "`ALL`"
-                ],
-                "argument":{
-                    "girl":{
-                        "type":"slash",
-                        "description":"Select the girl",
-                        "example":"Lily",
-                        "required":"No"
-                    }
-                }
-            },
+			 "eyes":{
+				  "emoji":"👀",
+				  "title":"Eyes",
+				  "thumbnail":{
+						"id":"1206233127287267338",
+						"index":0
+					 },
+					 "type":"slash",
+					 "id":"1206127314153242685",
+					 "description":"Generate a girl's eyes image",
+					 "channel":[
+						  "`ALL`"
+					 ],
+					 "argument":{
+						  "girl":{
+								"type":"slash",
+								"description":"Select the girl",
+								"example":"Lily",
+								"required":"No"
+						  }
+					 }
+				},
 			"gm":{
 				"emoji":"☀️",
 				"title":"Good Morning",
@@ -574,6 +574,31 @@ $objectCreate[{
 					}
 				}
 			},
+			"dnd":{
+			    "emoji":"⛔",
+			    "title":"Do Not Disturb",
+			    "thumbnail":{
+			        "id":"1206233127287267338",
+			        "index":1
+			    },
+			    "role":[
+					"859852356674125864"
+				],
+				"type":"slash",
+				"id":"1206204938699669614",
+				"description":"Set your DND status",
+				"channel":[
+				    "`ALL`"
+				],
+				"argument":{
+				    "state":{
+				        "type":"slash",
+				        "description":"Select your DND mode state",
+				        "example":"on",
+				        "required":"Yes"
+				    }
+				}
+			},
 			"warn":{
 				"emoji":"⚠️",
 				"title":"Warn",
@@ -584,7 +609,7 @@ $objectCreate[{
 				"role":[
 					"859852356674125864"
 				],
-				 "type":"slash",
+				"type":"slash",
 				"id":"1066048533020540972",
 				"description":"Warn a user",
 				"channel":[
