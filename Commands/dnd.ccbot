@@ -7,10 +7,10 @@
     Channel Used: Run in Channel
 */
 $function[getImage;id;i]{
-    $if[$i==undefined]{
+	$if[$i==undefined]{
 		$let[i;0]
 	}
-    $return[$msg[1157421810288185384;$id;attachment;$i]]
+	$return[$msg[1157421810288185384;$id;attachment;$i]]
 }
 $let[state;$getOption[state]]
 $let[curState;$conditional[$getUserVar[dndState]==on;on;off]]
@@ -21,7 +21,7 @@ $objectCreate[{
 		"am_action":"keyword",
 		"color":"798bcf",
 		"icon":{
-		    "id":"1157974096198508604",
+			"id":"1157974096198508604",
 			"index":1
 		}
 	},
@@ -37,28 +37,32 @@ $objectCreate[{
 	}
 }]
 $if[$state==status]{
-    $interactionReply[
-        {color:$objectGet[$curState;color]}
-        {title:DND Status}
-        {thumbnail:$getImage[$spread[,;$objectValues[,;$curState;icon]]]}
-        {desc:You currently have "*Do Not Disturb*" mode **$objectGet[$curState;action]**. You **$objectGet[$curState;ability]** be pinged by others.}
-    ]
+	$interactionReply[
+		{color:$objectGet[$curState;color]}
+		{title:DND Status}
+		{thumbnail:$getImage[$spread[,;$objectValues[,;$curState;icon]]]}
+		{desc:You currently have "*Do Not Disturb*" mode **$objectGet[$curState;action]**. You **$objectGet[$curState;ability]** be pinged by others.}
+	]
 $else
-    $let[action;$objectGet[$state;action]]
-    $onlyIf[$state!=$curState;
-        {private}
-        {color:db3539}
-        {author:Error:$getImage[1157974096198508604;6]}
-        {desc:You have already $action the "*Do Not Disturb*" mode.}
-    ]
-    $editAutomodKeyword[
-	    {id=1018890566529990666}
-	    {$objectGet[$state;am_action]=*<@$authorID>*}
-    ]
-    $setUserVar[dndState;$state]
-    $interactionReply[
-        {color:$objectGet[$state;color]}
-	    {author:DND Mode $toLocaleUppercase[$action]:$getImage[$spread[,;$objectValues[,;$state;icon]]]}
-	    {desc:You have **$action** "*Do Not Disturb*" mode. You now **$objectGet[$state;ability]** be pinged by others.}
-    ]
+	$let[action;$objectGet[$state;action]]
+	$onlyIf[$state!=$curState;
+		{private}
+		{color:db3539}
+		{author:Error:$getImage[1157974096198508604;6]}
+		{desc:You have already $action the "*Do Not Disturb*" mode.}
+	]
+	$editAutomodKeyword[
+		{id=1018890566529990666}
+		{$objectGet[$state;am_action]=*<@$authorID>*}
+	]
+	$if[$state==on]
+	    $setUserVar[dndState;on]
+	$else
+	    $deleteUserVar[dndState]
+    $endIf
+	$interactionReply[
+	    {color:$objectGet[$state;color]}
+		{author:DND Mode $toLocaleUppercase[$action]:$getImage[$spread[,;$objectValues[,;$state;icon]]]}
+		{desc:You have **$action** "*Do Not Disturb*" mode. You now **$objectGet[$state;ability]** be pinged by others.}
+	]
 }
