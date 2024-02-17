@@ -1,0 +1,10 @@
+/*
+    Type: Interval
+    Run Every: 7d
+    Channel Used: #sandbox
+*/
+$let[eventID;1205796668050636860]
+$eventStart[$eventID]
+$setTimeout[3h;End Karaoke Night]{
+	 $eventEnd[$eventID]
+}
