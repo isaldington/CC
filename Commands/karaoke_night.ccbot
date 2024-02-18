@@ -4,7 +4,8 @@
     Channel Used: #sandbox
 */
 $let[eventID;1205796668050636860]
+$let[date;$year$padLeft[$month[no];2;0]$day]
 $eventStart[$eventID]
-$setTimeout[3h;End Karaoke Night]{
+$setTimeout[3h;End Karaoke Night - $date]{
 	 $eventEnd[$eventID]
 }
