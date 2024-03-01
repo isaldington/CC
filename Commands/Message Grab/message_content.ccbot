@@ -64,7 +64,7 @@ $if[$get[msgImage]==undefined]{
 }
 $arraySlice[1;10;image]
 $if[$msgEmbed!=]{
-    $let[msgEmbed;$regexReplace[$msgEmbed;(?<=footer:[^:]+):;; -]]
+	$let[msgEmbed;$regexReplace[$msgEmbed;(?<=footer:[^:]+):;; -]]
 	$let[embed2;$msgEmbed]
 	$arrayRemove[$arrayLength[image];image]
 	$if[$msgContent==&&$msgImage==]
@@ -104,11 +104,11 @@ $else
 	$let[msgRef;]
 }
 $if[$userExists[$msgAuthor]==true||$getMessageVar[authorID;$msgID]!=undefined]{
-	 $if[$getMessageVar[authorID;$msgID]!=undefined]
-		  $let[msgAuthor;$getMessageVar[authorID;$msgID]]
-	 $endIf
-	 $if[$nickname[$msgAuthor]!=$username[$msgAuthor]]
-		 $let[authName;$nickname[$msgAuthor]]
+	$if[$getMessageVar[authorID;$msgID]!=undefined]
+		$let[msgAuthor;$getMessageVar[authorID;$msgID]]
+	$endIf
+	$if[$nickname[$msgAuthor]!=$username[$msgAuthor]]
+		$let[authName;$nickname[$msgAuthor]]
 	$else
 		$ignoreErrors[yes;$username[$msgAuthor]]
 		$let[authName;$displayName[$msgAuthor]]
