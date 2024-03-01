@@ -10,94 +10,94 @@ $arrayCreate[$menuID;-;menu]
 $let[caller;$arrayGet[2;menu]]
 $let[type;$arrayGet[3;menu]]
 $onlyIf[$caller==$userID;
-    {private}
-    {color:db3539}
-    {author:Error:$getImage[1157974096198508604;6]}
-    {desc:Only this help page's caller may use the menu. Please generate your own help page with </help\:1118738919907930152>.}
+	{private}
+	{color:db3539}
+	{author:Error:$getImage[1157974096198508604;6]}
+	{desc:Only this help page's caller may use the menu. Please generate your own help page with </help\:1118738919907930152>.}
 ]
 $includeLibrary[help]
 $if[$type==category]{
-    $deleteMessageVar[launchStage;$messageID]
-    $arrayCreate[$objectKeys[,;$eventSelected;command];,]
-    $arrayFilter[command]{
-        $if[$objectKeyExists[$eventSelected;command;$command;role]==true]
-            $hasAnyRole[$userID;$spread[,;$objectValues[,;$eventSelected;command;$command;role]]]
-        $endIf
-    }
-    $let[commandList;$arrayJoin[,]]
-    $let[step;10]
-    $let[iteration;$math[ceil($arrayLength/$step)]]
-    $interactionEdit[
-        {color:ffcd69}
-        {author:Help:$getImage[1157972790482309241;3]}
-        {thumbnail:$getImage[$spread[,;$objectValues[,;$eventSelected;icon]]]}
-        {title:$toLocaleUppercase[$eventSelected]}
-        {desc:Select a command to get more information on it.}
-        {menu:
-            {id=help-$userID-command-$eventSelected}
-            {placeholder=Select a command}
-            {max=1}
-            $forEach[i;$seq[1;$iteration]]{
-                $arrayCreate[$commandList;,;$i]
-                $arraySlice[$math[$step*($i-1)+1];$math[$step*$i];$i]
-                $forEach[command;$arrayJoin[,;$i];,]
-                    {label=$objectGet[$eventSelected;command;$command;title]}
-                    {desc=$objectGet[$eventSelected;command;$command;description]}
-                    {value=$command}
-                    {emoji=$objectGet[$eventSelected;command;$command;emoji]}
-                $endForEach
-            }
-        }
-    ]
-    $setMessageVar[commandStage;true;$messageID]
-    $wait[1m]
-    $onlyIf[$getMessageVar[commandStage;$messageID]==true]
-    $removeMenu[$messageID]
-    $interactionEdit[$timeoutMessage]
-    $deleteMessageVar[commandStage;$messageID]
-$elseif[$type==command]
-    $deleteMessageVar[commandStage;$messageID]
-    $function[descMarkdown;text]{
-        $regexReplace[$text;badik-discussion;g;<#859853722044596294>]
-    }
-    $let[class;$arrayGet[4;menu]]
-    $let[command;$eventSelected]
-    $if[$objectGet[$class;command;$command;type]==slash]
-        $let[commandMark;</$command\:$objectGet[$class;command;$command;id]>]
-    $else
-        $let[commandMark;$objectGet[$class;command;$command;id]]
-    $endIf
-    $if[$command==help&&$hasRole[$userID;859852356674125864]==true]
-        $arrayCreate[859925779831586827,860052083150684190,975385494575788032;,;modif]
-        $arrayLoop[id;i;modif]{
-            $objectSet[$class;command;help;channel;$i;<#$id>]
-        }
-    $endIf
-    $arrayPush[**Command\:** $commandMark]
-    $arrayPush[**Description\:** $descMarkdown[$objectGet[$class;command;$command;description]]]
-    $arrayPush[**Channels\:** $objectValues[, ;$class;command;$command;channel]]
-    $if[$objectGet[$class;command;$command;argument]!=undefined]
-        $arrayCreate[$objectKeys[,;$class;command;$command;argument];,;arg]
-        $arrayLoop[argument;i;arg]{
-            $arrayPush[- `$argument`;parameter]
-            $objectLoop[parameter;value;;$class;command;$command;argument;$argument]{
-                $arrayPush[ - **$toLocaleUppercase[$parameter]\:** $value;parameter]
-            }
-            $arraySet[$i;$arrayJoin[#NL#;parameter];arg]
-            $arrayClear[parameter]
-        }
-        $arrayPush[**Arguments\:**#NL#$arrayJoin[#NL#;arg]]
-    $endIf
-    $if[$objectGet[$class;command;$command;notes]!=undefined]
-        $arrayPush[**Notes\:**#NL#- $objectGet[$class;command;$command;notes]]
-    $endIf
-    $removeMenu
-    $interactionEdit[
-        {color:ffcd69}
-        {author:Help:$getImage[1157972790482309241;3]}
-        {thumbnail:$getImage[$spread[,;$objectValues[,;$class;command;$command;thumbnail]]]}
-        {title:$objectGet[$class;command;$command;title]}
-        {desc:$arrayJoin[#NL#]}
-    ]
-$endelseif
+	$deleteMessageVar[launchStage;$messageID]
+	$arrayCreate[$objectKeys[,;$eventSelected;command];,]
+	$arrayFilter[command]{
+		$if[$objectKeyExists[$eventSelected;command;$command;role]==true]
+			$hasAnyRole[$userID;$spread[,;$objectValues[,;$eventSelected;command;$command;role]]]
+		$endIf
+	}
+	$let[commandList;$arrayJoin[,]]
+	$let[step;10]
+	$let[iteration;$math[ceil($arrayLength/$step)]]
+	$interactionEdit[
+		{color:ffcd69}
+		{author:Help:$getImage[1157972790482309241;3]}
+		{thumbnail:$getImage[$spread[,;$objectValues[,;$eventSelected;icon]]]}
+		{title:$toLocaleUppercase[$eventSelected]}
+		{desc:Select a command to get more information on it.}
+		{menu:
+			{id=help-$userID-command-$eventSelected}
+			{placeholder=Select a command}
+			{max=1}
+			$forEach[i;$seq[1;$iteration]]{
+				$arrayCreate[$commandList;,;$i]
+				$arraySlice[$math[$step*($i-1)+1];$math[$step*$i];$i]
+				$forEach[command;$arrayJoin[,;$i];,]
+					{label=$objectGet[$eventSelected;command;$command;title]}
+					{desc=$objectGet[$eventSelected;command;$command;description]}
+					{value=$command}
+					{emoji=$objectGet[$eventSelected;command;$command;emoji]}
+				$endForEach
+			}
+		}
+	]
+	$setMessageVar[commandStage;true;$messageID]
+	$wait[1m]
+	$onlyIf[$getMessageVar[commandStage;$messageID]==true]
+	$removeMenu[$messageID]
+	$interactionEdit[$timeoutMessage]
+	$deleteMessageVar[commandStage;$messageID]
+$elseIf[$type==command]
+	$deleteMessageVar[commandStage;$messageID]
+	$function[descMarkdown;text]{
+		$regexReplace[$text;badik-discussion;g;<#859853722044596294>]
+	}
+	$let[class;$arrayGet[4;menu]]
+	$let[command;$eventSelected]
+	$if[$objectGet[$class;command;$command;type]==slash]
+		$let[commandMark;</$command\:$objectGet[$class;command;$command;id]>]
+	$else
+		$let[commandMark;$objectGet[$class;command;$command;id]]
+	$endIf
+	$if[$command==help&&$hasRole[$userID;859852356674125864]==true]
+		$arrayCreate[859925779831586827,860052083150684190,975385494575788032;,;modif]
+		$arrayLoop[id;i;modif]{
+			$objectSet[$class;command;help;channel;$i;<#$id>]
+		}
+	$endIf
+	$arrayPush[**Command\:** $commandMark]
+	$arrayPush[**Description\:** $descMarkdown[$objectGet[$class;command;$command;description]]]
+	$arrayPush[**Channels\:** $objectValues[, ;$class;command;$command;channel]]
+	$if[$objectGet[$class;command;$command;argument]!=undefined]
+		$arrayCreate[$objectKeys[,;$class;command;$command;argument];,;arg]
+		$arrayLoop[argument;i;arg]{
+			$arrayPush[- `$argument`;parameter]
+			$objectLoop[parameter;value;;$class;command;$command;argument;$argument]{
+				$arrayPush[ - **$toLocaleUppercase[$parameter]\:** $value;parameter]
+			}
+			$arraySet[$i;$arrayJoin[#NL#;parameter];arg]
+			$arrayClear[parameter]
+		}
+		$arrayPush[**Arguments\:**#NL#$arrayJoin[#NL#;arg]]
+	$endIf
+	$if[$objectGet[$class;command;$command;notes]!=undefined]
+		$arrayPush[**Notes\:**#NL#- $objectGet[$class;command;$command;notes]]
+	$endIf
+	$removeMenu[$messageID]
+	$interactionEdit[
+		{color:ffcd69}
+		{author:Help:$getImage[1157972790482309241;3]}
+		{thumbnail:$getImage[$spread[,;$objectValues[,;$class;command;$command;thumbnail]]]}
+		{title:$objectGet[$class;command;$command;title]}
+		{desc:$arrayJoin[#NL#]}
+	]
+$endElseIf
 }

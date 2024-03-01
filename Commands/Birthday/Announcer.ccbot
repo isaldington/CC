@@ -6,26 +6,26 @@
 $includeLibrary[birthday]
 $let[birthdayRole;874303310067269672]
 $forEach[id;$usersWithRole[$birthdayRole;,;id];,]{
-    $takeRoles[$id;$birthdayRole]
+	$takeRoles[$id;$birthdayRole]
 }
 $let[ids;$objectGet[date;$sub[$month[no];1];$sub[$day;1]]]
 $onlyIf[$ids!=]
 $forEach[id;$ids;,]{
-    $giveRoles[$id;$birthdayRole]
+	$giveRoles[$id;$birthdayRole]
 }
 $arrayCreate[$ids;,]
 $arraySort[yes;num]
 $arrayMap[id]{
-    <@$id>
+	<@$id>
 }
 $if[$arrayLength>1]{
-    $let[comma;$conditional[$arrayLength>2;,;]]
-    $let[finalID;$comma and $arrayPop]
+	$let[comma;$conditional[$arrayLength>2;,;]]
+	$let[finalID;$comma and $arrayPop]
 $else
-    $let[finalID;]
+	$let[finalID;]
 }
 $sendCrosspostingMessage[
-    {color:$objectGet[message;birthday;color]}
-    {author:Birthday:$getImage[$spread[,;$objectValues[,;message;birthday;icon]]]}
-    {desc:Motherfuckers, it's $arrayJoin[, ]$finalID's birthday!}
+	{color:$objectGet[message;birthday;color]}
+	{author:Birthday:$getImage[$spread[,;$objectValues[,;message;birthday;icon]]]}
+	{desc:Motherfuckers, it's $arrayJoin[, ]$finalID's birthday!}
 ;859842474682875917;859843384567136256]

@@ -16,9 +16,9 @@ $forEach[var;letter,word;,]{
 }
 $if[$regexCheck[$guess;^[A-Za-z]+$;i]==false]{
     $let[reason;`$guess` is not a valid entry]
-$elseif[$arrayInclude[$word;history_word]==true]
+$elseIf[$arrayInclude[$word;history_word]==true]
 	$let[reason;You have already guessed that word]
-$endelseif
+$endElseIf
 }
 $onlyIf[$get[reason]==undefined;
 	{private}

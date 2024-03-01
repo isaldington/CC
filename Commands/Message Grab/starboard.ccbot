@@ -33,13 +33,13 @@ $objectCreate[{
 		"author":"$starboardee",
 		"color":"ffb134",
 		"desc":{
-			 "Starboardee":"<@$starboardee>",
+			"Starboardee":"<@$starboardee>",
 			"Starboarder":"$mention"
-		 },
-		 "footer":"$messageID",
-		 "title":"Message Starboard",
-		 "url":"$msgURL"
-	}
+		},
+		"footer":"$messageID",
+		"title":"Message Starboard",
+		"url":"$msgURL"
+    }
 }]
 $includeLibrary[modlog]
 $arrayCreate[$getServerVar[starboard];,;starboard]

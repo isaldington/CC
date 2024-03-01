@@ -27,9 +27,9 @@ $if[$birthdate!=undefined]{
 $else
     $if[$member==$userID]
         $let[setMessage;Call </birthday-add\:1129996188406525993> to add your birthday.]
-    $elseif[$hasRole[$userID;859852356674125864]==true]
+    $elseIf[$hasRole[$userID;859852356674125864]==true]
         $let[setMessage;Call </birthday-set\:1129996188406525996> to add $toLowercase[$target] birthday.]
-    $endelseif
+    $endElseIf
     $else
         $let[setMessage;]
     $endIf

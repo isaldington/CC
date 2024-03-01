@@ -29,19 +29,19 @@ $let[badikChannel;859853722044596294]
 $let[hasAccess;$regexCheck[$channelPermissionsFor[$badikChannel;$member];\bView Channel\b;i]]
 $if[$rolePosition[$highestRole[$member]]<=$rolePosition[$highestRole[$clientID]]]{
 	$let[reason;<@$member>'s role is higher than the bot's.]
-$elseif[$userID!=699604758729588786&&$rolePosition[$highestRole]>=$rolePosition[$highestRole[$member]]]
+$elseIf[$userID!=699604758729588786&&$rolePosition[$highestRole]>=$rolePosition[$highestRole[$member]]]
 	$let[reason;You cannot warn <@$member>.]
-$endelseif
-$elseif[$hasAccess==$objectGet[$action;condition]]
+$endElseIf
+$elseIf[$hasAccess==$objectGet[$action;condition]]
 	$let[reason;<@$member> has $objectGet[$action;error] been banned from <#$badikChannel>.]
-$endelseif
+$endElseIf
 }
 $if[$action==ban&&$get[reason]==undefined&&$getOption[duration]!=]{
 	$if[$parseTime[$getOption[duration]]==-1]
 		$let[reason;Choose a valid duration (e.g. 7d).]
-	$elseif[$parseTime[$getOption[duration]]>31536000000]
+	$elseIf[$parseTime[$getOption[duration]]>31536000000]
 		$let[reason;The maximum duration is `365 days`.]
-	$endelseif
+	$endElseIf
 	$endIf
 }
 $onlyIf[$get[reason]==undefined;
@@ -56,10 +56,10 @@ $forEach[target;$targetList;,]{
 }
 $if[$action==unban]{
 	$let[duration;]
-$elseif[$getOption[duration]==]
+$elseIf[$getOption[duration]==]
 	$let[duration; indefinitely]
 	$let[endDate; Indefinite]
-$endelseif
+$endElseIf
 $else
 	$let[endBan;$math[round (($timestamp+$parseTime[$getOption[duration]])/1000)]]
 	$let[duration; until <t:$endBan:d>]
@@ -77,9 +77,9 @@ $let[webhookToken;$arrayGet[2;webhook]]
 $arrayPush[**User\:** <@$member>;log]
 $if[$action==ban&&$getOption[reason]!=]{
 	$arrayPush[**Reason\:** $getOption[reason];log]
-$elseif[$action==unban]
+$elseIf[$action==unban]
 	$arrayPush[**Reason\:** Unbanned by a moderator;log]
-$endelseif
+$endElseIf
 }
 $arrayPush[**Moderator\:** <@$userID>;log]
 $if[$get[endDate]!=undefined]{
@@ -102,17 +102,17 @@ $arrayCreate[$getServerVar[badikBanList];,;list]
 $if[$action==ban]{
 	$arrayPush[$member;list]
 	$objectSet[ban_data;log;$logID]
-$elseif[$action==unban]
+$elseIf[$action==unban]
 	$deleteUserVar[badikBan;$member]
 	$arrayRemove[$arraySearch[$member;list];list]
-$endelseif
+$endElseIf
 }
 $setServerVar[badikBanList;$arrayJoin[,;list]]
 $if[$action==unban&&$getUserVar[badikBan;$member]!=undefined]{
 	$objectCreate[$getUserVar[badikBan;$member]]
 	$onlyIf[$getTrigger[name;$objectGet[token]]==$timedCmdName;]
 	$deleteTrigger[$objectGet[token]]
-$elseif[$action==ban&&$getOption[duration]!=]
+$elseIf[$action==ban&&$getOption[duration]!=]
 	$let[cmdToken;$setTimeout[$getOption[duration];$timedCmdName;;yes]{
 		$useChannel[997972754915655700]
 		$forEach[target;$targetList;,]{
@@ -135,7 +135,7 @@ $elseif[$action==ban&&$getOption[duration]!=]
 		$deleteUserVar[badikBan;$member]
 	}]
 	$objectSet[ban_data;token;$cmdToken]
-$endelseif
+$endElseIf
 }
 $onlyIf[$action==ban]
 $setUserVar[badikBan;$objectGet[ban_data];$member]

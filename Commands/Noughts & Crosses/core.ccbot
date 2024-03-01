@@ -22,9 +22,9 @@ $objectCreate[{
 $objectLoop[i;score;;data;score]{
     $if[$score==3]{
         $let[gameOver;$player1]
-    $elseif[$score==-3]
+    $elseIf[$score==-3]
         $let[gameOver;$player2]
-    $endelseif
+    $endElseIf
     }
 }
 $if[$get[gameOver]==undefined&&$regexCheck[$objectValues[,;data;fill];0]==false]{

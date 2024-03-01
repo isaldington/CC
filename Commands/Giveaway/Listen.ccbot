@@ -19,9 +19,9 @@ $arrayCreate[$getMessageVar[participants];,]
 $let[index;$arraySearch[$userID]]
 $if[$action==join&&$index!=-1]
 	$arrayCreate[already, `Leave` to withdraw from;, ;error]
-$elseif[$action==leave&&$index==-1]
+$elseIf[$action==leave&&$index==-1]
 	$arrayCreate[not, `Join` to participate in;, ;error]
-$endelseif
+$endElseIf
 $endIf
 $onlyIf[$arrayLength[error]==0;
 	{private}
@@ -32,10 +32,10 @@ $onlyIf[$arrayLength[error]==0;
 $if[$action==join]
 	$arrayPush[$userID]
 	$let[userAction;participated in]
-$elseif[$action==leave]
+$elseIf[$action==leave]
 	$arrayRemove[$index]
 	$let[userAction;withdrew from]
-$endelseif
+$endElseIf
 $endIf
 $arraySort[yes;num]
 $setMessageVar[participants;$arrayJoin[,]]

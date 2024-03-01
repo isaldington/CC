@@ -60,7 +60,7 @@ $if[$action==accept]{
         ]
     };$sessionID]
     $includeLibrary[ttt]
-$elseif[$action==decline]
+$elseIf[$action==decline]
     $let[challenger;$regexMatch[$msg[$channelID;$messageID;embeddesc];\d{18,}]]
     $interactionReply[
         <@$challenger>
@@ -69,5 +69,5 @@ $elseif[$action==decline]
         {title:Challenge Declined}
         {desc:Unfortunately, $mention has declined your challenge.}
     ]
-$endelseif
+$endElseIf
 }

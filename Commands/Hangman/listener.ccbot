@@ -24,12 +24,12 @@ $forEach[var;letter,word;,]{
 $if[$action==quit0]{
 	$deleteMessage[$messageID]
 	$deleteUserVar[wordGuessSession]
-$elseif[$action==quit1]
+$elseIf[$action==quit1]
 	$let[gameOver;true]
 	$let[outcome;quit]
 	$includeLibrary[hangman]
-$endelseif
-$elseif[$action==word]
+$endElseIf
+$elseIf[$action==word]
 	$let[length;$charCount[$objectGet[word]]]
 	$if[$arrayLength[history_word]>0]
 		$let[prevGuess;$arrayGet[$arrayLength[history_word];history_word]]
@@ -48,8 +48,8 @@ $elseif[$action==word]
 			{def=$prevGuess}
 		}
 	]
-$endelseif
-$elseif[$action==start||$action==page1||$action==page2]
+$endElseIf
+$elseIf[$action==start||$action==page1||$action==page2]
 	$if[$action==start]
 		$let[apiKey;xF/ZlDD5V+s1rQNPtFeE3g==twwqV82Rjzku3yWh]
 		$objectMerge[$httpRequest[https://api.api-ninjas.com/v1/randomword;GET;;X-Api-Key:$apiKey]]
@@ -74,13 +74,13 @@ $elseif[$action==start||$action==page1||$action==page2]
 	$let[display;### $arrayJoin[ ;guess]]
 	$let[gameOver;false]
 	$includeLibrary[hangman]
-$endelseif
-$elseif[$regexCheck[$action;^letter[a-z]$]==true]
+$endElseIf
+$elseIf[$regexCheck[$action;^letter[a-z]$]==true]
 	$objectIncrease[guess_total;1]
 	$let[guess;$regexMatch[$action;[a-z]$]]
 	$let[capital;$toUppercase[$guess]]
 	$if[$objectKeyExists[previous_guess;letter]==true]
-	    $arrayCreate[$objectGet[previous_guess;letter];,;history_letter]
+		 $arrayCreate[$objectGet[previous_guess;letter];,;history_letter]
 	$endIf
 	$if[$checkContains[$objectGet[word];$capital]==false]
 		$objectIncrease[guess_incorrect;1]
@@ -114,5 +114,5 @@ $elseif[$regexCheck[$action;^letter[a-z]$]==true]
 		$let[outcome;$conditional[$checkGuess==$checkWord;win;lose]]
 	$endIf
 	$includeLibrary[hangman]
-$endelseif
+$endElseIf
 }

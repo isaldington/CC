@@ -21,9 +21,9 @@ $else
     $let[maxNumber;$objectGet[max_number]]
     $if[$regexCheck[$guessNumber;^\d+\.\d+$]==true]
         $let[reason;You must choose an integer]
-    $elseif[$guessNumber<0||$guessNumber>$maxNumber]
+    $elseIf[$guessNumber<0||$guessNumber>$maxNumber]
         $let[reason;You must choose a number between **0** and **$maxNumber**]
-    $endelseif
+    $endElseIf
     $endIf
 }
 $onlyIf[$get[reason]==undefined;

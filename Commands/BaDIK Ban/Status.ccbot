@@ -10,13 +10,13 @@ $initVar[server;badikBanList;]
 $arrayCreate[$getServerVar[badikBanList];,;init_list]
 $let[banCount;$arrayLength[init_list]]
 $arrayLoop[member;;init_list]{
-    $if[$checkContains[$getUserVar[badikBan;$member];token]==false]
+    $if[$checkContains[$getUserVar[badikBan;$member];token]==false]{
         $arrayPush[$arrayShift[init_list];perm]
     $else
         $let[logID;$regexMatch[$getUserVar[badikBan;$member];(?<="log":")\d{18,}]]
         $let[logContent;$msg[859961383261306890;$logID;embeddesc]]
         $objectSet[$regexMatch[$logContent;(?<=<t:)\d{13,}(?=:d>)];$member]
-    $endIf
+    }
 }
 $arrayCreate[$objectKeys[sort];,;temp]
 $arraySort[yes;num;temp]

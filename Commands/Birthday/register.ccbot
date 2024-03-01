@@ -16,9 +16,9 @@ $if[$isAdd==true]{
 		$objectSet[settings;$class;$parameter;false]
 	}
 	$includeLibrary[datecheck]
-$elseif[$objectKeyExists[$member]==false]
+$elseIf[$objectKeyExists[$member]==false]
 	$arrayPush[- <@$member>'s birthday has not been registered.;error]
-$endelseif
+$endElseIf
 }
 $onlyIf[$arrayLength[error]==0;
 	{private}

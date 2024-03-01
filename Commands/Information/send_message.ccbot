@@ -8,9 +8,9 @@ $let[embedContent;$objectLoop[parameter;value;;embed]{
             $arrayPush[**$header\:** $body;desc]
         $endObjectLoop
         {desc:$arrayJoin[#NL#;desc]}
-    $elseif[$parameter==field]
+    $elseIf[$parameter==field]
         {field:$objectValues[:;embed;field]}
-    $endelseif
+    $endElseIf
     $else
         {$parameter:$value}
     }

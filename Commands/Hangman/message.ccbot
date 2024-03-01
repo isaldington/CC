@@ -61,9 +61,9 @@ $else
 	$let[buttons;$objectLoop[parameter;;i;button]{
 		$if[$action==page2&&$i>20]
 			{button:$objectValues[:;button;$parameter]}
-		$elseif[$action!=page2&&($i<21||$i>26)]
+		$elseIf[$action!=page2&&($i<21||$i>26)]
 			{button:$objectValues[:;button;$parameter]}
-		$endelseif
+		$endElseIf
 		$endIf
 	}]
 	$if[$get[embedColor]==undefined]

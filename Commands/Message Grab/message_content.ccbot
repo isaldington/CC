@@ -16,7 +16,7 @@ $function[imageAction;action;type;text]{
 		$return[$regexCheck[$text;$regex;i]]
 	$elseIf[$action==filter]
 		$return[$regexReplace[$text;$regex;gi;]]
-	$endelseIf
+	$endElseIf
 	$elseIf[$action==get&&$type==image]
 		$return[$regexMatch[$text;$regex;i]]
 	$endElseIf
