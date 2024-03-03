@@ -7,70 +7,70 @@
     Channel Used: Run in Channel
 */
 $function[getImage;id;i]{
-    $if[$i==undefined]{
-        $let[i;0]
-    }
-    $return[$msg[1157421810288185384;$id;attachment;$i]]
+	$if[$i==undefined]{
+		$let[i;0]
+	}
+	$return[$msg[1157421810288185384;$id;attachment;$i]]
 }
 $objectCreate[{
-    "224881047463002112":"969545297208434758",
-    "262286305982021634":"1094641154668122172",
-    "266844228032790528":"908805829015240766",
-    "300304796269674497":"992816690087866598",
-    "302121096852013057":"1043538435761262732",
-    "466556481496547338":"1059173603528151090",
-    "589810563220242464":"1016042418673553408",
-    "635641386024042496":"929055118849085451",
-    "699604758729588786":"969484278696132619",
-    "752250176667910144":"1079511457307316314"
+	"224881047463002112":"969545297208434758",
+	"262286305982021634":"1094641154668122172",
+	"266844228032790528":"908805829015240766",
+	"300304796269674497":"992816690087866598",
+	"302121096852013057":"1043538435761262732",
+	"466556481496547338":"1059173603528151090",
+	"589810563220242464":"1016042418673553408",
+	"635641386024042496":"929055118849085451",
+	"699604758729588786":"969484278696132619",
+	"752250176667910144":"1079511457307316314"
 }]
 $if[$objectGet[$userID]!=undefined]{
-    $let[customID;$objectGet[$userID]]
+	$let[customID;$objectGet[$userID]]
 $else
-    $let[customID;$highestRole]
+	$let[customID;$highestRole]
 }
 $if[$rolePosition[$customID]<$rolePosition[$highestRole[$clientID]]]{
-    $arrayPush[- Your role is higher than <@$clientID>'s.]
-$elseif[$getOption[colour]$getOption[icon]$getOption[name]==]
-    $arrayPush[- At least one input must be provided.]
-$endelseif
+	$arrayPush[- Your role is higher than <@$clientID>'s.]
+$elseIf[$getOption[colour]$getOption[icon]$getOption[name]==]
+	$arrayPush[- At least one input must be provided.]
+$endElseIf
 $else
-    $if[$regexCheck[$getOption[colour];^(#?[A-Fa-f0-9]{6})?$]==false]
-        $arrayPush[- `Colour` must be in `HEX` or `#HEX`.]
-    $endIf
-    $if[$regexCheck[$getOption[icon];^$|(?<=\d{19,}/).+\.(?:jpe?g|png|webp)(?=\?ex);i]==false]
-        $arrayPush[- `Image` must be `JPEG`, `PNG`, or `WebP`.]
-    $endIf
+	$if[$regexCheck[$getOption[colour];^(#?[A-Fa-f0-9]{6})?$]==false]
+		$arrayPush[- `Colour` must be in `HEX` or `#HEX`.]
+	$endIf
+	$if[$regexCheck[$getOption[icon];^$|(?<=\d{19,}/).+\.(?:jpe?g|png|webp)(?=\?ex);i]==false]
+		$arrayPush[- `Image` must be `JPEG`, `PNG`, or `WebP`.]
+	$endIf
 }
 $onlyIf[$arrayLength==0;
-    {private}
-    {color:db3539}
-    {author:Error:$getImage[1157974096198508604;6]}
-    {desc:$arrayJoin[#NL#]}
-    {footer:Error Count\: $arrayLength}
+	{private}
+	{color:db3539}
+	{author:Error:$getImage[1157974096198508604;6]}
+	{desc:$arrayJoin[#NL#]}
+	{footer:Error Count\: $arrayLength}
 ]
 $if[$getOption[icon]!=]{
-    $let[newIcon;#NL##NL#**Icon**]
-    $roleIcon[$customID;$getOption[icon]]
+	$let[newIcon;#NL##NL#**Icon**]
+	$roleIcon[$customID;$getOption[icon]]
 $else
-    $let[newIcon;]
+	$let[newIcon;]
 }
 $forEach[option;Name,Colour;,]{
-    $let[new$option;$getOption[$toLowercase[$option]]]
-    $if[$get[new$option]!=]{
-        $arrayPush[**$option\:** $get[new$option]]
-    }
+	$let[new$option;$getOption[$toLowercase[$option]]]
+	$if[$get[new$option]!=]{
+		$arrayPush[**$option\:** $get[new$option]]
+	}
 }
 $modifyRole[$customID;$newName;$newColour]
 $if[$arrayLength>0]{
-    $let[newline;#NL##NL#]
+	$let[newline;#NL##NL#]
 $else
-    $let[newline;]
+	$let[newline;]
 }
 $interactionReply[
-    {color:479f4b}
-    {author:Role Update:$getImage[1157974096198508604;3]}
-    {desc:The role <@&$customID> has been updated.$newline$arrayJoin[#NL#]$newIcon}
-    {image:$getOption[icon]}
-    {footer:Updated by $username:$authorAvatar[yes]}
+	{color:479f4b}
+	{author:Role Update:$getImage[1157974096198508604;3]}
+	{desc:The role <@&$customID> has been updated.$newline$arrayJoin[#NL#]$newIcon}
+	{image:$getOption[icon]}
+	{footer:Updated by $username:$authorAvatar[yes]}
 ]

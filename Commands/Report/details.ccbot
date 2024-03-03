@@ -6,7 +6,7 @@
     Run only in: None
     Channel Used: Run in Channel
 */
-$$redirectErrors[997972754915655700]
+$redirectErrors[997972754915655700]
 $function[getImage;id;i]{
 	$if[$i==undefined]{
 		$let[i;0]
@@ -18,8 +18,9 @@ $let[msgChannel;$arrayGet[6]]
 $let[msgID;$arrayGet[7]]
 $if[$regexCheck[$modalAnswer[url];^https://discord\.com/channels/$guild[id](?:/\d{18,}){2}$]==false]{
 	$let[reason;Please enter a valid message URL.]
-$elseif[$messageExists[$msgChannel;$msgID]==false]
+$elseIf[$messageExists[$msgChannel;$msgID]==false]
 	$let[reason;Message not found.]
+$endElseIf
 }
 $onlyIf[$get[reason]==undefined;
 	{private}

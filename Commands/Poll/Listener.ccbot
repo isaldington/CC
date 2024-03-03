@@ -43,24 +43,24 @@ $if[$action==Vote]{
         $let[response;You have already voted. Click on `Reset` to reset your vote.]
         $let[outcome;error]
     $endIf
-$elseif[$arrayGet[2]==none]
+$elseIf[$arrayGet[2]==none]
     $let[response;You have not voted yet.]
     $if[$action==Check]
         $let[outcome;check]
     $else
         $let[outcome;error]
     $endIf
-$endelseif
-$elseif[$action==Check]
+$endElseIf
+$elseIf[$action==Check]
     $let[response;You have voted for `$arrayGet[2]`.]
     $let[outcome;check]
-$endelseif
-$elseif[$action==Reset]
+$endElseIf
+$elseIf[$action==Reset]
     $deleteUserVar[vote$messageID]
     $setMessageVar[count$arrayGet[2];$sub[$getMessageVar[count$arrayGet[2]];1]]
     $let[response;Your vote has been reset.]
     $let[outcome;success]
-$endelseif
+$endElseIf
 }
 $objectLoop[parameter;value;;$outcome;icon]{
     $let[$parameter;$value]

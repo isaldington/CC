@@ -34,7 +34,7 @@ $if[$action==next]
     $objectSet[timer_active;true]
     $setUserVar[triviaSession;$getObject]
     $includeLibrary[trivia]
-$elseif[$action==quit]
+$elseIf[$action==quit]
     $removeButtons[$messageID]
     $interactionEdit[
         {color:transparent}
@@ -44,5 +44,5 @@ $elseif[$action==quit]
         {footer:Score\: $score}
     ;$messageID]
     $deleteUserVar[triviaSession]
-$endelseif
+$endElseIf
 $endIf

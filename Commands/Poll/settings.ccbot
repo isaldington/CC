@@ -67,7 +67,7 @@ $let[pollID;$channelSendMessage[$pollChannel;
 	{desc:**End\:** <t\:$endTimestamp\:f> (<t\:$endTimestamp\:R>)}
 	{field:Instructions:$arrayJoin[#NL#;instructions]}
 	$forEach[i;$seq[1;$arrayLength]]{
-	    {button:$arrayGet[$i]:green::poll-Vote$arrayGet[$i]}
+		{button:$arrayGet[$i]:green::poll-Vote$arrayGet[$i]}
 	}
 	{button:Check:blurple::poll-Check:yes}
 	{button:Reset:red::poll-Reset}

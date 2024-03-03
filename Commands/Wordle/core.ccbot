@@ -39,7 +39,7 @@ $if[$gameOver==true]{
 		{desc:$objectGet[outcome;$outcome;message] The word is **$toUppercase[$word]**.#NL##NL#$arrayJoin[#NL#;history]}
 		{footer:$objectGet[outcome;$outcome;title]#NL#Score\: $score/$objectGet[data;guess;max]:$getImage[1157974096198508604;$objectGet[outcome;$outcome;icon]]}
 	]
-$elseif[$action==start]
+$elseIf[$action==start]
 	$editMessage[$messageID;
 		{color:f89147}
 		{author:$nickname:$authorAvatar}
@@ -50,7 +50,7 @@ $elseif[$action==start]
 		{button:Make a Guess:green::wordle-guess-$authorID}
 		{button:Quit:red::wordle-quit1-$authorID}
 	]
-$endelseif
+$endElseIf
 $else
 	$editEmbed[$channelID;$messageID;
 		{desc:$arrayJoin[#NL#;history]}

@@ -7,27 +7,27 @@
     Channel Used: Run in Channel
 */
 $objectCreate[{
-    "Being a DIK":"1145140500974817303",
-    "DIKs & HOTs":"1145140503470420118"
+	"Being a DIK":"1145140500974817303",
+	"DIKs & HOTs":"1145140503470420118"
 }]
 $let[faqID;$objectGet[$getOption[category]]]
 $forEach[option;embed,embedcolor,embedthumbnail;,]{
-    $let[faq_$option;$msg[1143958558631796806;$faqID;$option]]
+	$let[faq_$option;$msg[1143958558631796806;$faqID;$option]]
 }
 $let[fieldContent;$regexMatch[$faq_embed;{field:[^\}]+}(?=\n\{|$);gs;$math[$getOption[number]-1]]]
 $onlyIf[$fieldContent!=undefined;
-    {private}
-    {color:db3539}
-    {author:Error:$msg[1157974096198508604;6]}
-    {desc:Question not found.}
+	{private}
+	{color:db3539}
+	{author:Error:$msg[1157974096198508604;6]}
+	{desc:Question not found.}
 ]
 $let[fieldHeader;$regexMatch[$fieldContent;(?<=field:)[^:]+]]
 $let[fieldBody;$regexMatch[$fieldContent;(?<=\?:).+(?=:no\});s]]
 $interactionReply[
-    {private}
-    {color:$faq_embedcolor}
-    {author:FAQ - $getOption[category]}
-    {thumbnail:$faq_embedthumbnail}
-    {title:$fieldHeader}
-    {desc:$fieldBody}
+	{private}
+	{color:$faq_embedcolor}
+	{author:FAQ - $getOption[category]}
+	{thumbnail:$faq_embedthumbnail}
+	{title:$fieldHeader}
+	{desc:$fieldBody}
 ]

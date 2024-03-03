@@ -29,7 +29,7 @@ $if[$action==Create]{
 			{id=reason}
 		}
 	]
-$elseif[$action==Complete]
+$elseIf[$action==Complete]
 	$arrayPush[$msg[$channelID;$messageID;embeddesc];message]
 	$arrayPush[**Completed By\:** <@$userID>;message]
 	$editMessage[$messageID;
@@ -42,5 +42,5 @@ $elseif[$action==Complete]
 		{embed:$msg[$channelID;$messageID;embed;1]}
 	;$channelID]
 	$removeButton[$messageID]
-$endelseif
+$endElseIf
 }

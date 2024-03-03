@@ -26,12 +26,12 @@ $if[$getUserVar[reminder]!=undefined]{
 	$arrayPush[- **Time**\: <t\:$objectGet[time]\:f> (<t\:$objectGet[time]\:R>)]
 	$arrayPush[- **Message**\:$objectGet[message]]
 	$let[reason;$arrayJoin[#NL#]]
-$elseif[$regexCheck[$period;^\d+[dhmw]$;i]==false]
+$elseIf[$regexCheck[$period;^\d+[dhmw]$;i]==false]
 	$let[reason;Invalid period. It must be a number followed by `m`/`h`/`d`/`w`.]
-$endelseif
-$elseif[$parseTime[$period]>$math[$numDay*86400000]]
+$endElseIf
+$elseIf[$parseTime[$period]>$math[$numDay*86400000]]
 	$let[reason;The maximum period is 1 month. Please enter a shorter period.]
-$endelseif
+$endElseIf
 }
 $onlyIf[$get[reason]==undefined;
 	{private}
@@ -42,7 +42,7 @@ $onlyIf[$get[reason]==undefined;
 $let[reminderMsg;$getOption[message]]
 $let[reminderToken;$setTimeout[$period;Reminder - $authorID;;yes]{
 	$sendMessage[
-	    <@$authorID>
+		<@$authorID>
 		{color:ffcf03}
 		{title:Reminder}
 		{thumbnail:$getImage[1157972790482309241;7]}

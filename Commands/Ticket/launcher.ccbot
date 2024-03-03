@@ -34,7 +34,7 @@ $if[$action==Open]
 			{max=200}
 		}
 	]
-$elseif[$action==Close]
+$elseIf[$action==Close]
 	$interactionReply[
 		{color:ffcd69}
 		{author:Close Ticket:$getImage[1157972790482309241;3]}
@@ -42,11 +42,11 @@ $elseif[$action==Close]
 		{desc:Click on `Yes` to confirm.#NL#Click on `No` to cancel.}
 		{button:Yes:green:👍🏻:ticket-Confirm-$privacyLevel}
 		{button:No:red:👎🏻:ticket-Cancel}
-	 ;yes]
-$endelseif
-$elseif[$action==Cancel]
+	;yes]
+$endElseIf
+$elseIf[$action==Cancel]
 	$interactionDelete[$messageID]
-$endelseif
+$endElseIf
 $elseif[$action==Confirm]
 	$objectCreate[$getChannelVar[ticketData]]
 	$let[memberID;$objectGet[client]]
@@ -69,7 +69,7 @@ $elseif[$action==Confirm]
 			"Private":"1131229297735118988"
 		},
 		"transcript_channel":{
-		    "General":"1039597558273675354",
+			 "General":"1039597558273675354",
 			"Private":"1131163960519958600"
 		}
 	}]
@@ -94,5 +94,5 @@ $elseif[$action==Confirm]
 	$includeLibrary[modlog]
 	$deleteUserVar[ticketID;$memberID]
 	$deleteChannelVar[ticketData;$ticketID]
-$endelseif
+$endElseIf
 $endIf

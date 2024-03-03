@@ -3,150 +3,151 @@
     Library Name: datecheck
 */
 $function[getImage;id;i]{
-    $if[$i==undefined]{
-        $let[i;0]
-    }
-    $return[$msg[1157421810288185384;$id;attachment;$i]]
+	$if[$i==undefined]{
+		$let[i;0]
+	}
+	$return[$msg[1157421810288185384;$id;attachment;$i]]
 }
 $objectCreate[{
-    "num_day":[
-        31,
-        28,
-        31,
-        30,
-        31,
-        30,
-        31,
-        31,
-        30,
-        31,
-        30,
-        31
-    ],
-    "check":{
-        "day":{
-            "option":"date",
-            "regex":"^\\\\d{1,2}(?=[-/\\\\x20]|$)",
-            "digit":2,
-            "range":{
-                "min":1,
-                "max":31
-            },
-            "error_message":"`1` or `2`"
-        },
-        "month":{
-            "option":"date",
-            "regex":"(?<=([-/\\\\x20]))\\\\d{2}(?=\\\\1|$)",
-            "digit":2,
-            "range":{
-                "min":1,
-                "max":12
-            },
-            "error_message":"`1` or `2`"
-        },
-        "year":{
-            "option":"date",
-            "regex":"(?<=([-/\\\\x20]))\\\\d{4}$",
-            "digit":4,
-            "range":{
-                "min":1900,
-                "max":2099
-            },
-            "error_message":"`4`"
-        },
-        "hour":{
-            "option":"time",
-            "regex":"^\\\\d{1,2}(?=:|$)",
-            "digit":2,
-            "range":{
-                "min":"00",
-                "max":23
-            },
-            "error_message":"`1` or `2`"
-        },
-        "minute":{
-            "option":"time",
-            "regex":"(?<=:)\\\\d{2}$",
-            "digit":2,
-            "range":{
-                "min":"00",
-                "max":59
-            },
-            "error_message":"`2`"
-        }
-    },
-    "settings":$objectGet[settings]
+	"num_day":[
+		31,
+		28,
+		31,
+		30,
+		31,
+		30,
+		31,
+		31,
+		30,
+		31,
+		30,
+		31
+	],
+	"check":{
+		"day":{
+			"option":"date",
+			"regex":"^\\\\d{1,2}(?=[-/\\\\x20]|$)",
+			"digit":2,
+			"range":{
+				"min":1,
+				"max":31
+			},
+			"error_message":"`1` or `2`"
+		},
+		"month":{
+			"option":"date",
+			"regex":"(?<=([-/\\\\x20]))\\\\d{2}(?=\\\\1|$)",
+			"digit":2,
+			"range":{
+				"min":1,
+				"max":12
+			},
+			"error_message":"`1` or `2`"
+		},
+		"year":{
+			"option":"date",
+			"regex":"(?<=([-/\\\\x20]))\\\\d{4}$",
+			"digit":4,
+			"range":{
+				"min":1900,
+				"max":2099
+			},
+			"error_message":"`4`"
+		},
+		"hour":{
+			"option":"time",
+			"regex":"^\\\\d{1,2}(?=:|$)",
+			"digit":2,
+			"range":{
+				"min":"00",
+				"max":23
+			},
+			"error_message":"`1` or `2`"
+		},
+		"minute":{
+			"option":"time",
+			"regex":"(?<=:)\\\\d{2}$",
+			"digit":2,
+			"range":{
+				"min":"00",
+				"max":59
+			},
+			"error_message":"`2`"
+		}
+	},
+	"settings":$objectGet[settings]
 }]
 $if[$objectGet[settings;option;time]==false]{
-    $objectRemove[check;hour]
-    $objectRemove[check;minute]
+	$objectRemove[check;hour]
+	$objectRemove[check;minute]
 }
 $if[$objectGet[settings;option;year]==false]{
-    $objectRemove[check;year]
-    $objectSet[check;month;regex;(?<=([-/\\x20]))\\d{2}$]
+	$objectRemove[check;year]
+	$objectSet[check;month;regex;(?<=([-/\\x20]))\\d{2}$]
 }
 $objectLoop[var;;;check]{
-    $objectLoop[parameter;value;;check;$var]
-        $let[$parameter;$value]
-    $endObjectLoop
-    $if[$getTrigger[type]==modal]{
-        $let[input;$modalAnswer[$option]]
-    $elseif[$getTrigger[type]==slash]
-        $let[input;$getOption[$option]]
-    }
-    $let[set$toLocaleUppercase[$var];$padLeft[$regexMatch[$input;$regex];$digit;0]]
+	$objectLoop[parameter;value;;check;$var]
+		$let[$parameter;$value]
+	$endObjectLoop
+	$if[$getTrigger[type]==modal]{
+		$let[input;$modalAnswer[$option]]
+	$elseIf[$getTrigger[type]==slash]
+		 $let[input;$getOption[$option]]
+	$endElseIf
+	}
+	$let[set$toLocaleUppercase[$var];$padLeft[$regexMatch[$input;$regex];$digit;0]]
 }
 $if[$objectGet[settings;option;year]==true&&$setYear!=undefined]{
-    $if[$modulo[$setYear;4]==0&&$modulo[$setYear;100]!=0||$modulo[$setYear;400]==0]
-        $objectSet[num_day;1;29]
-    $endIf
+	$if[$modulo[$setYear;4]==0&&$modulo[$setYear;100]!=0||$modulo[$setYear;400]==0]
+		$objectSet[num_day;1;29]
+	$endIf
 }
 $if[$setMonth<=12&&$setMonth!=undefined]{
-    $objectSet[check;day;range;max;$objectGet[num_day;$sub[$setMonth;1]]]
+	$objectSet[check;day;range;max;$objectGet[num_day;$sub[$setMonth;1]]]
 }
 $objectLoop[parameter;;;check]{
-    $let[var;$toLocaleUppercase[$parameter]]
-    $let[value;$get[set$var]]
-    $objectLoop[bound;number;;check;$parameter;range]
-        $let[$bound;$number]
-    $endObjectLoop
+	$let[var;$toLocaleUppercase[$parameter]]
+	$let[value;$get[set$var]]
+	$objectLoop[bound;number;;check;$parameter;range]
+		$let[$bound;$number]
+	$endObjectLoop
 	$if[$value==undefined]{
 		$arrayPush[- **$var** must be a $objectGet[check;$parameter;error_message] digit number.;error]
-	$elseif[$value<$min||$value>$max]
+	$elseIf[$value<$min||$value>$max]
 		$arrayPush[- **$var** must be between `$min` and `$max`.;error]
-	$endelseif
+	$endElseIf
 	}
 }
 $if[$arrayLength[error]==0]{
-    $if[$objectGet[settings;time;past]==false&&$objectGet[settings;time;future]==true]
-        $arrayCreate[$setYear,$setMonth,$setDay,$setHour,$setMinute;,;set_time]
-        $arrayCreate[$year,$padLeft[$month[no];2;0],$day,$hour,$minute;,;current_time]
-        $if[$objectGet[settings;option;time]==false]
-            $arraySlice[1;3;set_time]
-            $arraySlice[1;3;current_time]
-        $endIf
-        $if[$objectGet[settings;time;present]==true&&$arrayJoin[;set_time]<$arrayJoin[;current_time]]
-            $arrayPush[- Date cannot be in the past.;error]
-        $elseif[$objectGet[settings;time;present]==false&&$arrayJoin[;set_time]<=$arrayJoin[;current_time]]
-            $arrayPush[- Date must be in the future.;error]
-        $endelseif
-        $endIf
-    $endIf
-    $if[$objectKeyExists[settings;time_limit]==true]
-        $if[$objectGet[settings;option;time]==false]
-            $let[extraTime;0]
-        $else
-            $let[extraTime;$math[3600000*$setHour+60000*$setMinute]]
-        $endIf
-        $let[setTimestamp;$math[$dateToTime[$setMonth-$setDay-$setYear]+$extraTime]]
-        $let[timeLimitMS;$parseTime[$objectGet[settings;time_limit]]]
-        $if[$math[abs($setTimestamp-$timeStamp)]>$timeLimitMS]
-            $arrayPush[- Date cannot be beyond **$humanizeMS[$timeLimitMS;1]**.;error]
-        $endIf
-    $endIf
+	$if[$objectGet[settings;time;past]==false&&$objectGet[settings;time;future]==true]
+		$arrayCreate[$setYear,$setMonth,$setDay,$setHour,$setMinute;,;set_time]
+		$arrayCreate[$year,$padLeft[$month[no];2;0],$day,$hour,$minute;,;current_time]
+		$if[$objectGet[settings;option;time]==false]
+			$arraySlice[1;3;set_time]
+			$arraySlice[1;3;current_time]
+		$endIf
+		$if[$objectGet[settings;time;present]==true&&$arrayJoin[;set_time]<$arrayJoin[;current_time]]
+			$arrayPush[- Date cannot be in the past.;error]
+		$elseIf[$objectGet[settings;time;present]==false&&$arrayJoin[;set_time]<=$arrayJoin[;current_time]]
+			$arrayPush[- Date must be in the future.;error]
+		$endElseIf
+		$endIf
+	$endIf
+	$if[$objectKeyExists[settings;time_limit]==true]
+		$if[$objectGet[settings;option;time]==false]
+			$let[extraTime;0]
+		$else
+			$let[extraTime;$math[3600000*$setHour+60000*$setMinute]]
+		$endIf
+		$let[setTimestamp;$math[$dateToTime[$setMonth-$setDay-$setYear]+$extraTime]]
+		$let[timeLimitMS;$parseTime[$objectGet[settings;time_limit]]]
+		$if[$math[abs($setTimestamp-$timeStamp)]>$timeLimitMS]
+			$arrayPush[- Date cannot be beyond **$humanizeMS[$timeLimitMS;1]**.;error]
+		$endIf
+	$endIf
 }
 $let[errorMessage;
-    {private}
-    {color:db3539}
-    {author:Error:$getImage[1157974096198508604;6]}
+	{private}
+	{color:db3539}
+	{author:Error:$getImage[1157974096198508604;6]}
 ]

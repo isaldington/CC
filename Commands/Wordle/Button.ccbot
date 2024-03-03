@@ -17,7 +17,7 @@ $let[action;$arrayGet[2;button]]
 $if[$action==quit0]{
     $deleteMessage[$messageID]
     $deleteUserVar[wordleSession]
-$elseif[$action==quit1]
+$elseIf[$action==quit1]
     $objectCreate[{
         "data":$getUserVar[wordleSession],
         "outcome":{
@@ -32,8 +32,8 @@ $elseif[$action==quit1]
     $let[gameOver;true]
     $let[word;$objectGet[data;word]]
     $includeLibrary[wordle]
-$endelseif
-$elseif[$action==start]
+$endElseIf
+$elseIf[$action==start]
     $let[initGuess;{"letter":" ","color":"grey"}]
     $let[initLine;\[$initGuess,$initGuess,$initGuess,$initGuess,$initGuess\]]
     $objectCreate[{
@@ -51,8 +51,8 @@ $elseif[$action==start]
         }
     }]
     $includeLibrary[wordle]
-$endelseif
-$elseif[$action==guess]
+$endElseIf
+$elseIf[$action==guess]
     $modal[
         {title=Wordle}
         {id=wordle}
@@ -64,5 +64,5 @@ $elseif[$action==guess]
             {max=5}
         }
     ]
-$endelseif
+$endElseIf
 }

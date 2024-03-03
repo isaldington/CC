@@ -56,12 +56,12 @@ $else
 		{$objectGet[$state;am_action]=*<@$authorID>*}
 	]
 	$if[$state==on]
-	    $setUserVar[dndState;on]
+		$setUserVar[dndState;on]
 	$else
-	    $deleteUserVar[dndState]
-    $endIf
+		$deleteUserVar[dndState]
+	$endIf
 	$interactionReply[
-	    {color:$objectGet[$state;color]}
+		{color:$objectGet[$state;color]}
 		{author:DND Mode $toLocaleUppercase[$action]:$getImage[$spread[,;$objectValues[,;$state;icon]]]}
 		{desc:You have **$action** "*Do Not Disturb*" mode. You now **$objectGet[$state;ability]** be pinged by others.}
 	]

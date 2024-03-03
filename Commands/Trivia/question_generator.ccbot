@@ -67,7 +67,7 @@ $if[$responseCode==0]{
             {button:$value:$style::$index:no:yes}
         }
     ]
-$elseif[$responseCode>=3]
+$elseIf[$responseCode>=3]
     $resetData
     $objectCreate[[
         {
@@ -97,15 +97,15 @@ $elseif[$responseCode>=3]
             $endIf
         }
     ]
-$endelseif
-$elseif[$responseCode==undefined]
+$endElseIf
+$elseIf[$responseCode==undefined]
     $let[newMessage;
         {color:transparent}
         {title:Error}
         {desc:An error has occured while loading the question. Please click on the button below to retrieve a new question.}
         {button:Refresh:green::trivia-next-$authorID}
     ]
-$endelseif
+$endElseIf
 $else
     $resetData
     $let[newMessage;

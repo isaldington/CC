@@ -49,10 +49,10 @@ $arrayLoop[letter;i;guess]{
 	$objectSet[data;history;$guessIndex;$position;letter;$letter]
 	$if[$letter==$arrayGet[$i;word]]{
 		$let[fill;green]
-	$elseif[$regexCheck[$word;$letter]==true&&$objectGet[count;$letter]>0]
+	$elseIf[$regexCheck[$word;$letter]==true&&$objectGet[count;$letter]>0]
 		$let[fill;yellow]
 		$objectIncrease[count;$letter;-1]
-	$endelseif
+	$endElseIf
 	$else
 		$let[fill;grey]
 	}

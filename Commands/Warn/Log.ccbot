@@ -7,51 +7,51 @@
     Channel Used: Run in Channel
 */
 $function[getImage;id;i]{
-    $if[$i==undefined]{
-        $let[i;0]
-    }
-    $return[$msg[1157421810288185384;$id;attachment;$i]]
+	$if[$i==undefined]{
+		$let[i;0]
+	}
+	$return[$msg[1157421810288185384;$id;attachment;$i]]
 }
 $forEach[option;details,member,reason;,]{
-    $let[$option;$getOption[$option]]
+	$let[$option;$getOption[$option]]
 }
 $if[$member==$userID]{
-    $let[subject;yourself]
-$elseif[$userID!=699604758729588786&&$rolePosition[$highestRole]>=$rolePosition[$highestRole[$member]]]
-    $let[subject;<@$member>]
-$endelseif
+	$let[subject;yourself]
+$elseIf[$userID!=699604758729588786&&$rolePosition[$highestRole]>=$rolePosition[$highestRole[$member]]]
+	$let[subject;<@$member>]
+$endElseIf
 }
 $onlyIf[$get[subject]==undefined;
-    {private}
-    {color:db3539}
-    {author:Error:$getImage[1157974096198508604;6]}
-    {desc:You cannot warn $subject.}
+	{private}
+	{color:db3539}
+	{author:Error:$getImage[1157974096198508604;6]}
+	{desc:You cannot warn $subject.}
 ]
 $initVar[user;infractions;;$member]
 $arrayCreate[$getUserVar[infractions;$member];,;warning]
 $objectCreate[{
-    "embed":{
-        "author":"$member",
-        "color":"eed202",
-        "desc":{
-            "User":"<@$member>",
-            "Moderator":"$mention",
-            "Warning Number":"`$math[$arrayLength[warning]+1]`",
-            "Reason":"`$reason`"
-        },
-        "footer":"$member",
-        "title":"Warning"
-    }
+	"embed":{
+		"author":"$member",
+		"color":"eed202",
+		"desc":{
+			"User":"<@$member>",
+			"Moderator":"$mention",
+			"Warning Number":"`$math[$arrayLength[warning]+1]`",
+			"Reason":"`$reason`"
+		},
+		"footer":"$member",
+		"title":"Warning"
+	}
 }]
 $objectSet[embed;desc;Details;$details]
 $objectLoop[parameter;value;;embed;desc]{
-    $arrayPush[**$parameter\:** $value;desc]
+	$arrayPush[**$parameter\:** $value;desc]
 }
 $interactionReply[
-    {color:f5e534}
-    {author:Warning:$getImage[1157972358620004352;8]}
-    {desc:<@$member> has been warned by $mention.}
-    {field:Details:$arrayJoin[#NL#;desc]}
+	{color:f5e534}
+	{author:Warning:$getImage[1157972358620004352;8]}
+	{desc:<@$member> has been warned by $mention.}
+	{field:Details:$arrayJoin[#NL#;desc]}
 ]
 $arrayClear[desc]
 $includeLibrary[modlog]

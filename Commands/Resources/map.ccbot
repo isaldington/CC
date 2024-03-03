@@ -56,7 +56,7 @@ $objectCreate[[
 		}
 	},
 	{
-		 "color":"0076ba",
+		"color":"0076ba",
 		"thumbnail":{
 			"id":"1157972358620004352",
 			"index":9
@@ -140,12 +140,12 @@ $let[content;$objectLoop[i]{
 				$endObjectLoop
 				{field:$category:$arrayJoin[#NL#;$i-$category]}
 			$endObjectLoop
-		$elseif[$parameter==thumbnail]
+		$elseIf[$parameter==thumbnail]
 			$objectLoop[var;num;;$i;thumbnail]
 				$let[$var;$num]
 			$endObjectLoop
 			{thumbnail:$msg[1157421810288185384;$id;attachment;$index]}
-		$endelseif
+		$endElseIf
 		$else
 			{$parameter:$value}
 		}
@@ -156,7 +156,7 @@ $let[content;$objectLoop[i]{
 $arrayCreate[$getChannelVar[webhook;$mapChannel];, ;webhook]
 $editWebhookMessage[$arrayGet[1;webhook];$arrayGet[2;webhook];$mapID;$content]
 $interactionReply[
-	 {color:GREEN}
-	 {author:Success:$msg[1157421810288185384;1157974096198508604;attachment;7]}
-	 {desc:The message on <#$mapChannel> has been successfully edited. [Jump]($msg[$mapChannel;$mapID;url]) to the message.}
+	{color:GREEN}
+	{author:Success:$msg[1157421810288185384;1157974096198508604;attachment;7]}
+	{desc:The message on <#$mapChannel> has been successfully edited. [Jump]($msg[$mapChannel;$mapID;url]) to the message.}
 ]

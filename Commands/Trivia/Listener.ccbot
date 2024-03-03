@@ -62,9 +62,9 @@ $interactionEdit[
     $objectLoop[index;value;i;data;buttons]{
         $if[$value==$correctAnswer]{
             $let[style;green]
-        $elseif[$value==$buttonLabel]
+        $elseIf[$value==$buttonLabel]
             $let[style;red]
-        $endelseif
+        $endElseIf
         $else
             $let[style;grey]
         }

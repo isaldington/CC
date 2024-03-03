@@ -7,18 +7,18 @@
     Channel Used: Run in Channel
 */
 $modal[
-    {id=quickvote}
-    {title=Create a Poll}
-    {input=
-        {id=topic}        
-        {name=Topic}
-        {ph=What is the poll about?}
-    }
-    {input=
-        {id=options}        
-        {name=Options}
-        {ph=2-8 options. Separate each option with a comma.}
-        {type=long}
-        {max=500}
-    }
+	{id=quickvote}
+	{title=Create a Poll}
+	{input=
+		{id=topic}		  
+		{name=Topic}
+		{ph=What is the poll about?}
+	}
+	{input=
+		{id=options}		  
+		{name=Options}
+		{ph=2-8 options. Separate each option with a comma.}
+		{type=long}
+		{max=500}
+	}
 ]
