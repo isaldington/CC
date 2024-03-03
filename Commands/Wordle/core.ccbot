@@ -6,12 +6,21 @@ $function[getImage;id;i]{
 	$let[index;$conditional[$i==undefined;0;$i]]
 	$return[$msg[1157421810288185384;$id;attachment;$index]]
 }
-$objectSet[color;green;left;<:Bracket_GL:1164289027105628231>]
-$objectSet[color;green;right;<:Bracket_GR:1164289028355534949>]
-$objectSet[color;grey;left;<:Bracket_BL:1164289022198288454>]
-$objectSet[color;grey;right;<:Bracket_BR:1164289024731656232>]
-$objectSet[color;yellow;left;<:Bracket_YL:1164289031106998292>]
-$objectSet[color;yellow;right;<:Bracket_YR:1164289032621133844>]
+$objectSet[color;]
+$objectMerge[color;{
+    "green":{
+        "left":"<:Bracket_GL:1164289027105628231>",
+        "right":"<:Bracket_GR:1164289028355534949>"
+    },
+    "grey":{
+        "left":"<:Bracket_BL:1164289022198288454>",
+        "right":"<:Bracket_BR:1164289024731656232>"
+    },
+    "yellow":{
+        "left":"<:Bracket_YL:1164289031106998292>",
+        "right":"<:Bracket_YR:1164289032621133844>"
+    }
+}]
 $objectLoop[line;;;data;history]{
 	$objectLoop[position;;;data;history;$line]
 		$let[fill;$objectGet[data;history;$line;$position;color]]

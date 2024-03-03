@@ -7,7 +7,8 @@
     Channel Used: Run in Channel
 */
 $let[guess;$toLowercase[$modalAnswer[guess]]]
-$onlyIf[$jsonRequest[http://fajfaj.pythonanywhere.com/wordle/check/$guess;isValid]==true;
+$objectCreate[$httpRequest[http://fajfaj.pythonanywhere.com/wordle/check/$guess/;GET]]
+$onlyIf[$objectGet[isValid]==true;
 	{private}
 	{color:db3539}
 	{author:Error:$msg[1157421810288185384;1157974096198508604;attachment;6]}
