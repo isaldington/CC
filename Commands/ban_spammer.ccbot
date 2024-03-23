@@ -1,0 +1,10 @@
+/*
+    Type: Word
+    Trigger: %all%
+    Required Permission: None
+    Ignore Roles: Moderator
+    Run only in: #automod
+    Channel Used: Run in Channel
+*/
+$onlyIfMessageContains[$msg[$channelID;$messageID;embeddesc];@everyone;discord.gg;]
+$ban[$authorID;Invite spam]

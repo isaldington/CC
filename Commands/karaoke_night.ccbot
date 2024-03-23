@@ -3,8 +3,14 @@
     Run Every: 7d
     Channel Used: #sandbox
 */
-$let[eventID;1211283427035185222]
 $let[date;$year$padLeft[$month[no];2;0]$day]
+$forEach[type;id,name;,]{
+    $arrayCreate[$guildEvents[$type;scheduled;|];|;$type]
+}
+$arrayLoop[event;i;name]{
+    $objectSet[$event;$arrayGet[$i;id]]
+}
+$let[eventID;$objectGet[Brand's Karaoke Night]]
 $eventStart[$eventID]
 $setTimeout[3h;End Karaoke Night - $date]{
 	$eventEnd[$eventID]
